@@ -49,6 +49,8 @@ public class LoadAssets {
 		}
 		
 		GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue());
+		
+		GameValues.avatar.sprite.setBounds(GameValues.avatar.getX(), GameValues.avatar.getY(), Avatar.width, Avatar.height);
 	}
 	
 }

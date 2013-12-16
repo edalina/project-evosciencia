@@ -5,6 +5,7 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Avatar extends Actor {
@@ -22,7 +23,7 @@ public class Avatar extends Actor {
 	public boolean walkFlag = true;
 	// Animation flag
 	public long animationFlag = 0;
-	public String facingFlag = "front";
+	public StanceEnum facingFlag = StanceEnum.FRONT_STAND;
 	
 	public Avatar() {
 		setWidth(Avatar.width);
@@ -36,6 +37,19 @@ public class Avatar extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		
+	}
+	
+	public void repositionAvatar(float x, float y) {
+		GameValues.avatar.setX(x);
+		GameValues.avatar.setY(y);
+		GameValues.avatar.sprite.getBoundingRectangle().set(GameValues.avatar.getX(),
+				GameValues.avatar.getY(), 
+				GameValues.avatar.getWidth(), 
+				GameValues.avatar.getHeight());
+	}
+	
+	public void updateStandBy() {
+		GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue()));
 	}
 	
 }

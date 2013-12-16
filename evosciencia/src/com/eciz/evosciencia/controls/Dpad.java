@@ -93,8 +93,7 @@ public class Dpad {
 			GameValues.dpad.rightArrowRectangle.y += valueY;
 		}
 		
-		GameValues.avatar.setX( GameValues.avatar.getX() + valueX );
-		GameValues.avatar.setY( GameValues.avatar.getY() + valueY );
+		GameValues.avatar.repositionAvatar(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY);
 		
 		if( TimeUtils.nanoTime() - GameValues.avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
 			
@@ -140,6 +139,10 @@ public class Dpad {
 				}
 			}
 			
+			if( Math.abs(valueX) != GameValues.CHARACTER_SPEED && Math.abs(valueY) != GameValues.CHARACTER_SPEED ) {
+				GameValues.avatar.updateStandBy();
+			}
+			
 		}
 			
 		
@@ -152,7 +155,7 @@ public class Dpad {
 		// Check if user touched or clicked
 		if( Gdx.input.isTouched() ) {
 			
-			String face = "";
+			StanceEnum face = GameValues.avatar.facingFlag;
 			
 			GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			GameValues.camera.unproject(GameValues.touchPos);
@@ -163,7 +166,7 @@ public class Dpad {
 				GameValues.touchPos.y >= GameValues.dpad.getUpArrowRectangle().y &&
 				GameValues.touchPos.y <= GameValues.dpad.getUpArrowRectangle().y + GameValues.dpad.getUpArrowRectangle().height) {
 				valueY = GameValues.CHARACTER_SPEED;
-				face = "back";
+				face = StanceEnum.BACK_STAND;
 			}
 			
 			// Down arrow is clicked/touched
@@ -172,7 +175,7 @@ public class Dpad {
 				GameValues.touchPos.y >= GameValues.dpad.getDownArrowRectangle().y &&
 				GameValues.touchPos.y <= GameValues.dpad.getDownArrowRectangle().y + GameValues.dpad.getDownArrowRectangle().height) {
 				valueY = -GameValues.CHARACTER_SPEED;
-				face = "front";
+				face = StanceEnum.FRONT_STAND;
 			}
 			
 			// Left arrow is clicked/touched
@@ -181,7 +184,7 @@ public class Dpad {
 				GameValues.touchPos.y >= GameValues.dpad.getLeftArrowRectangle().y &&
 				GameValues.touchPos.y <= GameValues.dpad.getLeftArrowRectangle().y + GameValues.dpad.getLeftArrowRectangle().height) {
 				valueX = -GameValues.CHARACTER_SPEED;
-				face = "left";
+				face = StanceEnum.LEFT_STAND;
 			}
 			
 			// Right arrow is clicked/touched
@@ -190,7 +193,7 @@ public class Dpad {
 				GameValues.touchPos.y >= GameValues.dpad.getRightArrowRectangle().y &&
 				GameValues.touchPos.y <= GameValues.dpad.getRightArrowRectangle().y + GameValues.dpad.getRightArrowRectangle().height) {
 				valueX = GameValues.CHARACTER_SPEED;
-				face = "right";
+				face = StanceEnum.RIGHT_STAND;
 			}
 			
 			if( !face.equals(GameValues.avatar.facingFlag) ) {
@@ -202,15 +205,7 @@ public class Dpad {
 			Dpad.moveAvatar(valueX, valueY);
 			
 		} else {
-			if( GameValues.avatar.facingFlag.equals("front") ) {
-				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue()));
-			} else if( GameValues.avatar.facingFlag.equals("back") ) {
-				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.BACK_STAND.getValue()));
-			} else if( GameValues.avatar.facingFlag.equals("left") ) {
-				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.LEFT_STAND.getValue()));
-			} else if( GameValues.avatar.facingFlag.equals("right") ) {
-				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.RIGHT_STAND.getValue()));
-			}
+			GameValues.avatar.updateStandBy();
 		}
 		
 	}

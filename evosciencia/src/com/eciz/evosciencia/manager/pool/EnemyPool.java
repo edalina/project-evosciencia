@@ -21,10 +21,19 @@ public class EnemyPool {
 			enemy.setCurrentSprite(GameValues.monsters.get(MonsterEnum.GOBLIN.getValue()).get(StanceEnum.FRONT_STAND.getValue()));
 			enemy.setFacing(StanceEnum.FRONT_STAND);
 			enemy.setVisible(false);
-			enemy.setX(MathUtils.random(0, GameValues.SCREEN_WIDTH - GameValues.ENEMY_WIDTH));
-			enemy.setY(MathUtils.random(0, GameValues.SCREEN_HEIGHT - GameValues.ENEMY_HEIGHT));
-			enemy.setWidth(GameValues.ENEMY_WIDTH);
+			enemy.setWidth(GameValues.ENEMY_WIDTH); 
 			enemy.setHeight(GameValues.ENEMY_HEIGHT);
+			
+			float x = MathUtils.random(0, GameValues.SCREEN_WIDTH - GameValues.ENEMY_WIDTH),
+				y = MathUtils.random(0, GameValues.SCREEN_HEIGHT - GameValues.ENEMY_HEIGHT);
+			
+			enemy.setX(x);
+			enemy.setY(y);
+			enemy.getCurrentSprite().getBoundingRectangle().set(
+					x, 
+					y, 
+					GameValues.ENEMY_WIDTH, 
+					GameValues.ENEMY_HEIGHT);
 			
 			enemies.add(enemy);
 		}
