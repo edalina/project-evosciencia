@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tiles_pokemon" tilewidth="16" tileheight="16" spacing="1" margin="1">
+  <tileoffset x="1" y="1"/>
+  <image source="assets/tiles_pokemon.png" trans="ff00ff" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztlTkSgCAQBPkAb+D/vzS1KEvFA2Z2O+iEQHqGBVsppQEIUgUcAACiwhtL98AMuLgpOpExdg4AVdTumJqPG9n6+yLv2Tdm9lkXnl+2fQH2ZJjDtxkzdAQ5UJ1lVS8XP1dXF646jdJ59H+lut/f3q75R/KtyHi0Z7/2xOtuntqx+hxGelJA1cuFDb20K6I=
+  </data>
+ </layer>
+</map>
