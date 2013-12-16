@@ -37,8 +37,11 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		
-		Avatar.x = 5;
-		Avatar.y = GameValues.SCREEN_HEIGHT - Avatar.height - 5;
+		GameValues.avatar.setX( 5 );
+		GameValues.avatar.setY( GameValues.SCREEN_HEIGHT - Avatar.height - 5 );
+		
+		System.out.println( GameValues.avatar.getX() );
+		System.out.println( GameValues.avatar.getY() );
 		
 		// Initialize utilities
 //		GameValues.camera = new OrthographicCamera();

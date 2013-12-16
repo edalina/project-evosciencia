@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.values.GameValues;
 
@@ -73,12 +72,12 @@ public class Dpad {
 	
 	public static void moveAvatar( float valueX, float valueY ) {
 		boolean isMoved = false;
-		if( Avatar.x == GameValues.camera.position.x - (Avatar.width/2) ) {
+		if( GameValues.avatar.getX() == GameValues.camera.position.x - (GameValues.avatar.getWidth()/2) ) {
 			GameValues.camera.position.x += valueX;
 			if( valueX != 0 )
 				isMoved = true;
 		}
-		if( Avatar.y == GameValues.camera.position.y - (Avatar.height/2) ) {
+		if( GameValues.avatar.getY() == GameValues.camera.position.y - (GameValues.avatar.getWidth()/2) ) {
 			GameValues.camera.position.y += valueY;
 			if( valueY != 0 )
 				isMoved = true;
@@ -94,50 +93,50 @@ public class Dpad {
 			GameValues.dpad.rightArrowRectangle.y += valueY;
 		}
 		
-		Avatar.x += valueX;
-		Avatar.y += valueY;
+		GameValues.avatar.setX( GameValues.avatar.getX() + valueX );
+		GameValues.avatar.setY( GameValues.avatar.getY() + valueY );
 		
-		if( TimeUtils.nanoTime() - Avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
+		if( TimeUtils.nanoTime() - GameValues.avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
 			
-			Avatar.animationFlag = TimeUtils.nanoTime();
+			GameValues.avatar.animationFlag = TimeUtils.nanoTime();
 		
 			if( valueY == -GameValues.CHARACTER_SPEED ) {
-				if( Avatar.walkFlag ) {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.FRONT_WALK1.getValue()));
-					Avatar.walkFlag = false;
+				if( GameValues.avatar.walkFlag ) {
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_WALK1.getValue()));
+					GameValues.avatar.walkFlag = false;
 				} else {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.FRONT_WALK2.getValue()));
-					Avatar.walkFlag = true;
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_WALK2.getValue()));
+					GameValues.avatar.walkFlag = true;
 				}
 			}
 			
 			if( valueY == GameValues.CHARACTER_SPEED ) {
-				if( Avatar.walkFlag ) {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.BACK_WALK1.getValue()));
-					Avatar.walkFlag = false;
+				if( GameValues.avatar.walkFlag ) {
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.BACK_WALK1.getValue()));
+					GameValues.avatar.walkFlag = false;
 				} else {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.BACK_WALK2.getValue()));
-					Avatar.walkFlag = true;
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.BACK_WALK2.getValue()));
+					GameValues.avatar.walkFlag = true;
 				}
 			}
 			
 			if( valueX == -GameValues.CHARACTER_SPEED ) {
-				if( Avatar.walkFlag ) {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.LEFT_WALK1.getValue()));
-					Avatar.walkFlag = false;
+				if( GameValues.avatar.walkFlag ) {
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.LEFT_WALK1.getValue()));
+					GameValues.avatar.walkFlag = false;
 				} else {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.LEFT_WALK2.getValue()));
-					Avatar.walkFlag = true;
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.LEFT_WALK2.getValue()));
+					GameValues.avatar.walkFlag = true;
 				}
 			}
 			
 			if( valueX == GameValues.CHARACTER_SPEED ) {
-				if( Avatar.walkFlag ) {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.RIGHT_WALK1.getValue()));
-					Avatar.walkFlag = false;
+				if( GameValues.avatar.walkFlag ) {
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.RIGHT_WALK1.getValue()));
+					GameValues.avatar.walkFlag = false;
 				} else {
-					Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.RIGHT_WALK2.getValue()));
-					Avatar.walkFlag = true;
+					GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.RIGHT_WALK2.getValue()));
+					GameValues.avatar.walkFlag = true;
 				}
 			}
 			
@@ -194,23 +193,23 @@ public class Dpad {
 				face = "right";
 			}
 			
-			if( !face.equals(Avatar.facingFlag) ) {
-				Avatar.animationFlag = 0;
+			if( !face.equals(GameValues.avatar.facingFlag) ) {
+				GameValues.avatar.animationFlag = 0;
 			}
 			
-			Avatar.facingFlag = face;
+			GameValues.avatar.facingFlag = face;
 			
 			Dpad.moveAvatar(valueX, valueY);
 			
 		} else {
-			if( Avatar.facingFlag.equals("front") ) {
-				Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue()));
-			} else if( Avatar.facingFlag.equals("back") ) {
-				Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.BACK_STAND.getValue()));
-			} else if( Avatar.facingFlag.equals("left") ) {
-				Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.LEFT_STAND.getValue()));
-			} else if( Avatar.facingFlag.equals("right") ) {
-				Avatar.setSprite(Avatar.avatarSprites.get(StanceEnum.RIGHT_STAND.getValue()));
+			if( GameValues.avatar.facingFlag.equals("front") ) {
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue()));
+			} else if( GameValues.avatar.facingFlag.equals("back") ) {
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.BACK_STAND.getValue()));
+			} else if( GameValues.avatar.facingFlag.equals("left") ) {
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.LEFT_STAND.getValue()));
+			} else if( GameValues.avatar.facingFlag.equals("right") ) {
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.RIGHT_STAND.getValue()));
 			}
 		}
 		
