@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.eciz.evosciencia.entities.Avatar;
@@ -14,11 +15,17 @@ import com.eciz.evosciencia.manager.pool.EnemyPool;
 import com.eciz.evosciencia.values.GameValues;
 
 public class LoadAssets {
+	
+	public static Texture splashTexture;
+	
+	public static AssetManager assetManager;
 
 	public LoadAssets() {
 	}
 	
 	public static void loadAllAssets() {
+		assetManager = new AssetManager();
+		assetManager.finishLoading();
 		LoadAssets.loadAvatarAssets();
 		LoadAssets.loadAllMonsters();
 		LoadAssets.loadPools();
@@ -28,7 +35,9 @@ public class LoadAssets {
 		for(MonsterEnum monsterEnum : MonsterEnum.values()) {
 			Map<String, Sprite> monsters = new LinkedHashMap<String, Sprite>();
 			for( StanceEnum stanceEnum : StanceEnum.values()  ) {
-				monsters.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal("monsters/" + monsterEnum.getValue() + "/" + stanceEnum.getValue() + ".png"))));
+				String path = "monsters/" + monsterEnum.getValue() + "/" + stanceEnum.getValue() + ".png";
+				assetManager.load(path, Texture.class);
+				monsters.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal(path))));
 			}
 			GameValues.monsters.put(monsterEnum.getValue(), monsters);
 		}
@@ -45,7 +54,9 @@ public class LoadAssets {
 		GameValues.avatar.avatarSprites = new HashMap<String, Sprite>();
 		
 		for( StanceEnum stanceEnum : StanceEnum.values() ) {
-			GameValues.avatar.avatarSprites.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal("avatar/boy_1/" + stanceEnum.getValue() + ".png"))));
+			String path = "avatar/" + GameValues.avatar.name + "/" + stanceEnum.getValue() + ".png";
+			assetManager.load(path, Texture.class);
+			GameValues.avatar.avatarSprites.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal(path))));
 		}
 		
 		GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue());

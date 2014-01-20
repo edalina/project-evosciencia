@@ -5,8 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.eciz.evosciencia.actors.GameMapActor;
-import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.actors.GameScreenActor;
 import com.eciz.evosciencia.values.GameValues;
 
 public class GameScreen implements Screen {
@@ -16,7 +15,9 @@ public class GameScreen implements Screen {
 	public GameScreen() {
 		stage = new Stage();
 		GameValues.camera = (OrthographicCamera) stage.getCamera();
-		stage.addActor(new GameMapActor());
+		GameValues.controlCamera = (OrthographicCamera) stage.getCamera();
+//		GameValues.camera.zoom = 0.5f;
+		stage.addActor(new GameScreenActor());
 	}
 	
 	@Override
@@ -36,9 +37,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		
-		GameValues.avatar.repositionAvatar(5, GameValues.SCREEN_HEIGHT - Avatar.height - 5);
-
 		// Initialize utilities
 //		GameValues.camera = new OrthographicCamera();
 //		GameValues.camera.setToOrtho(false, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
@@ -54,7 +52,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -65,6 +62,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		
 	}
 	
 }

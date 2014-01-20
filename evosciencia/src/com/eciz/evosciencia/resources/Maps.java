@@ -1,30 +1,40 @@
 package com.eciz.evosciencia.resources;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.eciz.evosciencia.values.GameValues;
 
 public class Maps {
 	
-	private TiledMap testMap;
+	private TiledMap currentMap;
 	private TiledMapRenderer renderer;
+	public static final float MAP_UNIT_SCALE = 2f;
+	public static final float MAP_WIDTH = 800 * MAP_UNIT_SCALE;
+	public static final float MAP_HEIGHT = 800 * MAP_UNIT_SCALE;
 	
 	public Maps() {
-		testMap = new TmxMapLoader().load("tmx/test.tmx");
-		renderer = new OrthogonalTiledMapRenderer(testMap, 2);
+		currentMap = new TmxMapLoader().load("tmx/town_1.tmx");
+		createObjects();
+		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
 	}
 	
 	public static Maps getMaps() {
 		return new Maps();
 	}
 
-	public TiledMap getTestMap() {
-		return testMap;
+	public TiledMap getCurrentMap() {
+		return currentMap;
 	}
 
-	public void setTestMap(TiledMap testMap) {
-		this.testMap = testMap;
+	public void setCurrentMap(TiledMap testMap) {
+		this.currentMap = testMap;
 	}
 
 	public TiledMapRenderer getRenderer() {
@@ -33,6 +43,45 @@ public class Maps {
 
 	public void setRenderer(TiledMapRenderer renderer) {
 		this.renderer = renderer;
+	}
+	
+	public void renderNonObstacleObj() {
+		GameValues.maps.getRenderer().setView(GameValues.camera);
+		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
+			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains("obstacles_") ) {
+				GameValues.maps.getRenderer().render(new int[]{i});
+			}
+		}
+	}
+	
+	public void renderObstacleObj() {
+		GameValues.maps.getRenderer().setView(GameValues.camera);
+		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
+			if( GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains("obstacles_") ) {
+				GameValues.maps.getRenderer().render(new int[]{i});
+			}
+		}
+	}
+	
+	public void createObjects() {
+		GameValues.collisions = new ArrayList<Rectangle>();
+		for( int i = 0 ; i < currentMap.getLayers().getCount() ; i++ ) {
+			TiledMapTileLayer currentLayer = ((TiledMapTileLayer) currentMap.getLayers().get(i));
+			int tileWidth = (int) (currentLayer.getTileWidth() * Maps.MAP_UNIT_SCALE),
+				tileHeight = (int) (currentLayer.getTileHeight() * Maps.MAP_UNIT_SCALE);
+			for( int x = 0 ; x < 50 ; x++ ) {
+				for( int y = 0 ; y < 50 ; y++ ) {
+					if( currentLayer.getCell(x, y) != null ) {
+						TiledMapTile tile = currentLayer.getCell(x, y).getTile();
+						if( tile.getProperties().containsKey(GameValues.COLLISION_PROPERTY) ) {
+							Rectangle collision = new Rectangle();
+							collision.set(x*tileWidth, y*tileHeight, tileWidth, tileHeight);
+							GameValues.collisions.add(collision);
+						}
+					}
+				}
+			}
+		}
 	}
 
 }

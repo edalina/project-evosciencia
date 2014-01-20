@@ -1,6 +1,7 @@
 package com.eciz.evosciencia.values;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
@@ -31,8 +33,12 @@ public class GameValues {
 	public static Vector3 touchPos;
 	
 	public static OrthographicCamera camera;
+	
+	public static OrthographicCamera controlCamera;
 
 	public static Avatar avatar;
+	
+	public static List<Rectangle> collisions;
 	
 	public static Dpad dpad;
 	
@@ -40,11 +46,17 @@ public class GameValues {
 	
 	public static final int ENEMY_COUNT_PER_MAP = 30;
 	
-	public static final int CHARACTER_SPEED = 1;
+	public static final float CHARACTER_SPEED = 2;
 	
-	public static final long ANIMATION_SPEED = 300000000;
+	public static final long ANIMATION_SPEED = 200000000;
 	
 	public static Map<String, Map<String, Sprite>> monsters = new LinkedHashMap<String, Map<String,Sprite>>();
 	
 	public static Batch currentBatch;
+	
+	public static Batch controlBatch;
+	
+	public static final String COLLISION_PROPERTY = "collision";
+	
+	public static final String CHECK_POINT = "cpoint";
 }

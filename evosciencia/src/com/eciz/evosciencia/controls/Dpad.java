@@ -16,6 +16,7 @@ public class Dpad {
 	private Texture downArrow;
 	private Texture leftArrow;
 	private Texture rightArrow;
+	private Texture navHandler;
 	
 	/**
 	 * DPAD Rectangle
@@ -24,17 +25,20 @@ public class Dpad {
 	private Rectangle downArrowRectangle;
 	private Rectangle leftArrowRectangle;
 	private Rectangle rightArrowRectangle;
+	private Rectangle navHandlerRectangle;
 	
 	public Dpad() {
 		upArrow = new Texture(Gdx.files.internal("dpad/up.png"));
 		downArrow = new Texture(Gdx.files.internal("dpad/down.png"));
 		leftArrow = new Texture(Gdx.files.internal("dpad/left.png"));
 		rightArrow = new Texture(Gdx.files.internal("dpad/right.png"));
+		navHandler = new Texture(Gdx.files.internal("dpad/dpad_handler.png"));
 		
 		upArrowRectangle = new Rectangle();
 		downArrowRectangle = new Rectangle();
 		leftArrowRectangle = new Rectangle();
 		rightArrowRectangle = new Rectangle();
+		navHandlerRectangle = new Rectangle();
 	}
 
 	public static Dpad positionDpad() {
@@ -72,6 +76,17 @@ public class Dpad {
 	
 	public static void moveAvatar( float valueX, float valueY ) {
 		boolean isMoved = false;
+		
+		Rectangle tempRect = new Rectangle();
+		tempRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		
+		for(Rectangle collision : GameValues.collisions ) {
+			if( tempRect.overlaps(collision) ) {
+				GameValues.avatar.updateStandBy();
+				return;
+			}
+		}
+		
 		if( GameValues.avatar.getX() == GameValues.camera.position.x - (GameValues.avatar.getWidth()/2) ) {
 			GameValues.camera.position.x += valueX;
 			if( valueX != 0 )
@@ -210,6 +225,14 @@ public class Dpad {
 		
 	}
 	
+	public void drawDpad() {
+		GameValues.controlBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
+		GameValues.controlBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
+		GameValues.controlBatch.draw(GameValues.dpad.getLeftArrow(), GameValues.dpad.getLeftArrowRectangle().x, GameValues.dpad.getLeftArrowRectangle().y, GameValues.dpad.getLeftArrowRectangle().width, GameValues.dpad.getLeftArrowRectangle().height);
+		GameValues.controlBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
+		GameValues.controlBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
+	}
+	
 	public Texture getUpArrow() {
 		return upArrow;
 	}
@@ -224,6 +247,14 @@ public class Dpad {
 
 	public Texture getRightArrow() {
 		return rightArrow;
+	}
+	
+	public Texture getNavHandler() {
+		return navHandler;
+	}
+
+	public void setNavHandler(Texture navHandler) {
+		this.navHandler = navHandler;
 	}
 
 	public Rectangle getUpArrowRectangle() {
@@ -241,5 +272,13 @@ public class Dpad {
 	public Rectangle getRightArrowRectangle() {
 		return rightArrowRectangle;
 	}
+	
+	public Rectangle getNavHandlerRectangle() {
+		return navHandlerRectangle;
+	}
 
+	public void setNavHandlerRectangle(Rectangle navHandlerRectangle) {
+		this.navHandlerRectangle = navHandlerRectangle;
+	}
+	
 }

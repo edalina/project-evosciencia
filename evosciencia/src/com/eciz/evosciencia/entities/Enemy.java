@@ -3,6 +3,7 @@ package com.eciz.evosciencia.entities;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eciz.evosciencia.enums.StanceEnum;
+import com.eciz.evosciencia.values.GameValues;
 
 public class Enemy extends Actor {
 
@@ -12,6 +13,7 @@ public class Enemy extends Actor {
 	private int id;
 	private Sprite currentSprite;
 	private StanceEnum facing;
+	public boolean isMoving = false;
 	
 	public int getId() {
 		return id;
@@ -32,5 +34,15 @@ public class Enemy extends Actor {
 		this.facing = facing;
 	}
 	
+	@Override
+	public void setPosition( float x, float y ) {
+		setX(x);
+		setY(y);
+		getCurrentSprite().getBoundingRectangle().set(
+				x, 
+				y, 
+				GameValues.ENEMY_WIDTH, 
+				GameValues.ENEMY_HEIGHT);
+	}
 	
 }

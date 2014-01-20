@@ -10,6 +10,6 @@ public class Main {
 		cfg.width = 800;
 		cfg.height = 480;
 		
-		new LwjglApplication(new EvoSciencia(), cfg);
+		new LwjglApplication(EvoSciencia.getMainInstance(), cfg);
 	}
 }

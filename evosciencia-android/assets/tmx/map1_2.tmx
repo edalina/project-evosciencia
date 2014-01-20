@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset2" tilewidth="16" tileheight="16">
+  <image source="tileset/tileset2.png" trans="ff00ff" width="2048" height="2048"/>
+  <tile id="1548">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1676">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="2822">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4127">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4128">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4129">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4255">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4257">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4383">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4384">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4385">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5272">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5273">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5276">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5277">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5400">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5401">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5404">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5405">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6151">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6152">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6153">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6279">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6280">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6281">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6406">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="black" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0cENgzAQRcEtAck2jYMpKJXlF5ATKJBIM9K7WfauXAUAAAAAAAAAAPfaWtWeZjra5zNzuXemM1qv6mmktT89zXlbZt/TTMcf79FG/iONtI573nwt1/vGnU/0C3u8AfzFUqY=
+  </data>
+ </layer>
+ <layer name="tile" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwzENAAAIA7BJwP83p2jg42iTdpKqqqqqqqqqqqp6zi8LTfJ7uw==
+  </data>
+ </layer>
+ <layer name="tile_stone" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmeFqAjEMgPPTbR4oKLjBhvq0c+oDbLCx+aRL0WI5erVJ02sCfpDfzXdN09zdfgpwIMQR4zSD5vxiDrsgnjqAKSG67uoxWQE8YDyubHu8Y/47jI9KHmtcZ4Oxjex/iUfoMAYu179ZfE2ux9gOjvUc9wNjO7ftkYLjwXVI1bclj1R9j+1RUk+p+i6F4tEpPBeevsc+yDeM4yV/jQ6OvscpEZrpezg+FwBfi3Y5fePaP8T1Yx7PS4CXpXx+ubzi2m/E9WMeVGreC7lIeNS8Fyg5FO9HxXshFwkPDbTykO6JrTyke6K1uhrqjdY8hnqjNY+h3mjNYwgpj9YzmZSH7z+cGU+CHA/K/MSZ8STI8dAwP90iaz8UzE+30NyvKGdNswflrGn2oHD3KEP6XbiVh3Qvj3lw/ytRZhPpXh7z4P5Xavm9yPI5D+vGskdYNxY9XM6xsOQRyzkWmsl10OxBcfAeGr4796E4eA+N700cj5y7dqzvCtR6op6P2ne3f04cB03n3D8n6x53zvwDPDbwOw==
+  </data>
+ </layer>
+ <layer name="tile_stone_cave" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
+  </data>
+ </layer>
+ <layer name="tile_grass" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt2csKgCAQBdBWtYg+vX9uLxQUXXHqnJ0LxwdyFZymZ5b1YcfBpNexzdftt+yhumf1E+N95UwBkFHpnqg01yupd0tvd98tf103wB2yEoCWuwFq6/WXkdbjL6NVda9a8i/LOQFGlMqm3pmXyiaZB7UdLxMItg==
+  </data>
+ </layer>
+</map>

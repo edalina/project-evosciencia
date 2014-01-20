@@ -6,6 +6,7 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
 public class MainActivity extends AndroidApplication {
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -14,7 +15,9 @@ public class MainActivity extends AndroidApplication {
         cfg.useGL20 = false;
         cfg.useAccelerometer = false;
         cfg.useCompass = false;
+ 
+        initialize(EvoSciencia.getMainInstance(), cfg);
         
-        initialize(new EvoSciencia(), cfg);
     }
+    
 }
