@@ -35,8 +35,6 @@ public class GameValues {
 	
 	public static OrthographicCamera camera;
 	
-	public static OrthographicCamera controlCamera;
-
 	public static Avatar avatar;
 	
 	public static List<Rectangle> collisions;
@@ -59,8 +57,6 @@ public class GameValues {
 	public static Map<String, Map<String, Sprite>> monsters = new LinkedHashMap<String, Map<String,Sprite>>();
 	
 	public static Batch currentBatch;
-	
-	public static Batch controlBatch;
 	
 	public static final String COLLISION_PROPERTY = "collision";
 	

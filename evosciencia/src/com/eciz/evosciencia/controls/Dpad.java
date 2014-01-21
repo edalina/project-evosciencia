@@ -47,14 +47,15 @@ public class Dpad {
 
 	public static void positionDpad() {
 		
+		System.out.println( GameValues.CAMERA_WIDTH + " : " + GameValues.CAMERA_HEIGHT + "-");
+		System.out.println( GameValues.camera.position.x + " : " + GameValues.camera.position.y );
+		
 		/*
 		 * Setting values
 		 */
 		
-//		float dpadControlXCenter = ( GameValues.DPAD_WIDTH * 2 ) + ( GameValues.DPAD_WIDTH / 2 ) + ( GameValues.CAMERA_WIDTH/2 );
-//		float dpadControlYCenter = ( GameValues.DPAD_HEIGHT * 2 ) + ( GameValues.DPAD_HEIGHT / 2 ) + ( GameValues.CAMERA_HEIGHT/2 );
-		float dpadControlXCenter = GameValues.avatar.getX() - (GameValues.avatar.getWidth()*2) + ( GameValues.CAMERA_WIDTH/2 );
-		float dpadControlYCenter = GameValues.avatar.getY() - (GameValues.avatar.getHeight()*2) + ( GameValues.CAMERA_HEIGHT/2 );
+		float dpadControlXCenter = GameValues.avatar.getX() - ( (GameValues.CAMERA_WIDTH/2) - ( GameValues.DPAD_WIDTH*3 ) );
+		float dpadControlYCenter = GameValues.avatar.getY() - ( (GameValues.CAMERA_HEIGHT/2) - ( GameValues.DPAD_HEIGHT*3 ) );
 		
 		GameValues.dpad.upArrowRectangle.width = GameValues.DPAD_WIDTH;
 		GameValues.dpad.upArrowRectangle.height = GameValues.DPAD_HEIGHT;
@@ -76,11 +77,9 @@ public class Dpad {
 		GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + GameValues.DPAD_WIDTH;
 		GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
 		
-		System.out.println( GameValues.dpad.rightArrowRectangle.x );
 	}
 	
 	public static void moveAvatar( float valueX, float valueY ) {
-		boolean isMoved = false;
 		
 		Rectangle tempRect = new Rectangle();
 		tempRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
@@ -132,29 +131,6 @@ public class Dpad {
 				return;
 			}
 		}
-		
-		if( GameValues.avatar.getX() == GameValues.camera.position.x - (GameValues.avatar.getWidth()/2) ) {
-			angleCameraX(valueX);
-			if( valueX != 0 )
-				isMoved = true;
-		}
-		if( GameValues.avatar.getY() == GameValues.camera.position.y - (GameValues.avatar.getWidth()/2) ) {
-			angleCameraY(valueY);
-			if( valueY != 0 )
-				isMoved = true;
-		}
-//		if( isMoved ) {
-//			GameValues.dpad.upArrowRectangle.x += valueX;
-//			GameValues.dpad.upArrowRectangle.y += valueY;
-//			GameValues.dpad.downArrowRectangle.x += valueX;
-//			GameValues.dpad.downArrowRectangle.y += valueY;
-//			GameValues.dpad.leftArrowRectangle.x += valueX;
-//			GameValues.dpad.leftArrowRectangle.y += valueY;
-//			GameValues.dpad.rightArrowRectangle.x += valueX;
-//			GameValues.dpad.rightArrowRectangle.y += valueY;
-//		}
-		
-		positionDpad();
 		
 		GameValues.avatar.repositionAvatar(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY);
 		
@@ -209,22 +185,6 @@ public class Dpad {
 		}
 			
 		
-	}
-	
-	public static void angleCameraOnAvatar() {
-		// TODO
-		GameValues.camera.position.x = GameValues.avatar.getX();
-		GameValues.camera.position.x = GameValues.avatar.getY();
-	}
-	
-	public static void angleCameraX(float x) {
-		// TODO Auto-generated method stub
-		GameValues.camera.position.x += x;
-	}
-	
-	public static void angleCameraY(float y) {
-		// TODO Auto-generated method stub
-		GameValues.camera.position.y += y;
 	}
 	
 	public void checkEvents() {
@@ -290,11 +250,11 @@ public class Dpad {
 	}
 	
 	public void drawDpad() {
-		GameValues.controlBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
-		GameValues.controlBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
-		GameValues.controlBatch.draw(GameValues.dpad.getLeftArrow(), GameValues.dpad.getLeftArrowRectangle().x, GameValues.dpad.getLeftArrowRectangle().y, GameValues.dpad.getLeftArrowRectangle().width, GameValues.dpad.getLeftArrowRectangle().height);
-		GameValues.controlBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
-		GameValues.controlBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getLeftArrow(), GameValues.dpad.getLeftArrowRectangle().x, GameValues.dpad.getLeftArrowRectangle().y, GameValues.dpad.getLeftArrowRectangle().width, GameValues.dpad.getLeftArrowRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
 	}
 	
 	public Texture getUpArrow() {

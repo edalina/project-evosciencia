@@ -4,11 +4,17 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Avatar extends Rectangle {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4502025065283224473L;
 	
 	public int id;
 	public static final int width = (int) ( 16 * Maps.MAP_UNIT_SCALE );
@@ -41,10 +47,24 @@ public class Avatar extends Rectangle {
 				GameValues.avatar.getY(), 
 				GameValues.avatar.getWidth(), 
 				GameValues.avatar.getHeight());
+		
+//		if( !(GameValues.camera.position.x <= GameValues.CAMERA_WIDTH/2 ||
+//			GameValues.camera.position.x >= GameValues.SCREEN_WIDTH - (GameValues.CAMERA_WIDTH/2) ||
+//			GameValues.camera.position.y <= GameValues.CAMERA_HEIGHT/2 ||
+//			GameValues.camera.position.y >= GameValues.SCREEN_HEIGHT - (GameValues.CAMERA_HEIGHT/2)) ) {
+			Dpad.positionDpad();
+			angleCameraOnAvatar();
+//		}
+		
 	}
 	
 	public void updateStandBy() {
 		GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue()));
+	}
+	
+	public void angleCameraOnAvatar() {
+		GameValues.camera.position.x = GameValues.avatar.getX();
+		GameValues.camera.position.y = GameValues.avatar.getY();
 	}
 	
 }
