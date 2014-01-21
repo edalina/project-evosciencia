@@ -2,9 +2,13 @@ package com.eciz.evosciencia.controls;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.enums.StanceEnum;
+import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Dpad {
@@ -41,37 +45,38 @@ public class Dpad {
 		navHandlerRectangle = new Rectangle();
 	}
 
-	public static Dpad positionDpad() {
-		Dpad dpad = new Dpad();
+	public static void positionDpad() {
 		
 		/*
 		 * Setting values
 		 */
 		
-		float dpadControlXCenter = ( GameValues.DPAD_WIDTH * 2 ) + ( GameValues.DPAD_WIDTH / 2 );
-		float dpadControlYCenter = ( GameValues.DPAD_HEIGHT * 2 ) + ( GameValues.DPAD_HEIGHT / 2 );
+//		float dpadControlXCenter = ( GameValues.DPAD_WIDTH * 2 ) + ( GameValues.DPAD_WIDTH / 2 ) + ( GameValues.CAMERA_WIDTH/2 );
+//		float dpadControlYCenter = ( GameValues.DPAD_HEIGHT * 2 ) + ( GameValues.DPAD_HEIGHT / 2 ) + ( GameValues.CAMERA_HEIGHT/2 );
+		float dpadControlXCenter = GameValues.avatar.getX() - (GameValues.avatar.getWidth()*2) + ( GameValues.CAMERA_WIDTH/2 );
+		float dpadControlYCenter = GameValues.avatar.getY() - (GameValues.avatar.getHeight()*2) + ( GameValues.CAMERA_HEIGHT/2 );
 		
-		dpad.upArrowRectangle.width = GameValues.DPAD_WIDTH;
-		dpad.upArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		dpad.upArrowRectangle.x = dpadControlXCenter;
-		dpad.upArrowRectangle.y = dpadControlYCenter + GameValues.DPAD_HEIGHT;
+		GameValues.dpad.upArrowRectangle.width = GameValues.DPAD_WIDTH;
+		GameValues.dpad.upArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
+		GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + GameValues.DPAD_HEIGHT;
 		
-		dpad.downArrowRectangle.width = GameValues.DPAD_WIDTH;
-		dpad.downArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		dpad.downArrowRectangle.x = dpadControlXCenter;
-		dpad.downArrowRectangle.y = dpadControlYCenter - GameValues.DPAD_HEIGHT;
+		GameValues.dpad.downArrowRectangle.width = GameValues.DPAD_WIDTH;
+		GameValues.dpad.downArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
+		GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - GameValues.DPAD_HEIGHT;
 		
-		dpad.leftArrowRectangle.width = GameValues.DPAD_WIDTH;
-		dpad.leftArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		dpad.leftArrowRectangle.x = dpadControlXCenter - GameValues.DPAD_WIDTH;
-		dpad.leftArrowRectangle.y = dpadControlYCenter;
+		GameValues.dpad.leftArrowRectangle.width = GameValues.DPAD_WIDTH;
+		GameValues.dpad.leftArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - GameValues.DPAD_WIDTH;
+		GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
 		
-		dpad.rightArrowRectangle.width = GameValues.DPAD_WIDTH;
-		dpad.rightArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		dpad.rightArrowRectangle.x = dpadControlXCenter + GameValues.DPAD_WIDTH;
-		dpad.rightArrowRectangle.y = dpadControlYCenter;
+		GameValues.dpad.rightArrowRectangle.width = GameValues.DPAD_WIDTH;
+		GameValues.dpad.rightArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + GameValues.DPAD_WIDTH;
+		GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
 		
-		return dpad;
+		System.out.println( GameValues.dpad.rightArrowRectangle.x );
 	}
 	
 	public static void moveAvatar( float valueX, float valueY ) {
@@ -79,6 +84,47 @@ public class Dpad {
 		
 		Rectangle tempRect = new Rectangle();
 		tempRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		
+		for(Checkpoint checkpoint : GameValues.checkpoints ) {
+			if( tempRect.overlaps(checkpoint.getRectangle()) ) {
+				GameValues.avatar.updateStandBy();
+				GameValues.maps.setCurrentMap(new TmxMapLoader().load("tmx/" + checkpoint.getValue() + ".tmx"));
+				GameValues.maps.changeMap();
+				
+				StanceEnum facing = GameValues.avatar.facingFlag;
+				float x = GameValues.avatar.getX(), y = GameValues.avatar.getY();
+				
+				switch (facing) {
+					case FRONT_STAND:
+						y = Maps.MAP_HEIGHT - (Avatar.height + checkpoint.getRectangle().getHeight());
+						break;
+					case BACK_STAND:
+						y = checkpoint.getRectangle().getHeight();
+						break;
+					case LEFT_STAND:
+						x = Maps.MAP_WIDTH - (Avatar.width + checkpoint.getRectangle().getWidth());
+						break;
+					case RIGHT_STAND:
+						x = checkpoint.getRectangle().getWidth();
+						break;
+					default:
+						break;
+				}
+				
+				GameValues.avatar.repositionAvatar(x, y);
+				GameValues.camera.setToOrtho(false, GameValues.CAMERA_WIDTH, GameValues.CAMERA_HEIGHT);
+				GameValues.camera.position.set(GameValues.avatar.getX(), GameValues.avatar.getY(), 0);
+				return;
+			}
+		}
+		
+		if( tempRect.getX() < 1 ||
+			tempRect.getX() > Maps.MAP_WIDTH - Avatar.width ||
+			tempRect.getY() < 1 ||
+			tempRect.getY() > Maps.MAP_HEIGHT - Avatar.height) {
+			GameValues.avatar.updateStandBy();
+			return;
+		}
 		
 		for(Rectangle collision : GameValues.collisions ) {
 			if( tempRect.overlaps(collision) ) {
@@ -88,25 +134,27 @@ public class Dpad {
 		}
 		
 		if( GameValues.avatar.getX() == GameValues.camera.position.x - (GameValues.avatar.getWidth()/2) ) {
-			GameValues.camera.position.x += valueX;
+			angleCameraX(valueX);
 			if( valueX != 0 )
 				isMoved = true;
 		}
 		if( GameValues.avatar.getY() == GameValues.camera.position.y - (GameValues.avatar.getWidth()/2) ) {
-			GameValues.camera.position.y += valueY;
+			angleCameraY(valueY);
 			if( valueY != 0 )
 				isMoved = true;
 		}
-		if( isMoved ) {
-			GameValues.dpad.upArrowRectangle.x += valueX;
-			GameValues.dpad.upArrowRectangle.y += valueY;
-			GameValues.dpad.downArrowRectangle.x += valueX;
-			GameValues.dpad.downArrowRectangle.y += valueY;
-			GameValues.dpad.leftArrowRectangle.x += valueX;
-			GameValues.dpad.leftArrowRectangle.y += valueY;
-			GameValues.dpad.rightArrowRectangle.x += valueX;
-			GameValues.dpad.rightArrowRectangle.y += valueY;
-		}
+//		if( isMoved ) {
+//			GameValues.dpad.upArrowRectangle.x += valueX;
+//			GameValues.dpad.upArrowRectangle.y += valueY;
+//			GameValues.dpad.downArrowRectangle.x += valueX;
+//			GameValues.dpad.downArrowRectangle.y += valueY;
+//			GameValues.dpad.leftArrowRectangle.x += valueX;
+//			GameValues.dpad.leftArrowRectangle.y += valueY;
+//			GameValues.dpad.rightArrowRectangle.x += valueX;
+//			GameValues.dpad.rightArrowRectangle.y += valueY;
+//		}
+		
+		positionDpad();
 		
 		GameValues.avatar.repositionAvatar(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY);
 		
@@ -161,6 +209,22 @@ public class Dpad {
 		}
 			
 		
+	}
+	
+	public static void angleCameraOnAvatar() {
+		// TODO
+		GameValues.camera.position.x = GameValues.avatar.getX();
+		GameValues.camera.position.x = GameValues.avatar.getY();
+	}
+	
+	public static void angleCameraX(float x) {
+		// TODO Auto-generated method stub
+		GameValues.camera.position.x += x;
+	}
+	
+	public static void angleCameraY(float y) {
+		// TODO Auto-generated method stub
+		GameValues.camera.position.y += y;
 	}
 	
 	public void checkEvents() {

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
+import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.resources.LoadAssets;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.screens.SplashScreen;
@@ -24,13 +25,15 @@ public class EvoSciencia extends Game implements InputProcessor {
 		GameValues.currentScreen = new SplashScreen();
 		setScreen(GameValues.currentScreen);
 		
-		Gdx.input.setCatchBackKey(true);
+//		Gdx.input.setCatchBackKey(true);
 		
 		EvoSciencia.getMainInstance().loadAssets();
 	}
 	
 	public void loadAssets() {
 		LoadAssets.loadAllAssets();
+		
+		GameValues.dpad = new Dpad();
 		
 //		GameValues.currentScreen = new MenuScreen();
 //		setScreen(GameValues.currentScreen);

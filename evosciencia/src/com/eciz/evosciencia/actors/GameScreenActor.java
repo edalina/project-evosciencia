@@ -13,8 +13,6 @@ public class GameScreenActor extends Table {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
 		setClip(true);
 		
-		GameValues.dpad = Dpad.positionDpad();
-		
 		GameValues.currentBatch = new SpriteBatch();
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
@@ -23,7 +21,9 @@ public class GameScreenActor extends Table {
 		GameValues.controlBatch.setProjectionMatrix(GameValues.camera.combined);
 		
 		GameValues.maps = Maps.getMaps();
-		GameValues.avatar.repositionAvatar(( GameValues.SCREEN_WIDTH - GameValues.avatar.getWidth() ) / 2, ( GameValues.SCREEN_HEIGHT - GameValues.avatar.getHeight() ) / 2);
+		GameValues.avatar.repositionAvatar(( GameValues.SCREEN_WIDTH - GameValues.avatar.getWidth() ) / 2, ( GameValues.SCREEN_HEIGHT - GameValues.avatar.getHeight() )/2);
+		
+		Dpad.positionDpad();
 		
 //		Music bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm/mysterious_path.wav"));
 //		bgm.setVolume(0.5f);

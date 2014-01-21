@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.resources.Maps;
 
@@ -25,8 +26,8 @@ public class GameValues {
 	public static final int CHARACTER_HEIGHT = Avatar.height;
 	public static final int ENEMY_WIDTH = Enemy.width;
 	public static final int ENEMY_HEIGHT = Enemy.height;
-	public static final int DPAD_WIDTH = 32;
-	public static final int DPAD_HEIGHT = 32;
+	public static final int DPAD_WIDTH = 16;
+	public static final int DPAD_HEIGHT = 16;
 	
 	public static Screen currentScreen;
 	
@@ -40,9 +41,14 @@ public class GameValues {
 	
 	public static List<Rectangle> collisions;
 	
+	public static List<Checkpoint> checkpoints;
+	
 	public static Dpad dpad;
 	
 	public static Maps maps;
+	
+	public static final float CAMERA_WIDTH = SCREEN_WIDTH/2f;
+	public static final float CAMERA_HEIGHT = SCREEN_HEIGHT/2f;
 	
 	public static final int ENEMY_COUNT_PER_MAP = 30;
 	

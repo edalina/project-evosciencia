@@ -9,20 +9,20 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Maps {
 	
 	private TiledMap currentMap;
 	private TiledMapRenderer renderer;
-	public static final float MAP_UNIT_SCALE = 2f;
+	public static final float MAP_UNIT_SCALE = 1f;
 	public static final float MAP_WIDTH = 800 * MAP_UNIT_SCALE;
 	public static final float MAP_HEIGHT = 800 * MAP_UNIT_SCALE;
 	
 	public Maps() {
 		currentMap = new TmxMapLoader().load("tmx/town_1.tmx");
-		createObjects();
-		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
+		changeMap();
 	}
 	
 	public static Maps getMaps() {
@@ -45,10 +45,16 @@ public class Maps {
 		this.renderer = renderer;
 	}
 	
+	public void changeMap() {
+		createObjects();
+		renderCheckpoints();
+		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
+	}
+	
 	public void renderNonObstacleObj() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
 		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
-			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains("obstacles_") ) {
+			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.COLLISION_PROPERTY) ) {
 				GameValues.maps.getRenderer().render(new int[]{i});
 			}
 		}
@@ -57,8 +63,29 @@ public class Maps {
 	public void renderObstacleObj() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
 		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
-			if( GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains("obstacles_") ) {
+			if( GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.COLLISION_PROPERTY) ) {
 				GameValues.maps.getRenderer().render(new int[]{i});
+			}
+		}
+	}
+	
+	public void renderCheckpoints() {
+		GameValues.checkpoints = new ArrayList<Checkpoint>();
+		for( int i = 0 ; i < currentMap.getLayers().getCount() ; i++ ) {
+			TiledMapTileLayer currentLayer = ((TiledMapTileLayer) currentMap.getLayers().get(i));
+			int tileWidth = (int) (currentLayer.getTileWidth() * Maps.MAP_UNIT_SCALE),
+				tileHeight = (int) (currentLayer.getTileHeight() * Maps.MAP_UNIT_SCALE);
+			for( int x = 0 ; x < 50 ; x++ ) {
+				for( int y = 0 ; y < 50 ; y++ ) {
+					if( currentLayer.getCell(x, y) != null ) {
+						TiledMapTile tile = currentLayer.getCell(x, y).getTile();
+						if( tile.getProperties().containsKey(GameValues.CHECK_POINT) ) {
+							Rectangle checkpoint = new Rectangle();
+							checkpoint.set(x*tileWidth, y*tileHeight, tileWidth, tileHeight);
+							GameValues.checkpoints.add(new Checkpoint(tile.getProperties().get(GameValues.CHECK_POINT).toString(), checkpoint));
+						}
+					}
+				}
 			}
 		}
 	}
