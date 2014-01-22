@@ -43,39 +43,40 @@ public class Dpad {
 		leftArrowRectangle = new Rectangle();
 		rightArrowRectangle = new Rectangle();
 		navHandlerRectangle = new Rectangle();
+		
+		upArrowRectangle.width = GameValues.DPAD_WIDTH;
+		upArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		downArrowRectangle.width = GameValues.DPAD_WIDTH;
+		downArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		leftArrowRectangle.width = GameValues.DPAD_WIDTH;
+		leftArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		rightArrowRectangle.width = GameValues.DPAD_WIDTH;
+		rightArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		
 	}
 
-	public static void positionDpad() {
-		
-		System.out.println( GameValues.CAMERA_WIDTH + " : " + GameValues.CAMERA_HEIGHT + "-");
-		System.out.println( GameValues.camera.position.x + " : " + GameValues.camera.position.y );
+	public static void positionDpad(boolean isX, boolean isY) {
 		
 		/*
 		 * Setting values
 		 */
 		
-		float dpadControlXCenter = GameValues.avatar.getX() - ( (GameValues.CAMERA_WIDTH/2) - ( GameValues.DPAD_WIDTH*3 ) );
-		float dpadControlYCenter = GameValues.avatar.getY() - ( (GameValues.CAMERA_HEIGHT/2) - ( GameValues.DPAD_HEIGHT*3 ) );
+		float dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.CAMERA_WIDTH/2) - ( GameValues.DPAD_WIDTH*3 ) );
+		float dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.CAMERA_HEIGHT/2) - ( GameValues.DPAD_HEIGHT*3 ) );
 		
-		GameValues.dpad.upArrowRectangle.width = GameValues.DPAD_WIDTH;
-		GameValues.dpad.upArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
-		GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + GameValues.DPAD_HEIGHT;
+		if( isX ) {
+			GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
+			GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
+			GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - GameValues.DPAD_WIDTH;
+			GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + GameValues.DPAD_WIDTH;
+		}
 		
-		GameValues.dpad.downArrowRectangle.width = GameValues.DPAD_WIDTH;
-		GameValues.dpad.downArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
-		GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - GameValues.DPAD_HEIGHT;
-		
-		GameValues.dpad.leftArrowRectangle.width = GameValues.DPAD_WIDTH;
-		GameValues.dpad.leftArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - GameValues.DPAD_WIDTH;
-		GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
-		
-		GameValues.dpad.rightArrowRectangle.width = GameValues.DPAD_WIDTH;
-		GameValues.dpad.rightArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + GameValues.DPAD_WIDTH;
-		GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
+		if( isY ) {
+			GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + GameValues.DPAD_HEIGHT;
+			GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - GameValues.DPAD_HEIGHT;
+			GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
+			GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
+		}
 		
 	}
 	
@@ -111,8 +112,26 @@ public class Dpad {
 				}
 				
 				GameValues.avatar.repositionAvatar(x, y);
-				GameValues.camera.setToOrtho(false, GameValues.CAMERA_WIDTH, GameValues.CAMERA_HEIGHT);
 				GameValues.camera.position.set(GameValues.avatar.getX(), GameValues.avatar.getY(), 0);
+				
+				if( GameValues.avatar.getX() <= GameValues.CAMERA_WIDTH/2 ) {
+					GameValues.camera.position.x = GameValues.CAMERA_WIDTH/2;
+				}
+				
+				if( GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2) ) {
+					GameValues.camera.position.x = Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2);
+				}
+				
+				if( GameValues.avatar.getY() <= GameValues.CAMERA_HEIGHT/2 ) {
+					GameValues.camera.position.y = GameValues.CAMERA_HEIGHT/2;
+				}
+				
+				if( GameValues.avatar.getY()  >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2) ) {
+					GameValues.camera.position.x = Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2);
+				}
+				
+				Dpad.positionDpad(true, true);
+				
 				return;
 			}
 		}

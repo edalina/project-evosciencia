@@ -39,11 +39,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		// Initialize utilities
-//		GameValues.camera = new OrthographicCamera();
-//		GameValues.camera.setToOrtho(false, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
-//		GameValues.camera.position.x = Avatar.x < GameValues.SCREEN_WIDTH/2 ? GameValues.SCREEN_WIDTH/2 : Avatar.x;
-//		GameValues.camera.position.y = Avatar.y > GameValues.SCREEN_HEIGHT/2 ? GameValues.SCREEN_HEIGHT/2 : Avatar.y;
 		
 	}
 

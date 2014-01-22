@@ -41,6 +41,7 @@ public class Avatar extends Rectangle {
 	}
 	
 	public void repositionAvatar(float x, float y) {
+		boolean isX = false, isY = false;
 		GameValues.avatar.setX(x);
 		GameValues.avatar.setY(y);
 		GameValues.avatar.sprite.getBoundingRectangle().set(GameValues.avatar.getX(),
@@ -48,13 +49,19 @@ public class Avatar extends Rectangle {
 				GameValues.avatar.getWidth(), 
 				GameValues.avatar.getHeight());
 		
-//		if( !(GameValues.camera.position.x <= GameValues.CAMERA_WIDTH/2 ||
-//			GameValues.camera.position.x >= GameValues.SCREEN_WIDTH - (GameValues.CAMERA_WIDTH/2) ||
-//			GameValues.camera.position.y <= GameValues.CAMERA_HEIGHT/2 ||
-//			GameValues.camera.position.y >= GameValues.SCREEN_HEIGHT - (GameValues.CAMERA_HEIGHT/2)) ) {
-			Dpad.positionDpad();
-			angleCameraOnAvatar();
-//		}
+		if( !(GameValues.avatar.getX() <= GameValues.CAMERA_WIDTH/2 ||
+			GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2)) ) {
+			angleCameraOnAvatarOnX();
+			isX = true;
+		}
+	
+		if( !(GameValues.avatar.getY()  <= GameValues.CAMERA_HEIGHT/2 ||
+			GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2)) ) {
+			angleCameraOnAvatarOnY();
+			isY = true;
+		}
+		
+		Dpad.positionDpad(isX, isY);
 		
 	}
 	
@@ -64,6 +71,14 @@ public class Avatar extends Rectangle {
 	
 	public void angleCameraOnAvatar() {
 		GameValues.camera.position.x = GameValues.avatar.getX();
+		GameValues.camera.position.y = GameValues.avatar.getY();
+	}
+	
+	public void angleCameraOnAvatarOnX() {
+		GameValues.camera.position.x = GameValues.avatar.getX();
+	}
+	
+	public void angleCameraOnAvatarOnY() {
 		GameValues.camera.position.y = GameValues.avatar.getY();
 	}
 	

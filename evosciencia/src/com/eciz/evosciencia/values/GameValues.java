@@ -50,7 +50,7 @@ public class GameValues {
 	
 	public static final int ENEMY_COUNT_PER_MAP = 30;
 	
-	public static final float CHARACTER_SPEED = 2;
+	public static final float CHARACTER_SPEED = 1;
 	
 	public static final long ANIMATION_SPEED = 200000000;
 	
@@ -59,6 +59,8 @@ public class GameValues {
 	public static Batch currentBatch;
 	
 	public static final String COLLISION_PROPERTY = "collision";
+	
+	public static final String OBSTACLE_PROPERTY = "obstacles_";
 	
 	public static final String CHECK_POINT = "cpoint";
 }

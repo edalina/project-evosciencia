@@ -54,7 +54,7 @@ public class Maps {
 	public void renderNonObstacleObj() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
 		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
-			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.COLLISION_PROPERTY) ) {
+			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.OBSTACLE_PROPERTY) ) {
 				GameValues.maps.getRenderer().render(new int[]{i});
 			}
 		}
@@ -63,7 +63,7 @@ public class Maps {
 	public void renderObstacleObj() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
 		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
-			if( GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.COLLISION_PROPERTY) ) {
+			if( GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.OBSTACLE_PROPERTY) ) {
 				GameValues.maps.getRenderer().render(new int[]{i});
 			}
 		}
