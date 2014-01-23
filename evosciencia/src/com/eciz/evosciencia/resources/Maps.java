@@ -19,9 +19,10 @@ public class Maps {
 	public static final float MAP_UNIT_SCALE = 1f;
 	public static final float MAP_WIDTH = 800 * MAP_UNIT_SCALE;
 	public static final float MAP_HEIGHT = 800 * MAP_UNIT_SCALE;
+	public String name = "town_1";
 	
 	public Maps() {
-		currentMap = new TmxMapLoader().load("tmx/town_1.tmx");
+		currentMap = new TmxMapLoader().load("tmx/" + name + ".tmx");
 		changeMap();
 	}
 	
@@ -33,8 +34,9 @@ public class Maps {
 		return currentMap;
 	}
 
-	public void setCurrentMap(TiledMap testMap) {
-		this.currentMap = testMap;
+	public void setCurrentMap(String name) {
+		this.name = name;
+		this.currentMap = new TmxMapLoader().load("tmx/" + name + ".tmx");
 	}
 
 	public TiledMapRenderer getRenderer() {

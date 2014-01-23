@@ -2,7 +2,6 @@ package com.eciz.evosciencia.controls;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.entities.Avatar;
@@ -88,48 +87,56 @@ public class Dpad {
 		for(Checkpoint checkpoint : GameValues.checkpoints ) {
 			if( tempRect.overlaps(checkpoint.getRectangle()) ) {
 				GameValues.avatar.updateStandBy();
-				GameValues.maps.setCurrentMap(new TmxMapLoader().load("tmx/" + checkpoint.getValue() + ".tmx"));
+				String prevMap = GameValues.maps.name;
+				GameValues.maps.setCurrentMap(checkpoint.getValue());
 				GameValues.maps.changeMap();
 				
 				StanceEnum facing = GameValues.avatar.facingFlag;
 				float x = GameValues.avatar.getX(), y = GameValues.avatar.getY();
 				
-				switch (facing) {
-					case FRONT_STAND:
-						y = Maps.MAP_HEIGHT - (Avatar.height + checkpoint.getRectangle().getHeight());
+				for(Checkpoint newMapCheckpoint : GameValues.checkpoints ) {
+					if( newMapCheckpoint.getValue().equals(prevMap) ) {
+						x = newMapCheckpoint.getRectangle().getX();
+						y = newMapCheckpoint.getRectangle().getY();
+						switch (facing) {
+							case FRONT_STAND:
+								y = y - newMapCheckpoint.getRectangle().getHeight();
+								break;
+							case BACK_STAND:
+								y = y + newMapCheckpoint.getRectangle().getHeight();
+								break;
+							case LEFT_STAND:
+								x = x - newMapCheckpoint.getRectangle().getWidth();
+								break;
+							case RIGHT_STAND:
+								x = x + newMapCheckpoint.getRectangle().getWidth();
+								break;
+							default:
+								break;
+						}
 						break;
-					case BACK_STAND:
-						y = checkpoint.getRectangle().getHeight();
-						break;
-					case LEFT_STAND:
-						x = Maps.MAP_WIDTH - (Avatar.width + checkpoint.getRectangle().getWidth());
-						break;
-					case RIGHT_STAND:
-						x = checkpoint.getRectangle().getWidth();
-						break;
-					default:
-						break;
+					}
 				}
 				
 				GameValues.avatar.repositionAvatar(x, y);
-				GameValues.camera.position.set(GameValues.avatar.getX(), GameValues.avatar.getY(), 0);
 				
 				if( GameValues.avatar.getX() <= GameValues.CAMERA_WIDTH/2 ) {
-					GameValues.camera.position.x = GameValues.CAMERA_WIDTH/2;
+					x = GameValues.CAMERA_WIDTH/2;
 				}
 				
 				if( GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2) ) {
-					GameValues.camera.position.x = Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2);
+					x = Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2);
 				}
 				
 				if( GameValues.avatar.getY() <= GameValues.CAMERA_HEIGHT/2 ) {
-					GameValues.camera.position.y = GameValues.CAMERA_HEIGHT/2;
+					y = GameValues.CAMERA_HEIGHT/2;
 				}
 				
-				if( GameValues.avatar.getY()  >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2) ) {
-					GameValues.camera.position.x = Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2);
+				if( GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2) ) {
+					y = Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2);
 				}
 				
+				GameValues.camera.position.set(x, y, 0);
 				Dpad.positionDpad(true, true);
 				
 				return;

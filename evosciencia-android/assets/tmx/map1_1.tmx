@@ -207,9 +207,19 @@
     <property name="collision" value=""/>
    </properties>
   </tile>
+  <tile id="6150">
+   <properties>
+    <property name="cpoint" value="town_1"/>
+   </properties>
+  </tile>
   <tile id="6414">
    <properties>
     <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6720">
+   <properties>
+    <property name="cpoint" value="town_1"/>
    </properties>
   </tile>
   <tile id="6798">
@@ -226,6 +236,11 @@
  <layer name="grass" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztwzENAAAIA7BJwL+HeUQDH0ebtJNUVVVVVVVVVVXVc35Z3OTsOw==
+  </data>
+ </layer>
+ <layer name="cpoint" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzcEJgEAQBMHJQu+CETVwWY1MYxD2VwX97gQAAAAAAAAAAIA/tjXV2TlTx9c+ez/XknT2jNT9VaP39QJE2WJF
   </data>
  </layer>
  <layer name="collision" width="50" height="50">

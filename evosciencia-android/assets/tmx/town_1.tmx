@@ -82,7 +82,7 @@
     <property name="collision" value="true"/>
    </properties>
   </tile>
-  <tile id="6150">
+  <tile id="6720">
    <properties>
     <property name="cpoint" value="map1_1"/>
    </properties>
@@ -315,7 +315,12 @@
  </tileset>
  <layer name="floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0TsOQEAUheHbzRQKhcIKUJjMrj0SrMDisAIjOfHKX/w5nYsvFmZRmCvPU94jIiL6Qmv+/DvQfU3ObHaarbxZnVDjtXePbfdnBq/ZK9+hvBvE/wUPPPDAAw888MADDzzwwAMPPPDAAw888MADDzzwwAOPd3p0e31Cw8s9jl0SV313zP7RBgUvrUA=
+   eJzt0TsKgDAQhOHtksLCwjOohSG39gHqCTycyQV0xQWD/MIwnev4xUYkGuao72N5j1xH83z9jexgBzvYwY7ywo53WZ3I5my69SKdIr23vZt7SO8M3qaf7LC8G4z/Cx544IEHHnjggQceeOCBBx544IEHHnjggQceeOCBBx5leowpkyJz4R65d2Vb312qf+QEoiGbPg==
+  </data>
+ </layer>
+ <layer name="checkpoint" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzTENACAMAMHKIBXTAP5FwYKETtwlP3+NiGpqZsS67ex7vAAAAAAAAAAAAPjbAT9+ENw=
   </data>
  </layer>
  <layer name="river" width="50" height="50">

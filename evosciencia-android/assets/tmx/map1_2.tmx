@@ -57,6 +57,11 @@
     <property name="collision" value=""/>
    </properties>
   </tile>
+  <tile id="4999">
+   <properties>
+    <property name="cpoint" value="map1_1"/>
+   </properties>
+  </tile>
   <tile id="5272">
    <properties>
     <property name="collision" value=""/>
@@ -133,24 +138,19 @@
    </properties>
   </tile>
  </tileset>
- <layer name="black" width="50" height="50">
+ <layer name="floor" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0cENgzAQRcEtAck2jYMpKJXlF5ATKJBIM9K7WfauXAUAAAAAAAAAAPfaWtWeZjra5zNzuXemM1qv6mmktT89zXlbZt/TTMcf79FG/iONtI573nwt1/vGnU/0C3u8AfzFUqY=
+   eJztwzEJAAAMA7BKmP+vTqtjkEB6SVVVVVVVVVVVVfX5AdlEwN8=
   </data>
  </layer>
- <layer name="tile" width="50" height="50">
+ <layer name="checkpoint" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAIA7BJwP83p2jg42iTdpKqqqqqqqqqqqp6zi8LTfJ7uw==
+   eJztzTENADAMBLHnUNBNWBVaQyKbLd18CQAAAAAAAAAAAOzok1fTnbZfH8cWBBI=
   </data>
  </layer>
  <layer name="tile_stone" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmeFqAjEMgPPTbR4oKLjBhvq0c+oDbLCx+aRL0WI5erVJ02sCfpDfzXdN09zdfgpwIMQR4zSD5vxiDrsgnjqAKSG67uoxWQE8YDyubHu8Y/47jI9KHmtcZ4Oxjex/iUfoMAYu179ZfE2ux9gOjvUc9wNjO7ftkYLjwXVI1bclj1R9j+1RUk+p+i6F4tEpPBeevsc+yDeM4yV/jQ6OvscpEZrpezg+FwBfi3Y5fePaP8T1Yx7PS4CXpXx+ubzi2m/E9WMeVGreC7lIeNS8Fyg5FO9HxXshFwkPDbTykO6JrTyke6K1uhrqjdY8hnqjNY+h3mjNYwgpj9YzmZSH7z+cGU+CHA/K/MSZ8STI8dAwP90iaz8UzE+30NyvKGdNswflrGn2oHD3KEP6XbiVh3Qvj3lw/ytRZhPpXh7z4P5Xavm9yPI5D+vGskdYNxY9XM6xsOQRyzkWmsl10OxBcfAeGr4796E4eA+N700cj5y7dqzvCtR6op6P2ne3f04cB03n3D8n6x53zvwDPDbwOw==
-  </data>
- </layer>
- <layer name="tile_stone_cave" width="50" height="50">
-  <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
+   eJztmd1KQzEMgHPpzw5ssMEUlG1Pq849gIKiPqkprlhqz1mTpm2C+yBXu2i+NU1zztnPAJ4JccD4mkN3PqIcrgeAGSGG4dfjYg1wiXG1tu3xgPk/YjxV8tjgOluMXWL/SzxChxa4XD/n6TW5Hq0dHJsF7gfGbvH3N0seU3A8uA5T9V1KS4+p+i6F6lFST1P1XQrFY1B4Ljyxxz7IN4zDMX+NDo7Yw+eaCs3EHo6XJcDrsn0unjdc+524fsrjZgVwu5LJicMdrn1PXD/lQaXmvZCLhEfNe4GSQyk174VcJDw00MtDuif28pDuidbqaqw3WvMY643WPMZ6ozWPMaQ8es9kUh6+/3BmPAlyPCjzE2fGkyDHQ8P8dIqs/VAwP51Cc7+inDXNHpSzptmDwtmjDOln4V4e0r085cH9rkSZTaR7ecqD+12p5/siy+c8rBvLHmHdWPRwOafCEhZzjvmvDhreO8dw9kHjcxPHI+eubfVeofaZqH13+//J+rn2/5N1jzM/fAOc9HSE
   </data>
  </layer>
  <layer name="tile_grass" width="50" height="50">
