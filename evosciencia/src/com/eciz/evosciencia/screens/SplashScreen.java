@@ -5,7 +5,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.eciz.evosciencia.EvoSciencia;
 import com.eciz.evosciencia.actors.SplashScreenActor;
+import com.eciz.evosciencia.resources.LoadAssets;
 import com.eciz.evosciencia.values.GameValues;
 
 public class SplashScreen implements Screen {
@@ -13,6 +15,7 @@ public class SplashScreen implements Screen {
 	private Stage stage;
 	
 	public SplashScreen() {
+		EvoSciencia.getMainInstance().loadAssets();
 		stage = new Stage();
 		GameValues.camera = (OrthographicCamera) stage.getCamera();
 		
@@ -21,6 +24,16 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		
+		if( LoadAssets.assetManager.update() ) {
+//			GameValues.currentScreen = new MenuScreen();
+//			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
+//			
+//			MOVE TO GAME PROPER
+			GameValues.currentScreen = new GameScreen();
+			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
+		}
+		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
