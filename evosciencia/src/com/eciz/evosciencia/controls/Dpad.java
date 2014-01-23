@@ -1,5 +1,8 @@
 package com.eciz.evosciencia.controls;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
@@ -20,6 +23,10 @@ public class Dpad {
 	private Texture leftArrow;
 	private Texture rightArrow;
 	private Texture navHandler;
+	private Texture actionBtn;
+	private Texture healthBar;
+	private Texture pauseBtn;
+	private Texture slot;
 	
 	/**
 	 * DPAD Rectangle
@@ -29,6 +36,15 @@ public class Dpad {
 	private Rectangle leftArrowRectangle;
 	private Rectangle rightArrowRectangle;
 	private Rectangle navHandlerRectangle;
+	private Rectangle actionRectangle;
+	private Rectangle healthBarRectangle;
+	private Rectangle pauseRectangle;
+	private List<Rectangle> skillSlots;
+	
+	public static final int DPAD_WIDTH = 24;
+	public static final int DPAD_HEIGHT = 24;
+	
+	public static boolean isDpadActive = true;
 	
 	public Dpad() {
 		upArrow = new Texture(Gdx.files.internal("dpad/up.png"));
@@ -36,22 +52,45 @@ public class Dpad {
 		leftArrow = new Texture(Gdx.files.internal("dpad/left.png"));
 		rightArrow = new Texture(Gdx.files.internal("dpad/right.png"));
 		navHandler = new Texture(Gdx.files.internal("dpad/dpad_handler.png"));
+		actionBtn = new Texture(Gdx.files.internal("dpad/action.png"));
+		pauseBtn = new Texture(Gdx.files.internal("dpad/pause.png"));
+		healthBar = new Texture(Gdx.files.internal("dpad/gauge.png"));
+		slot = new Texture(Gdx.files.internal("dpad/slot.png"));
 		
 		upArrowRectangle = new Rectangle();
 		downArrowRectangle = new Rectangle();
 		leftArrowRectangle = new Rectangle();
 		rightArrowRectangle = new Rectangle();
 		navHandlerRectangle = new Rectangle();
+		actionRectangle = new Rectangle();
+		pauseRectangle = new Rectangle();
+		healthBarRectangle = new Rectangle();
 		
-		upArrowRectangle.width = GameValues.DPAD_WIDTH;
-		upArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		downArrowRectangle.width = GameValues.DPAD_WIDTH;
-		downArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		leftArrowRectangle.width = GameValues.DPAD_WIDTH;
-		leftArrowRectangle.height = GameValues.DPAD_HEIGHT;
-		rightArrowRectangle.width = GameValues.DPAD_WIDTH;
-		rightArrowRectangle.height = GameValues.DPAD_HEIGHT;
+		skillSlots = new ArrayList<Rectangle>();
 		
+		for( int i = 0 ; i < 5 ; i++ ) {
+			Rectangle skillSlot = new Rectangle();
+			skillSlot.width = DPAD_WIDTH;
+			skillSlot.height = DPAD_HEIGHT;
+			skillSlots.add(skillSlot);
+		}
+		
+		upArrowRectangle.width = DPAD_WIDTH;
+		upArrowRectangle.height = DPAD_HEIGHT;
+		downArrowRectangle.width = DPAD_WIDTH;
+		downArrowRectangle.height = DPAD_HEIGHT;
+		leftArrowRectangle.width = DPAD_WIDTH;
+		leftArrowRectangle.height = DPAD_HEIGHT;
+		rightArrowRectangle.width = DPAD_WIDTH;
+		rightArrowRectangle.height = DPAD_HEIGHT;
+		navHandlerRectangle.width = DPAD_WIDTH*2;
+		navHandlerRectangle.height = DPAD_HEIGHT*2;
+		actionRectangle.width = DPAD_WIDTH*2;
+		actionRectangle.height = DPAD_HEIGHT*2;
+		pauseRectangle.width = DPAD_WIDTH;
+		pauseRectangle.height = DPAD_HEIGHT;
+		healthBarRectangle.width = DPAD_WIDTH * 4;
+		healthBarRectangle.height = DPAD_HEIGHT/2;
 	}
 
 	public static void positionDpad(boolean isX, boolean isY) {
@@ -60,21 +99,46 @@ public class Dpad {
 		 * Setting values
 		 */
 		
-		float dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.CAMERA_WIDTH/2) - ( GameValues.DPAD_WIDTH*3 ) );
-		float dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.CAMERA_HEIGHT/2) - ( GameValues.DPAD_HEIGHT*3 ) );
+		float
+			dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.CAMERA_WIDTH/2) - ( DPAD_WIDTH*3 ) ),
+			dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.CAMERA_HEIGHT/2) - ( DPAD_HEIGHT*3 ) ),
+			dpadActionXCenter = GameValues.camera.position.x + ( (GameValues.CAMERA_WIDTH/2) - ( DPAD_WIDTH*3 ) ),
+			dpadActionYCenter = dpadControlYCenter,
+			dpadPauseXCenter = dpadActionXCenter + DPAD_WIDTH,
+			dpadPauseYCenter = GameValues.camera.position.y + ( (GameValues.CAMERA_HEIGHT/2) - ( DPAD_HEIGHT + 10 ) ),
+			dpadHealthXCenter = dpadControlXCenter - (DPAD_WIDTH*3),
+			dpadHealthYCenter = dpadPauseYCenter + DPAD_HEIGHT - 2,
+			dpadSkillSlotXCenter = GameValues.camera.position.x - (2 * (DPAD_WIDTH + (DPAD_WIDTH/2))),
+			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2);
 		
 		if( isX ) {
 			GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
 			GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
-			GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - GameValues.DPAD_WIDTH;
-			GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + GameValues.DPAD_WIDTH;
+			GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - DPAD_WIDTH;
+			GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + DPAD_WIDTH;
+			GameValues.dpad.navHandlerRectangle.x = dpadControlXCenter - (DPAD_WIDTH/2);
+			GameValues.dpad.actionRectangle.x = dpadActionXCenter - (DPAD_WIDTH/2);
+			GameValues.dpad.pauseRectangle.x = dpadPauseXCenter;
+			GameValues.dpad.healthBarRectangle.x = dpadHealthXCenter;
+			int i = 0;
+			for( Rectangle skillSlot : GameValues.dpad.getSkillSlots() ) {
+				skillSlot.x = dpadSkillSlotXCenter + (i * (DPAD_WIDTH + (DPAD_WIDTH/2)));
+				i++;
+			}
 		}
 		
 		if( isY ) {
-			GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + GameValues.DPAD_HEIGHT;
-			GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - GameValues.DPAD_HEIGHT;
+			GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + DPAD_HEIGHT;
+			GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - DPAD_HEIGHT;
 			GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
 			GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
+			GameValues.dpad.navHandlerRectangle.y = dpadControlYCenter - (DPAD_HEIGHT/2);
+			GameValues.dpad.actionRectangle.y = dpadActionYCenter - (DPAD_HEIGHT/2);
+			GameValues.dpad.pauseRectangle.y = dpadPauseYCenter;
+			GameValues.dpad.healthBarRectangle.y = dpadHealthYCenter;
+			for( Rectangle skillSlot : GameValues.dpad.getSkillSlots() ) {
+				skillSlot.y = dpadSkillSlotYCenter;
+			}
 		}
 		
 	}
@@ -218,7 +282,7 @@ public class Dpad {
 		float valueX = 0, valueY = 0;
 		
 		// Check if user touched or clicked
-		if( Gdx.input.isTouched() ) {
+		if( Gdx.input.isTouched() && Dpad.isDpadActive ) {
 			
 			StanceEnum face = GameValues.avatar.facingFlag;
 			
@@ -276,11 +340,34 @@ public class Dpad {
 	}
 	
 	public void drawDpad() {
+		GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
 		GameValues.currentBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
 		GameValues.currentBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
 		GameValues.currentBatch.draw(GameValues.dpad.getLeftArrow(), GameValues.dpad.getLeftArrowRectangle().x, GameValues.dpad.getLeftArrowRectangle().y, GameValues.dpad.getLeftArrowRectangle().width, GameValues.dpad.getLeftArrowRectangle().height);
 		GameValues.currentBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getActionBtn(), GameValues.dpad.getActionRectangle().x, GameValues.dpad.getActionRectangle().y, GameValues.dpad.getActionRectangle().width, GameValues.dpad.getActionRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getPauseBtn(), GameValues.dpad.getPauseRectangle().x, GameValues.dpad.getPauseRectangle().y, GameValues.dpad.getPauseRectangle().width, GameValues.dpad.getPauseRectangle().height);
+		GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
+		
+		for( Rectangle skillSlot : GameValues.dpad.getSkillSlots() ) {
+			GameValues.currentBatch.draw(GameValues.dpad.getSlot(), skillSlot.x, skillSlot.y, skillSlot.width, skillSlot.height);
+		}
+	}
+	
+	public Texture getActionBtn() {
+		return actionBtn;
+	}
+
+	public void setActionBtn(Texture actionBtn) {
+		this.actionBtn = actionBtn;
+	}
+
+	public Rectangle getActionRectangle() {
+		return actionRectangle;
+	}
+
+	public void setActionRectangle(Rectangle actionRectangle) {
+		this.actionRectangle = actionRectangle;
 	}
 	
 	public Texture getUpArrow() {
@@ -329,6 +416,54 @@ public class Dpad {
 
 	public void setNavHandlerRectangle(Rectangle navHandlerRectangle) {
 		this.navHandlerRectangle = navHandlerRectangle;
+	}
+
+	public Texture getHealthBar() {
+		return healthBar;
+	}
+
+	public void setHealthBar(Texture healthBar) {
+		this.healthBar = healthBar;
+	}
+
+	public Texture getPauseBtn() {
+		return pauseBtn;
+	}
+
+	public void setPauseBtn(Texture pauseBtn) {
+		this.pauseBtn = pauseBtn;
+	}
+
+	public Rectangle getHealthBarRectangle() {
+		return healthBarRectangle;
+	}
+
+	public void setHealthBarRectangle(Rectangle healthBarRectangle) {
+		this.healthBarRectangle = healthBarRectangle;
+	}
+
+	public Rectangle getPauseRectangle() {
+		return pauseRectangle;
+	}
+
+	public void setPauseRectangle(Rectangle pauseRectangle) {
+		this.pauseRectangle = pauseRectangle;
+	}
+
+	public Texture getSlot() {
+		return slot;
+	}
+
+	public void setSlot(Texture slot) {
+		this.slot = slot;
+	}
+
+	public List<Rectangle> getSkillSlots() {
+		return skillSlots;
+	}
+
+	public void setSkillSlots(List<Rectangle> skillSlots) {
+		this.skillSlots = skillSlots;
 	}
 	
 }

@@ -4,7 +4,7 @@
   <image source="tileset/tileset2.png" trans="ff00ff" width="2048" height="2048"/>
   <tile id="1548">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="1676">
@@ -19,17 +19,17 @@
   </tile>
   <tile id="4127">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="4128">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="4129">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="4255">
@@ -148,12 +148,12 @@
    eJztzTENADAMBLHnUNBNWBVaQyKbLd18CQAAAAAAAAAAAOzok1fTnbZfH8cWBBI=
   </data>
  </layer>
- <layer name="tile_stone" width="50" height="50">
+ <layer name="obstacles_1" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztmd1KQzEMgHPpzw5ssMEUlG1Pq849gIKiPqkprlhqz1mTpm2C+yBXu2i+NU1zztnPAJ4JccD4mkN3PqIcrgeAGSGG4dfjYg1wiXG1tu3xgPk/YjxV8tjgOluMXWL/SzxChxa4XD/n6TW5Hq0dHJsF7gfGbvH3N0seU3A8uA5T9V1KS4+p+i6F6lFST1P1XQrFY1B4Ljyxxz7IN4zDMX+NDo7Yw+eaCs3EHo6XJcDrsn0unjdc+524fsrjZgVwu5LJicMdrn1PXD/lQaXmvZCLhEfNe4GSQyk174VcJDw00MtDuif28pDuidbqaqw3WvMY643WPMZ6ozWPMaQ8es9kUh6+/3BmPAlyPCjzE2fGkyDHQ8P8dIqs/VAwP51Cc7+inDXNHpSzptmDwtmjDOln4V4e0r085cH9rkSZTaR7ecqD+12p5/siy+c8rBvLHmHdWPRwOafCEhZzjvmvDhreO8dw9kHjcxPHI+eubfVeofaZqH13+//J+rn2/5N1jzM/fAOc9HSE
   </data>
  </layer>
- <layer name="tile_grass" width="50" height="50">
+ <layer name="obstacles_2" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt2csKgCAQBdBWtYg+vX9uLxQUXXHqnJ0LxwdyFZymZ5b1YcfBpNexzdftt+yhumf1E+N95UwBkFHpnqg01yupd0tvd98tf103wB2yEoCWuwFq6/WXkdbjL6NVda9a8i/LOQFGlMqm3pmXyiaZB7UdLxMItg==
   </data>

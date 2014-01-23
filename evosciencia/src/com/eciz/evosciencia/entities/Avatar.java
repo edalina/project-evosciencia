@@ -51,14 +51,14 @@ public class Avatar extends Rectangle {
 		
 		if( !(GameValues.avatar.getX() <= GameValues.CAMERA_WIDTH/2 ||
 			GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2)) ) {
-			angleCameraOnAvatarOnX();
 			isX = true;
+			angleCameraOnAvatarOnX();
 		}
 	
 		if( !(GameValues.avatar.getY()  <= GameValues.CAMERA_HEIGHT/2 ||
 			GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2)) ) {
-			angleCameraOnAvatarOnY();
 			isY = true;
+			angleCameraOnAvatarOnY();
 		}
 		
 		Dpad.positionDpad(isX, isY);
@@ -72,14 +72,17 @@ public class Avatar extends Rectangle {
 	public void angleCameraOnAvatar() {
 		GameValues.camera.position.x = GameValues.avatar.getX();
 		GameValues.camera.position.y = GameValues.avatar.getY();
+		GameValues.camera.update();
 	}
 	
 	public void angleCameraOnAvatarOnX() {
 		GameValues.camera.position.x = GameValues.avatar.getX();
+		GameValues.camera.update();
 	}
 	
 	public void angleCameraOnAvatarOnY() {
 		GameValues.camera.position.y = GameValues.avatar.getY();
+		GameValues.camera.update();
 	}
 	
 }
