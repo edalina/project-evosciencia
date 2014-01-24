@@ -33,9 +33,6 @@ public class GameScreenActor extends Table {
 		// Updating camera/frame
 		GameValues.camera.update();
 		
-		// Check if event is triggered
-		GameValues.dpad.checkEvents();
-		
 		// Set tiled map
 		GameValues.maps.renderNonObstacleObj();
 		
@@ -50,6 +47,9 @@ public class GameScreenActor extends Table {
 		GameValues.currentBatch.begin();
 		GameValues.dpad.drawDpad();
 		GameValues.currentBatch.end();
+		
+		// Check if event is triggered
+		GameValues.dpad.checkEvents();
 	}
 	
 }

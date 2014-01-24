@@ -26,11 +26,7 @@ public class SplashScreen implements Screen {
 	public void render(float delta) {
 		
 		if( LoadAssets.assetManager.update() ) {
-//			GameValues.currentScreen = new MenuScreen();
-//			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
-//			
-//			MOVE TO GAME PROPER
-			GameValues.currentScreen = new GameScreen();
+			GameValues.currentScreen = new MenuScreen();
 			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 		}
 		
@@ -68,7 +64,8 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
+		stage.dispose();
+		this.dispose();
 	}
 
 }

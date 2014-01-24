@@ -12,7 +12,6 @@ public class SplashScreenActor extends Table {
 	
 	private BitmapFont loadingText;
 	private final String LOADING_STRING = "Loading...";
-	private boolean flag = false;
 	
 	public SplashScreenActor() {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);

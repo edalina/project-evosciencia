@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.SkillSlot;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.values.GameValues;
@@ -39,12 +40,13 @@ public class Dpad {
 	private Rectangle actionRectangle;
 	private Rectangle healthBarRectangle;
 	private Rectangle pauseRectangle;
-	private List<Rectangle> skillSlots;
+	private List<SkillSlot> skillSlots;
 	
-	public static final int DPAD_WIDTH = 24;
-	public static final int DPAD_HEIGHT = 24;
+	public static final int DPAD_WIDTH = 16;
+	public static final int DPAD_HEIGHT = 16;
 	
 	public static boolean isDpadActive = true;
+	public static boolean buttonActive = false;
 	
 	public Dpad() {
 		upArrow = new Texture(Gdx.files.internal("dpad/up.png"));
@@ -66,12 +68,17 @@ public class Dpad {
 		pauseRectangle = new Rectangle();
 		healthBarRectangle = new Rectangle();
 		
-		skillSlots = new ArrayList<Rectangle>();
+		skillSlots = new ArrayList<SkillSlot>();
 		
 		for( int i = 0 ; i < 5 ; i++ ) {
-			Rectangle skillSlot = new Rectangle();
-			skillSlot.width = DPAD_WIDTH;
-			skillSlot.height = DPAD_HEIGHT;
+			Rectangle skillSlotRec = new Rectangle();
+			skillSlotRec.width = DPAD_WIDTH;
+			skillSlotRec.height = DPAD_HEIGHT;
+			
+			SkillSlot skillSlot = new SkillSlot();
+			skillSlot.setRectangle(skillSlotRec);
+			skillSlot.setId(i);
+			skillSlot.setSkillId(0);
 			skillSlots.add(skillSlot);
 		}
 		
@@ -121,8 +128,8 @@ public class Dpad {
 			GameValues.dpad.pauseRectangle.x = dpadPauseXCenter;
 			GameValues.dpad.healthBarRectangle.x = dpadHealthXCenter;
 			int i = 0;
-			for( Rectangle skillSlot : GameValues.dpad.getSkillSlots() ) {
-				skillSlot.x = dpadSkillSlotXCenter + (i * (DPAD_WIDTH + (DPAD_WIDTH/2)));
+			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
+				skillSlot.getRectangle().x = dpadSkillSlotXCenter + (i * (DPAD_WIDTH + (DPAD_WIDTH/2)));
 				i++;
 			}
 		}
@@ -136,8 +143,8 @@ public class Dpad {
 			GameValues.dpad.actionRectangle.y = dpadActionYCenter - (DPAD_HEIGHT/2);
 			GameValues.dpad.pauseRectangle.y = dpadPauseYCenter;
 			GameValues.dpad.healthBarRectangle.y = dpadHealthYCenter;
-			for( Rectangle skillSlot : GameValues.dpad.getSkillSlots() ) {
-				skillSlot.y = dpadSkillSlotYCenter;
+			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
+				skillSlot.getRectangle().y = dpadSkillSlotYCenter;
 			}
 		}
 		
@@ -285,9 +292,41 @@ public class Dpad {
 		if( Gdx.input.isTouched() && Dpad.isDpadActive ) {
 			
 			StanceEnum face = GameValues.avatar.facingFlag;
-			
 			GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			GameValues.camera.unproject(GameValues.touchPos);
+			
+			if( !Dpad.buttonActive ) {
+				
+				// Action button is clicked
+				if( GameValues.touchPos.x >= GameValues.dpad.getActionRectangle().x &&
+					GameValues.touchPos.x <= GameValues.dpad.getActionRectangle().x + GameValues.dpad.getActionRectangle().width &&
+					GameValues.touchPos.y >= GameValues.dpad.getActionRectangle().y &&
+					GameValues.touchPos.y <= GameValues.dpad.getActionRectangle().y + GameValues.dpad.getActionRectangle().height) {
+					Dpad.buttonActive = true;
+					System.out.println( "ACT" );
+				}
+				
+				// Pause button is clicked
+				if( Gdx.input.getX(0) >= GameValues.dpad.getPauseRectangle().x &&
+					Gdx.input.getX(0) <= GameValues.dpad.getPauseRectangle().x + GameValues.dpad.getPauseRectangle().width &&
+					GameValues.touchPos.y >= GameValues.dpad.getPauseRectangle().y &&
+					GameValues.touchPos.y <= GameValues.dpad.getPauseRectangle().y + GameValues.dpad.getPauseRectangle().height) {
+					Dpad.buttonActive = true;
+					System.out.println( "PAUSE" );
+				}
+				
+				// Skill slots
+				for( SkillSlot skillSlot : GameValues.dpad.skillSlots ) {
+					if( GameValues.touchPos.x >= skillSlot.getRectangle().x &&
+						GameValues.touchPos.x <= skillSlot.getRectangle().x + skillSlot.getRectangle().width &&
+						GameValues.touchPos.y >= skillSlot.getRectangle().y &&
+						GameValues.touchPos.y <= skillSlot.getRectangle().y + skillSlot.getRectangle().height) {
+						Dpad.buttonActive = true;
+						System.out.println( "SKILL" );
+					}
+				}
+				
+			}
 			
 			// Up arrow is clicked/touched
 			if( GameValues.touchPos.x >= GameValues.dpad.getUpArrowRectangle().x &&
@@ -335,6 +374,7 @@ public class Dpad {
 			
 		} else {
 			GameValues.avatar.updateStandBy();
+			Dpad.buttonActive = false;
 		}
 		
 	}
@@ -349,8 +389,8 @@ public class Dpad {
 		GameValues.currentBatch.draw(GameValues.dpad.getPauseBtn(), GameValues.dpad.getPauseRectangle().x, GameValues.dpad.getPauseRectangle().y, GameValues.dpad.getPauseRectangle().width, GameValues.dpad.getPauseRectangle().height);
 		GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
 		
-		for( Rectangle skillSlot : GameValues.dpad.getSkillSlots() ) {
-			GameValues.currentBatch.draw(GameValues.dpad.getSlot(), skillSlot.x, skillSlot.y, skillSlot.width, skillSlot.height);
+		for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
+			GameValues.currentBatch.draw(GameValues.dpad.getSlot(), skillSlot.getRectangle().x, skillSlot.getRectangle().y, skillSlot.getRectangle().width, skillSlot.getRectangle().height);
 		}
 	}
 	
@@ -458,11 +498,11 @@ public class Dpad {
 		this.slot = slot;
 	}
 
-	public List<Rectangle> getSkillSlots() {
+	public List<SkillSlot> getSkillSlots() {
 		return skillSlots;
 	}
 
-	public void setSkillSlots(List<Rectangle> skillSlots) {
+	public void setSkillSlots(List<SkillSlot> skillSlots) {
 		this.skillSlots = skillSlots;
 	}
 	
