@@ -49,14 +49,14 @@ public class Avatar extends Rectangle {
 				GameValues.avatar.getWidth(), 
 				GameValues.avatar.getHeight());
 		
-		if( !(GameValues.avatar.getX() <= GameValues.CAMERA_WIDTH/2 ||
-			GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2)) ) {
+		if( !(GameValues.avatar.getX() <= GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE ||
+			GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE)) ) {
 			isX = true;
 			angleCameraOnAvatarOnX();
 		}
 	
-		if( !(GameValues.avatar.getY()  <= GameValues.CAMERA_HEIGHT/2 ||
-			GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2)) ) {
+		if( !(GameValues.avatar.getY()  <= GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE ||
+			GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE)) ) {
 			isY = true;
 			angleCameraOnAvatarOnY();
 		}

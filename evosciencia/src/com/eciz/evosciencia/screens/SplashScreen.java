@@ -17,7 +17,9 @@ public class SplashScreen implements Screen {
 	public SplashScreen() {
 		EvoSciencia.getMainInstance().loadAssets();
 		stage = new Stage();
-		GameValues.camera = (OrthographicCamera) stage.getCamera();
+//		GameValues.camera = (OrthographicCamera) stage.getCamera();
+		GameValues.camera = new OrthographicCamera(GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
+		GameValues.camera.position.set(GameValues.SCREEN_WIDTH/2, GameValues.SCREEN_HEIGHT/2, 0);
 		
 		stage.addActor(new SplashScreenActor());
 	}
@@ -64,8 +66,8 @@ public class SplashScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		stage.dispose();
-		this.dispose();
+//		stage.dispose();
+//		this.dispose();
 	}
 
 }

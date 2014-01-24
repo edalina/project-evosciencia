@@ -4,7 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,8 +18,8 @@ import com.eciz.evosciencia.resources.Maps;
 
 public class GameValues {
 	
-	public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
-	public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
+	public static final int SCREEN_WIDTH = 800;
+	public static final int SCREEN_HEIGHT = 400;
 
 	public static final int CHARACTER_WIDTH = Avatar.width;
 	public static final int CHARACTER_HEIGHT = Avatar.height;
@@ -45,8 +44,8 @@ public class GameValues {
 	
 	public static Maps maps;
 	
-	public static final float CAMERA_WIDTH = SCREEN_WIDTH/2f;
-	public static final float CAMERA_HEIGHT = SCREEN_HEIGHT/2f;
+	public static final float CAMERA_ZOOM = 0.5f;
+	public static final float CAMERA_ZOOM_MULTIPLE = 8*CAMERA_ZOOM;
 	
 	public static final int ENEMY_COUNT_PER_MAP = 30;
 	

@@ -4,22 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.eciz.evosciencia.actors.MenuScreenActor;
+import com.eciz.evosciencia.actors.SaveDataActor;
 
-public class MenuScreen implements Screen {
+public class SaveDataScreen implements Screen {
 	
 	private Stage stage;
 	
-	public MenuScreen() {
+	public SaveDataScreen() {
 		stage = new Stage();
-//		GameValues.camera = (OrthographicCamera) stage.getCamera();
 		
-		stage.addActor(new MenuScreenActor());
+		stage.addActor(new SaveDataActor());
 	}
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		// Clearing screen
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
@@ -28,33 +28,32 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-
+		
 	}
 
 	@Override
 	public void show() {
-
+		
 	}
 
 	@Override
 	public void hide() {
-
+		
 	}
 
 	@Override
 	public void pause() {
-
+		
 	}
 
 	@Override
 	public void resume() {
-
+		
 	}
 
 	@Override
 	public void dispose() {
-//		stage.dispose();
-//		this.dispose();
+		
 	}
-
+	
 }

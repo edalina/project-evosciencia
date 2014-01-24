@@ -21,6 +21,7 @@ public class EvoSciencia extends Game implements InputProcessor {
 
 	@Override
 	public void create() {
+		
 		GameValues.currentScreen = new SplashScreen();
 		setScreen(GameValues.currentScreen);
 		

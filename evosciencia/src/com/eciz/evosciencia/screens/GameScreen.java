@@ -3,7 +3,6 @@ package com.eciz.evosciencia.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eciz.evosciencia.actors.GameScreenActor;
 import com.eciz.evosciencia.values.GameValues;
@@ -14,11 +13,9 @@ public class GameScreen implements Screen {
 
 	public GameScreen() {
 		stage = new Stage();
-		GameValues.camera = (OrthographicCamera) stage.getCamera();
-		GameValues.camera.setToOrtho(false, GameValues.CAMERA_WIDTH, GameValues.CAMERA_HEIGHT);
-		GameValues.camera.position.set(GameValues.CAMERA_WIDTH, GameValues.CAMERA_HEIGHT, 0);
-		GameValues.camera = (OrthographicCamera) stage.getCamera();
-//		GameValues.camera.zoom = 0.5f;
+//		GameValues.camera = (OrthographicCamera) stage.getCamera();
+		GameValues.camera.zoom = GameValues.CAMERA_ZOOM;
+		
 		stage.addActor(new GameScreenActor());
 	}
 	
@@ -59,8 +56,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		stage.dispose();
-		this.dispose();
+//		stage.dispose();
+//		this.dispose();
 	}
 	
 }

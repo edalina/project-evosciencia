@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.EvoSciencia;
-import com.eciz.evosciencia.screens.GameScreen;
+import com.eciz.evosciencia.screens.SaveDataScreen;
 import com.eciz.evosciencia.values.GameValues;
 
 public class MenuControls {
@@ -78,7 +78,7 @@ public class MenuControls {
 				GameValues.touchPos.y <= MenuControls.getInstance().getStartRectangle().y + MenuControls.getInstance().getStartRectangle().height - 15) {
 				
 				// MOVE TO GAME PROPER, ACTUALLY GAME DATA FIRST
-				GameValues.currentScreen = new GameScreen();
+				GameValues.currentScreen = new SaveDataScreen();
 				EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 			}
 			

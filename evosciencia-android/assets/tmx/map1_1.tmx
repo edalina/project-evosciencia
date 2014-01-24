@@ -207,9 +207,19 @@
     <property name="collision" value=""/>
    </properties>
   </tile>
+  <tile id="6077">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
   <tile id="6150">
    <properties>
     <property name="cpoint" value="town_1"/>
+   </properties>
+  </tile>
+  <tile id="6205">
+   <properties>
+    <property name="collision" value=""/>
    </properties>
   </tile>
   <tile id="6414">
@@ -230,7 +240,7 @@
  </tileset>
  <layer name="brown" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztz6ENADAMA8GM0P1xUaYsD6zkoDvpseUqAAAAAAAAAAAAfvTJdUfJra3SPx5aJ0iL
+   eJztz6ERACAMBMGUgKQaakWgqBKPQQUQuzOn84kAAAAAAAAAAAA4azX66w2/mSWvsZV561bZfyzh5UmB
   </data>
  </layer>
  <layer name="grass" width="50" height="50">
@@ -240,7 +250,7 @@
  </layer>
  <layer name="cpoint" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztzcEJgEAQBMHJQu+CETVwWY1MYxD2VwX97gQAAAAAAAAAAIA/tjXV2TlTx9c+ez/XknT2jNT9VaP39QJE2WJF
+   eJztzcEJgDAQAMHrIibFiLFwuViZqUG43wzseyMAAAAAAAAAAAD44zwiK7tH5Nxdo/bztNreHrl22Ws/H+vchYU=
   </data>
  </layer>
  <layer name="collision" width="50" height="50">
@@ -251,11 +261,6 @@
  <layer name="stone" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt2MENwCAIBVBmsIeO7ro9dAAvJvXT9wZAIySAVa/7qnhzZMT88hwAAADW7Gh7dHrHDv8mJ+pUIwAAf2OWAyCVHnam5Lwk372rB6X1Bu8=
-  </data>
- </layer>
- <layer name="Tile Layer 6" width="50" height="50">
-  <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
   </data>
  </layer>
  <layer name="cliffs" width="50" height="50">

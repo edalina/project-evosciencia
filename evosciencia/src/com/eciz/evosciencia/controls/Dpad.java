@@ -42,8 +42,8 @@ public class Dpad {
 	private Rectangle pauseRectangle;
 	private List<SkillSlot> skillSlots;
 	
-	public static final int DPAD_WIDTH = 16;
-	public static final int DPAD_HEIGHT = 16;
+	public static final int DPAD_WIDTH = 24;
+	public static final int DPAD_HEIGHT = 24;
 	
 	public static boolean isDpadActive = true;
 	public static boolean buttonActive = false;
@@ -107,16 +107,16 @@ public class Dpad {
 		 */
 		
 		float
-			dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.CAMERA_WIDTH/2) - ( DPAD_WIDTH*3 ) ),
-			dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.CAMERA_HEIGHT/2) - ( DPAD_HEIGHT*3 ) ),
-			dpadActionXCenter = GameValues.camera.position.x + ( (GameValues.CAMERA_WIDTH/2) - ( DPAD_WIDTH*3 ) ),
+			dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_WIDTH*3 ) ),
+			dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_HEIGHT*2 ) ),
+			dpadActionXCenter = GameValues.camera.position.x + ( (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_WIDTH*3 ) ),
 			dpadActionYCenter = dpadControlYCenter,
 			dpadPauseXCenter = dpadActionXCenter + DPAD_WIDTH,
-			dpadPauseYCenter = GameValues.camera.position.y + ( (GameValues.CAMERA_HEIGHT/2) - ( DPAD_HEIGHT + 10 ) ),
+			dpadPauseYCenter = GameValues.camera.position.y + ( (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_HEIGHT + 10 ) ),
 			dpadHealthXCenter = dpadControlXCenter - (DPAD_WIDTH*3),
 			dpadHealthYCenter = dpadPauseYCenter + DPAD_HEIGHT - 2,
 			dpadSkillSlotXCenter = GameValues.camera.position.x - (2 * (DPAD_WIDTH + (DPAD_WIDTH/2))),
-			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2);
+			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2) + 10;
 		
 		if( isX ) {
 			GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
@@ -191,20 +191,20 @@ public class Dpad {
 				
 				GameValues.avatar.repositionAvatar(x, y);
 				
-				if( GameValues.avatar.getX() <= GameValues.CAMERA_WIDTH/2 ) {
-					x = GameValues.CAMERA_WIDTH/2;
+				if( GameValues.avatar.getX() <= GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE ) {
+					x = GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE;
 				}
 				
-				if( GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2) ) {
-					x = Maps.MAP_WIDTH - (GameValues.CAMERA_WIDTH/2);
+				if( GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) ) {
+					x = Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE);
 				}
 				
-				if( GameValues.avatar.getY() <= GameValues.CAMERA_HEIGHT/2 ) {
-					y = GameValues.CAMERA_HEIGHT/2;
+				if( GameValues.avatar.getY() <= GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE ) {
+					y = GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE;
 				}
 				
-				if( GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2) ) {
-					y = Maps.MAP_HEIGHT - (GameValues.CAMERA_HEIGHT/2);
+				if( GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) ) {
+					y = Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE);
 				}
 				
 				GameValues.camera.position.set(x, y, 0);

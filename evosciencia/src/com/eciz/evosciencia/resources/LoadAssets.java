@@ -28,9 +28,17 @@ public class LoadAssets {
 		assetManager.finishLoading();
 		LoadAssets.loadAvatarAssets();
 		LoadAssets.loadAllMonsters();
+		LoadAssets.loadEtc();
 		LoadAssets.loadPools();
 	}
 	
+	private static void loadEtc() {
+		assetManager.load("images/data_box.png", Texture.class);
+		assetManager.load("images/character_box.png", Texture.class);
+		assetManager.load("images/character_slot.png", Texture.class);
+		assetManager.load("images/character_slot_active.png", Texture.class);
+	}
+
 	public static void loadAllMonsters() {
 		for(MonsterEnum monsterEnum : MonsterEnum.values()) {
 			Map<String, Sprite> monsters = new LinkedHashMap<String, Sprite>();
