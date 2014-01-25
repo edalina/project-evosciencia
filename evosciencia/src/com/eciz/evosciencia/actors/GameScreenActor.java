@@ -19,11 +19,6 @@ public class GameScreenActor extends Table {
 		GameValues.maps = Maps.getMaps();
 		GameValues.avatar.repositionAvatar(( GameValues.SCREEN_WIDTH - GameValues.avatar.getWidth() ) / 2, ( GameValues.SCREEN_HEIGHT - GameValues.avatar.getHeight() )/2);
 		
-//		Music bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm/mysterious_path.wav"));
-//		bgm.setVolume(0.5f);
-//		bgm.setLooping(true);
-//		bgm.play();
-		
 	}
 	
 	@Override

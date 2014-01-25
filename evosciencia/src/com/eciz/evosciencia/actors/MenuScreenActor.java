@@ -1,5 +1,6 @@
 package com.eciz.evosciencia.actors;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -18,6 +19,11 @@ public class MenuScreenActor extends Table {
 		GameValues.touchPos = new Vector3();
 		
 		MenuControls.getInstance();
+		
+		GameValues.bgm = Gdx.audio.newMusic(Gdx.files.internal("bgm/moving_to_the_beat.wav"));
+		GameValues.bgm.setVolume(0.5f);
+		GameValues.bgm.setLooping(true);
+		GameValues.bgm.play();
 	}
 	
 	@Override

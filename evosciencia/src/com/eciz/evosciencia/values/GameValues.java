@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -62,4 +63,6 @@ public class GameValues {
 	public static final String OBSTACLE_PROPERTY = "obstacles_";
 	
 	public static final String CHECK_POINT = "cpoint";
+	
+	public static Music bgm;
 }

@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.eciz.evosciencia.entities.CharacterSlot;
+import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
 public class SaveDataActor extends Table {
@@ -47,7 +48,6 @@ public class SaveDataActor extends Table {
 			rectangle.x = (i * rectangle.width)+  (coor + 10);
 			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*2))/2;
 			characterSlot.setRectangle(rectangle);
-			
 			characterSlots.add(characterSlot);
 		}
 		
@@ -66,6 +66,15 @@ public class SaveDataActor extends Table {
 			GameValues.currentBatch.draw(characterSlotTexture, characterSlot.getRectangle().x, characterSlot.getRectangle().y, characterSlot.getRectangle().width, characterSlot.getRectangle().height);
 		}
 		GameValues.currentBatch.end();
+		if( Gdx.input.isTouched() ) {
+			GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			GameValues.camera.unproject(GameValues.touchPos);
+			for( CharacterSlot characterSlot : characterSlots ) {
+				if( EventUtils.isTap(characterSlot.getRectangle()) ) {
+					System.out.println( characterSlot.getId() );
+				}
+			}
+		}
 	}
 
 }

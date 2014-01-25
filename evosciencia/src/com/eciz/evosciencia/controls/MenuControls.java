@@ -4,7 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.EvoSciencia;
-import com.eciz.evosciencia.screens.SaveDataScreen;
+import com.eciz.evosciencia.screens.GameScreen;
+import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
 public class MenuControls {
@@ -72,29 +73,22 @@ public class MenuControls {
 			GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			GameValues.camera.unproject(GameValues.touchPos);
 			
-			if( GameValues.touchPos.x >= MenuControls.getInstance().getStartRectangle().x &&
-				GameValues.touchPos.x <= MenuControls.getInstance().getStartRectangle().x + MenuControls.getInstance().getStartRectangle().width &&
-				GameValues.touchPos.y >= MenuControls.getInstance().getStartRectangle().y - 15 &&
-				GameValues.touchPos.y <= MenuControls.getInstance().getStartRectangle().y + MenuControls.getInstance().getStartRectangle().height - 15) {
-				
+			GameValues.touchPos.y += 15;
+			
+			if( EventUtils.isTap(MenuControls.getInstance().getStartRectangle()) ) {
 				// MOVE TO GAME PROPER, ACTUALLY GAME DATA FIRST
-				GameValues.currentScreen = new SaveDataScreen();
+//				GameValues.currentScreen = new SaveDataScreen();
+				GameValues.bgm.stop();
+				GameValues.currentScreen = new GameScreen();
 				EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 			}
 			
-			if( GameValues.touchPos.x >= MenuControls.getInstance().getOptionRectangle().x &&
-				GameValues.touchPos.x <= MenuControls.getInstance().getOptionRectangle().x + MenuControls.getInstance().getOptionRectangle().width &&
-				GameValues.touchPos.y >= MenuControls.getInstance().getOptionRectangle().y - 15 &&
-				GameValues.touchPos.y <= MenuControls.getInstance().getOptionRectangle().y + MenuControls.getInstance().getOptionRectangle().height - 15) {
-				
+			if( EventUtils.isTap(MenuControls.getInstance().getOptionRectangle()) ) {
 				// MOVE OPTION SCREEN
 				System.out.println( "OPTION" );
 			}
 			
-			if( GameValues.touchPos.x >= MenuControls.getInstance().getAboutRectangle().x &&
-				GameValues.touchPos.x <= MenuControls.getInstance().getAboutRectangle().x + MenuControls.getInstance().getAboutRectangle().width &&
-				GameValues.touchPos.y >= MenuControls.getInstance().getAboutRectangle().y - 15 &&
-				GameValues.touchPos.y <= MenuControls.getInstance().getAboutRectangle().y + MenuControls.getInstance().getAboutRectangle().height - 15) {
+			if( EventUtils.isTap(MenuControls.getInstance().getAboutRectangle()) ) {
 				
 				// MOVE ABOUT SCREEN
 				System.out.println( "ABOUT" );

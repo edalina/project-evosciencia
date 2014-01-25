@@ -4,20 +4,25 @@
   <image source="tileset/tileset2.png" trans="ff00ff" width="2048" height="2048"/>
   <tile id="1">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="2">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="3">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="129">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="130">
    <properties>
     <property name="collision" value=""/>
    </properties>
@@ -169,12 +174,12 @@
   </tile>
   <tile id="5274">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="5275">
    <properties>
-    <property name="collision" value=""/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="5382">
@@ -227,9 +232,24 @@
     <property name="collision" value=""/>
    </properties>
   </tile>
-  <tile id="6720">
+  <tile id="6592">
    <properties>
     <property name="cpoint" value="town_1"/>
+   </properties>
+  </tile>
+  <tile id="6719">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="6720">
+   <properties>
+    <property name="" value=""/>
+   </properties>
+  </tile>
+  <tile id="6721">
+   <properties>
+    <property name="collision" value=""/>
    </properties>
   </tile>
   <tile id="6798">
@@ -250,12 +270,7 @@
  </layer>
  <layer name="cpoint" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztzcEJgDAQAMHrIibFiLFwuViZqUG43wzseyMAAAAAAAAAAAD44zwiK7tH5Nxdo/bztNreHrl22Ws/H+vchYU=
-  </data>
- </layer>
- <layer name="collision" width="50" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt1dENgDAIBUCGaL90cx22E/hBaqyhdxOQB3lE1HK1iLutnmLe0SPOvnoKstzfPBmyC7cOVKTb9mb/75MpAHzDz82TGUCO3gT+Ri/VYI/wbADGYBUB
+   eJztzbENgDAMAEFvEZJhEGFw5DAZbWokd3fS1x8BAAAAAAAAAADAH+cRWdU9IufWNepeT6vr7ZFrK3vd6wP7hIWZ
   </data>
  </layer>
  <layer name="stone" width="50" height="50">
@@ -288,7 +303,12 @@
    eJzt0UEKwCAQBMG9Ge/65phfZ/4QRAJV0PdZtgoAAAAAAPZoo+pKfZxe8s2d/Ss9P7+jzfwj9Xl6CQAAAOzxAnZyAoA=
   </data>
  </layer>
- <layer name="grass_trees" width="50" height="50">
+ <layer name="obstacles_1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1dENgDAIBUCGaL90cx22E/hBaqyhdxOQB3lE1HK1iLutnmLe0SPOvnoKstzfPBmyC7cOVKTb9mb/75MpAHzDz82TGUCO3gT+Ri/VYI/wbADGYBUB
+  </data>
+ </layer>
+ <layer name="obstacles_2" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt18EKgCAQhGE16dwzVw/QI7eXIARBcGOW+D/Ym4eF0GlSAvBWbBabql5k0m5z2JzqRSaVbN/Dpmb1JvgS9y4W5b3bVt9zKtfgfqPnAOBBZsbCvyoA/INXvqpz2itf1Tntla/eOd320Oi9tKftofRSAOr88qLOLy/0TAA9vNex8F4D8d2mtQ4D
   </data>

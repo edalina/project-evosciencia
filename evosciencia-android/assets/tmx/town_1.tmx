@@ -82,9 +82,24 @@
     <property name="collision" value="true"/>
    </properties>
   </tile>
+  <tile id="6592">
+   <properties>
+    <property name="cpoint" value="map1_1"/>
+   </properties>
+  </tile>
+  <tile id="6719">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
   <tile id="6720">
    <properties>
     <property name="cpoint" value="map1_1"/>
+   </properties>
+  </tile>
+  <tile id="6721">
+   <properties>
+    <property name="collision" value=""/>
    </properties>
   </tile>
   <tile id="7191">
@@ -340,7 +355,7 @@
  </layer>
  <layer name="checkpoint" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztzTENACAMAMHKIBXTAP5FwYKETtwlP3+NiGpqZsS67ex7vAAAAAAAAAAAAPjbAT9+ENw=
+   eJztzbEJACAMAMGMIRkmqPsPZSW4QCrv4OuvEVENzYxYTzt7PjcAAAAAAAAAAAD+dgDCYRDm
   </data>
  </layer>
  <layer name="river" width="50" height="50">

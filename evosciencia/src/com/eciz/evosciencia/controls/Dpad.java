@@ -12,6 +12,7 @@ import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.SkillSlot;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
+import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Dpad {
@@ -298,29 +299,20 @@ public class Dpad {
 			if( !Dpad.buttonActive ) {
 				
 				// Action button is clicked
-				if( GameValues.touchPos.x >= GameValues.dpad.getActionRectangle().x &&
-					GameValues.touchPos.x <= GameValues.dpad.getActionRectangle().x + GameValues.dpad.getActionRectangle().width &&
-					GameValues.touchPos.y >= GameValues.dpad.getActionRectangle().y &&
-					GameValues.touchPos.y <= GameValues.dpad.getActionRectangle().y + GameValues.dpad.getActionRectangle().height) {
+				if( EventUtils.isTap(GameValues.dpad.getActionRectangle()) ) {
 					Dpad.buttonActive = true;
 					System.out.println( "ACT" );
 				}
 				
 				// Pause button is clicked
-				if( Gdx.input.getX(0) >= GameValues.dpad.getPauseRectangle().x &&
-					Gdx.input.getX(0) <= GameValues.dpad.getPauseRectangle().x + GameValues.dpad.getPauseRectangle().width &&
-					GameValues.touchPos.y >= GameValues.dpad.getPauseRectangle().y &&
-					GameValues.touchPos.y <= GameValues.dpad.getPauseRectangle().y + GameValues.dpad.getPauseRectangle().height) {
+				if( EventUtils.isTap(GameValues.dpad.getPauseRectangle()) ) {
 					Dpad.buttonActive = true;
 					System.out.println( "PAUSE" );
 				}
 				
 				// Skill slots
 				for( SkillSlot skillSlot : GameValues.dpad.skillSlots ) {
-					if( GameValues.touchPos.x >= skillSlot.getRectangle().x &&
-						GameValues.touchPos.x <= skillSlot.getRectangle().x + skillSlot.getRectangle().width &&
-						GameValues.touchPos.y >= skillSlot.getRectangle().y &&
-						GameValues.touchPos.y <= skillSlot.getRectangle().y + skillSlot.getRectangle().height) {
+					if( EventUtils.isTap(skillSlot.getRectangle()) ) {
 						Dpad.buttonActive = true;
 						System.out.println( "SKILL" );
 					}
@@ -329,37 +321,25 @@ public class Dpad {
 			}
 			
 			// Up arrow is clicked/touched
-			if( GameValues.touchPos.x >= GameValues.dpad.getUpArrowRectangle().x &&
-				GameValues.touchPos.x <= GameValues.dpad.getUpArrowRectangle().x + GameValues.dpad.getUpArrowRectangle().width &&
-				GameValues.touchPos.y >= GameValues.dpad.getUpArrowRectangle().y &&
-				GameValues.touchPos.y <= GameValues.dpad.getUpArrowRectangle().y + GameValues.dpad.getUpArrowRectangle().height) {
+			if( EventUtils.isTap(GameValues.dpad.getUpArrowRectangle()) ) {
 				valueY = GameValues.CHARACTER_SPEED;
 				face = StanceEnum.BACK_STAND;
 			}
 			
 			// Down arrow is clicked/touched
-			if( GameValues.touchPos.x >= GameValues.dpad.getDownArrowRectangle().x &&
-				GameValues.touchPos.x <= GameValues.dpad.getDownArrowRectangle().x + GameValues.dpad.getDownArrowRectangle().width &&
-				GameValues.touchPos.y >= GameValues.dpad.getDownArrowRectangle().y &&
-				GameValues.touchPos.y <= GameValues.dpad.getDownArrowRectangle().y + GameValues.dpad.getDownArrowRectangle().height) {
+			if( EventUtils.isTap(GameValues.dpad.getDownArrowRectangle()) ) {
 				valueY = -GameValues.CHARACTER_SPEED;
 				face = StanceEnum.FRONT_STAND;
 			}
 			
 			// Left arrow is clicked/touched
-			if( GameValues.touchPos.x >= GameValues.dpad.getLeftArrowRectangle().x &&
-				GameValues.touchPos.x <= GameValues.dpad.getLeftArrowRectangle().x + GameValues.dpad.getLeftArrowRectangle().width &&
-				GameValues.touchPos.y >= GameValues.dpad.getLeftArrowRectangle().y &&
-				GameValues.touchPos.y <= GameValues.dpad.getLeftArrowRectangle().y + GameValues.dpad.getLeftArrowRectangle().height) {
+			if( EventUtils.isTap(GameValues.dpad.getLeftArrowRectangle()) ) {
 				valueX = -GameValues.CHARACTER_SPEED;
 				face = StanceEnum.LEFT_STAND;
 			}
 			
 			// Right arrow is clicked/touched
-			if( GameValues.touchPos.x >= GameValues.dpad.getRightArrowRectangle().x &&
-				GameValues.touchPos.x <= GameValues.dpad.getRightArrowRectangle().x + GameValues.dpad.getRightArrowRectangle().width &&
-				GameValues.touchPos.y >= GameValues.dpad.getRightArrowRectangle().y &&
-				GameValues.touchPos.y <= GameValues.dpad.getRightArrowRectangle().y + GameValues.dpad.getRightArrowRectangle().height) {
+			if( EventUtils.isTap(GameValues.dpad.getRightArrowRectangle()) ) {
 				valueX = GameValues.CHARACTER_SPEED;
 				face = StanceEnum.RIGHT_STAND;
 			}
