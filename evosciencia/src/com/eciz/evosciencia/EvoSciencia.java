@@ -3,6 +3,7 @@ package com.eciz.evosciencia;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.InputProcessor;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.resources.LoadAssets;
@@ -21,6 +22,8 @@ public class EvoSciencia extends Game implements InputProcessor {
 
 	@Override
 	public void create() {
+		
+		Texture.setEnforcePotImages(false);
 		
 		GameValues.currentScreen = new SplashScreen();
 		setScreen(GameValues.currentScreen);

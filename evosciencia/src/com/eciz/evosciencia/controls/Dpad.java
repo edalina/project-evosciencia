@@ -307,6 +307,7 @@ public class Dpad {
 				// Pause button is clicked
 				if( EventUtils.isTap(GameValues.dpad.getPauseRectangle()) ) {
 					Dpad.buttonActive = true;
+					GameValues.settingUtils.toggleBGM();
 					System.out.println( "PAUSE" );
 				}
 				

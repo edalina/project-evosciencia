@@ -9,6 +9,8 @@ import com.eciz.evosciencia.values.GameValues;
 public class GameScreenActor extends Table {
 	
 	public GameScreenActor() {
+		
+		GameValues.settingUtils.stopBGM();
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
 		setClip(true);
 		

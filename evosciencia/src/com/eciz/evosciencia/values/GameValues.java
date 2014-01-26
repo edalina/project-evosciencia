@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -16,11 +15,14 @@ import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.resources.Maps;
+import com.eciz.evosciencia.utils.SettingUtils;
 
 public class GameValues {
 	
 	public static final int SCREEN_WIDTH = 800;
 	public static final int SCREEN_HEIGHT = 400;
+	
+	public static final String DATABASE_NAME = "evosciencia";
 
 	public static final int CHARACTER_WIDTH = Avatar.width;
 	public static final int CHARACTER_HEIGHT = Avatar.height;
@@ -28,6 +30,21 @@ public class GameValues {
 	public static final int ENEMY_HEIGHT = Enemy.height;
 	public static final int DPAD_WIDTH = 16;
 	public static final int DPAD_HEIGHT = 16;
+	
+	public static final float CAMERA_ZOOM = 0.5f;
+	public static final float CAMERA_ZOOM_MULTIPLE = 8*CAMERA_ZOOM;
+	
+	public static final int ENEMY_COUNT_PER_MAP = 30;
+	
+	public static final float CHARACTER_SPEED = 1;
+	
+	public static final long ANIMATION_SPEED = 200000000;
+	
+	public static final String COLLISION_PROPERTY = "collision";
+	
+	public static final String OBSTACLE_PROPERTY = "obstacles_";
+	
+	public static final String CHECK_POINT = "cpoint";
 	
 	public static Screen currentScreen;
 	
@@ -45,24 +62,11 @@ public class GameValues {
 	
 	public static Maps maps;
 	
-	public static final float CAMERA_ZOOM = 0.5f;
-	public static final float CAMERA_ZOOM_MULTIPLE = 8*CAMERA_ZOOM;
-	
-	public static final int ENEMY_COUNT_PER_MAP = 30;
-	
-	public static final float CHARACTER_SPEED = 1;
-	
-	public static final long ANIMATION_SPEED = 200000000;
-	
 	public static Map<String, Map<String, Sprite>> monsters = new LinkedHashMap<String, Map<String,Sprite>>();
 	
 	public static Batch currentBatch;
 	
-	public static final String COLLISION_PROPERTY = "collision";
+	public static boolean touchDown = false;
 	
-	public static final String OBSTACLE_PROPERTY = "obstacles_";
-	
-	public static final String CHECK_POINT = "cpoint";
-	
-	public static Music bgm;
+	public static SettingUtils settingUtils;
 }

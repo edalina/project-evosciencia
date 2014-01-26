@@ -6,12 +6,14 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.enums.MonsterEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.manager.pool.EnemyPool;
+import com.eciz.evosciencia.utils.SettingUtils;
 import com.eciz.evosciencia.values.GameValues;
 
 public class LoadAssets {
@@ -25,11 +27,11 @@ public class LoadAssets {
 	
 	public static void loadAllAssets() {
 		assetManager = new AssetManager();
-		assetManager.finishLoading();
-		LoadAssets.loadAvatarAssets();
+//		LoadAssets.loadAvatarAssets();
 		LoadAssets.loadAllMonsters();
 		LoadAssets.loadEtc();
 		LoadAssets.loadPools();
+		GameValues.settingUtils = new SettingUtils();
 	}
 	
 	private static void loadEtc() {
@@ -37,6 +39,11 @@ public class LoadAssets {
 		assetManager.load("images/character_box.png", Texture.class);
 		assetManager.load("images/character_slot.png", Texture.class);
 		assetManager.load("images/character_slot_active.png", Texture.class);
+		
+		for( int i = 1 ; i <= 141 ; i++ ) {
+			String pathName = "intro/intro_hr_" + (i < 10 ? "0" : "") + (i < 100 ? "0" : "") + i + ".jpg";
+			assetManager.load(pathName, Texture.class);
+		}
 	}
 
 	public static void loadAllMonsters() {
@@ -56,8 +63,6 @@ public class LoadAssets {
 	}
 	
 	public static void loadAvatarAssets() {
-		
-		GameValues.avatar = new Avatar();
 		
 		GameValues.avatar.avatarSprites = new HashMap<String, Sprite>();
 		

@@ -9,6 +9,8 @@ public class CharacterSlot {
 	private int saveDataId;
 	private Texture texture;
 	private Rectangle rectangle;
+	private String definition;
+	private boolean active;
 	
 	public int getId() {
 		return id;
@@ -33,6 +35,18 @@ public class CharacterSlot {
 	}
 	public void setRectangle(Rectangle rectangle) {
 		this.rectangle = rectangle;
+	}
+	public String getDefinition() {
+		return definition;
+	}
+	public void setDefinition(String definition) {
+		this.definition = definition;
+	}
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 	
 }
