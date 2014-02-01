@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.EvoSciencia;
+import com.eciz.evosciencia.screens.AboutScreen;
 import com.eciz.evosciencia.screens.SaveDataScreen;
+import com.eciz.evosciencia.screens.SettingScreen;
 import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
@@ -56,41 +58,37 @@ public class MenuControls {
 		startRectangle.x = (GameValues.SCREEN_WIDTH - startRectangle.width)/2;
 		optionRectangle.x = (GameValues.SCREEN_WIDTH - optionRectangle.width)/2;
 		aboutRectangle.x = (GameValues.SCREEN_WIDTH - aboutRectangle.width)/2;
-		startRectangle.y = 100;
-		optionRectangle.y = 75;
-		aboutRectangle.y = 50;
+		startRectangle.y = 85;
+		optionRectangle.y = 60;
+		aboutRectangle.y = 35;
 		
 	}
 	
 	public void draw() {
-		startButton.draw(GameValues.currentBatch, START_STRING, startRectangle.x, startRectangle.y);
-		optionButton.draw(GameValues.currentBatch, OPTION_STRING, optionRectangle.x, optionRectangle.y);
-		aboutButton.draw(GameValues.currentBatch, ABOUT_STRING, aboutRectangle.x, aboutRectangle.y);
+		startButton.draw(GameValues.currentBatch, START_STRING, startRectangle.x, startRectangle.y + 15);
+		optionButton.draw(GameValues.currentBatch, OPTION_STRING, optionRectangle.x, optionRectangle.y + 15);
+		aboutButton.draw(GameValues.currentBatch, ABOUT_STRING, aboutRectangle.x, aboutRectangle.y + 15);
 	}
 	
 	public void checkEvents() {
 		if( Gdx.input.isTouched() && MenuControls.isMenuActive ) {
-			GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			GameValues.camera.unproject(GameValues.touchPos);
-			
-			GameValues.touchPos.y += 15;
 			
 			if( EventUtils.isTap(MenuControls.getInstance().getStartRectangle()) ) {
 				// MOVE TO GAME PROPER, ACTUALLY GAME DATA FIRST
 				GameValues.currentScreen = new SaveDataScreen();
-				EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 			}
 			
 			if( EventUtils.isTap(MenuControls.getInstance().getOptionRectangle()) ) {
 				// MOVE OPTION SCREEN
-				System.out.println( "OPTION" );
+				GameValues.currentScreen = new SettingScreen();
 			}
 			
 			if( EventUtils.isTap(MenuControls.getInstance().getAboutRectangle()) ) {
-				
 				// MOVE ABOUT SCREEN
-				System.out.println( "ABOUT" );
+				GameValues.currentScreen = new AboutScreen();
 			}
+			
+			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 		}
 	}
 

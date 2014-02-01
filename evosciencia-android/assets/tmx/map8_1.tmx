@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset2" tilewidth="16" tileheight="16">
+  <image source="tileset/tileset2.png" trans="ff00ff" width="2048" height="2048"/>
+  <tile id="1668">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1673">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1674">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1675">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1676">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1677">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1678">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="7305">
+   <properties>
+    <property name="cpoint" value="map8_2"/>
+   </properties>
+  </tile>
+  <tile id="7306">
+   <properties>
+    <property name="cpoint" value="map8_2"/>
+   </properties>
+  </tile>
+  <tile id="7307">
+   <properties>
+    <property name="cpoint" value="map8_2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="tile" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1bERwCAMBEFKcOdE9OsWsAYPj73Bxa+N1K/W+uLGRKs334gjK46sOLLiyIojK46sTnfM3H+ChyMrjqx2OirbkqR6X/kfHBwcHH90PPHsvpGDg4ODIy+OrDiy4siKo94NXU0jlQ==
+  </data>
+ </layer>
+ <layer name="obstacles_1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmkkOwyAMRbOBRTpdoNfNhqTtlXq0ukqRumDGYNP6SZayiBTswvcHqvSEznadniuEgfA9Y31r/Yx/aZAHJ2bI7wxxGTxPA+O/QzwGzyOE/Fb5SM3G50iY8wHx2xthHusfzpsS5h+pk2mUx0nvUQMHTb7pPWoYUZNbaimmVsZI0VI7x3LXNDettHOs1ZqOQdl/v1G6biyl/VdpHN2zvPeUFF5g0Ti6JwiCMBqYGk6JaDgOXHyNpdQ/l3qJVn4d2z/H9ovc/LoPjvvF3nvxVP3N1enetU3VX9FpwUXp2QQ3ep5NpPRr5Xin57mUJaSrKf3ade9M0ec49qzeuOZUCK5rOve/DFTnjSG41jYXjrWlhEKjfdT05lYaXTIminuDmG+nvstIBdu3vwBkVTTf
+  </data>
+ </layer>
+</map>

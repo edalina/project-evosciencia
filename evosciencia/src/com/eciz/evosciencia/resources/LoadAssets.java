@@ -6,10 +6,12 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.utils.Json;
 import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.entities.DataHandler;
+import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.enums.MonsterEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.manager.pool.EnemyPool;
@@ -27,23 +29,54 @@ public class LoadAssets {
 	
 	public static void loadAllAssets() {
 		assetManager = new AssetManager();
-//		LoadAssets.loadAvatarAssets();
-		LoadAssets.loadAllMonsters();
+//		LoadAssets.loadAllMonsters();
 		LoadAssets.loadEtc();
-		LoadAssets.loadPools();
+		LoadAssets.loadScientists();
+//		LoadAssets.loadPools();
 		GameValues.settingUtils = new SettingUtils();
 	}
 	
+	private static void loadScientists() {
+		for( Scientist scientist : GameValues.dataHandler.getScientists() ) {
+			assetManager.load("npc/" + scientist.getName() + ".png", Texture.class);
+		}
+	}
+
 	private static void loadEtc() {
+		
+		Json json = new Json();
+		GameValues.dataHandler = json.fromJson(DataHandler.class, Gdx.files.internal("data/data.json"));
+		
+		assetManager.load("images/quest.png", Texture.class);
+		
+		GameValues.questMarkActive = new Texture(Gdx.files.internal("images/quest.png"));
+		GameValues.questMarkInactive = new Texture(Gdx.files.internal("images/quest_inactive.png"));
+		
+		assetManager.load("images/toggle_on.png", Texture.class);
+		assetManager.load("images/toggle_off.png", Texture.class);
+		
 		assetManager.load("images/data_box.png", Texture.class);
 		assetManager.load("images/character_box.png", Texture.class);
 		assetManager.load("images/character_slot.png", Texture.class);
 		assetManager.load("images/character_slot_active.png", Texture.class);
 		
-		for( int i = 1 ; i <= 141 ; i++ ) {
-			String pathName = "intro/intro_hr_" + (i < 10 ? "0" : "") + (i < 100 ? "0" : "") + i + ".jpg";
+		assetManager.load("images/einstein.png", Texture.class);
+		assetManager.load("images/dialog.png", Texture.class);
+		
+		assetManager.load("images/selection_carlo.jpg", Texture.class);
+		assetManager.load("images/selection_ia.jpg", Texture.class);
+		assetManager.load("images/selection_yjae.jpg", Texture.class);
+		assetManager.load("images/selection_zhandy.jpg", Texture.class);
+		
+		GameValues.introAnimations = new Texture[72];
+		GameValues.introIndexPointer = 1;
+		
+		for( int i = 1 ; i <= GameValues.introAnimations.length ; i++ ) {
+			String pathName = "intro/00" + ( i < 10 ? "0" : "" ) + ( i < 100 ? "0" : "" ) + i + ".jpg";
 			assetManager.load(pathName, Texture.class);
+			GameValues.introAnimations[i-1] = new Texture(Gdx.files.internal(pathName));
 		}
+		
 	}
 
 	public static void loadAllMonsters() {
@@ -62,6 +95,8 @@ public class LoadAssets {
 		new EnemyPool();
 	}
 	
+//	public static void 
+	
 	public static void loadAvatarAssets() {
 		
 		GameValues.avatar.avatarSprites = new HashMap<String, Sprite>();
@@ -72,7 +107,7 @@ public class LoadAssets {
 			GameValues.avatar.avatarSprites.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal(path))));
 		}
 		
-		GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue());
+		GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND_1.getValue());
 		
 		GameValues.avatar.sprite.setBounds(GameValues.avatar.getX(), GameValues.avatar.getY(), Avatar.width, Avatar.height);
 	}

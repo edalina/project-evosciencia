@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset2" tilewidth="16" tileheight="16">
+  <image source="tileset/tileset2.png" trans="ff00ff" width="2048" height="2048"/>
+  <tile id="1336">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1337">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1342">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1464">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1465">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1470">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1476">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1477">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1592">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1593">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1604">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="1605">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4160">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4161">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4162">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4288">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4289">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4290">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4372">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4416">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4417">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="4418">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5634">
+   <properties>
+    <property name="cpoint" value="map7_2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="tile" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1LEKwCAMhGFHZx/9nrhToUhbHWKi4R++TcydAVstpQHAgfQhOhcAAIilDTJY9bhlmRfVZ9VMzz7PmRn20+/oxPu9389zNwCwK9Vc/6FeRGey7BadAQA86Ud0NmAlTYrOCQAzVO3/LU3c258ZWd3JYq7HjkaZLon3Kvg=
+  </data>
+ </layer>
+ <layer name="obstacles_1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmUsOg0AIhkk7egTvoou2Cx9n1oW68HGt/j2ATuIwgbF8yb8yFZAGCBDx8yiInpArIrzcMIwgRkc0QbOT86GH7SHQ/isjekOfjMenK5SwXQXaH/H7CZoF4+hhezixvyBXK7RBu+D/xkeZIx/58fMaMTZQC3WC3zuUBb6v0AbtCcdRI1cN1ELdSd5SYIX/W+Ix3B3J+sXZdyXrF2fflaxfnH33DvXrR+r1i2Ou1ADHXKkB31yZCr650rgXVkficWUO0lhHrsxBGuuIhv2DYRiGER+J/X+M/bHE/j/G/lii/9r+WB9a9sca7oMcaLgPcmDzufGvpHJ39mF3Z10czQ1fPoxJWw==
+  </data>
+ </layer>
+ <layer name="obstacles_2" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzbEJADAIAEFHSApHd99MkE4E4Q6+/joRJTWXt6epzy8AAAAAAAAAAGCPBx7zbBM=
+  </data>
+ </layer>
+ <layer name="obstacles_3" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt19EJwCAMBcCMoCNZJ69drFmhWFDhDt7/EwkkEQAAMK+ViCvTy+omc+7sPzLP4e9oNf8j0+vqJgDwjZ1iL3aKM5ibvZgbAACA/7h593LKzfsCMGURlQ==
+  </data>
+ </layer>
+ <layer name="pbstacles_4" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzDEOABAURMEfXEDB/Y9KIxollZnkNVtsxH2pR+RZ6Q/O+Uqru9MOAAAAAAAAAACwDIIzAQo=
+  </data>
+ </layer>
+</map>

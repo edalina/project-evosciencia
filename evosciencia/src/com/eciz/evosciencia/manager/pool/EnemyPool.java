@@ -19,8 +19,8 @@ public class EnemyPool {
 		for( int i = 0 ; i < GameValues.ENEMY_COUNT_PER_MAP ; i++ ) {
 			Enemy enemy = new Enemy();
 			enemy.setId(i);
-			enemy.setCurrentSprite(GameValues.monsters.get(MonsterEnum.GOBLIN.getValue()).get(StanceEnum.FRONT_STAND.getValue()));
-			enemy.setFacing(StanceEnum.FRONT_STAND);
+			enemy.setCurrentSprite(GameValues.monsters.get(MonsterEnum.GOBLIN.getValue()).get(StanceEnum.FRONT_STAND_1.getValue()));
+			enemy.setFacing(StanceEnum.FRONT_STAND_1);
 			enemy.setVisible(false);
 			enemy.setWidth(GameValues.ENEMY_WIDTH); 
 			enemy.setHeight(GameValues.ENEMY_HEIGHT);

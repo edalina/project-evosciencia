@@ -4,8 +4,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.eciz.evosciencia.controls.MenuControls;
+import com.eciz.evosciencia.enums.BGMEnum;
 import com.eciz.evosciencia.resources.LoadAssets;
-import com.eciz.evosciencia.utils.SettingUtils;
 import com.eciz.evosciencia.values.GameValues;
 
 public class MenuScreenActor extends Table {
@@ -20,7 +20,7 @@ public class MenuScreenActor extends Table {
 		
 		MenuControls.getInstance();
 		
-		GameValues.settingUtils.startBGM("bgm/moving_to_the_beat.wav");
+		GameValues.settingUtils.startBGM(BGMEnum.BGM_3.getValue());
 	}
 	
 	@Override

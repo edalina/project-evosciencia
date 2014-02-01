@@ -9,9 +9,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.Quest;
 import com.eciz.evosciencia.entities.SkillSlot;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
+import com.eciz.evosciencia.utils.DialogUtils;
 import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
@@ -71,17 +73,17 @@ public class Dpad {
 		
 		skillSlots = new ArrayList<SkillSlot>();
 		
-		for( int i = 0 ; i < 5 ; i++ ) {
-			Rectangle skillSlotRec = new Rectangle();
-			skillSlotRec.width = DPAD_WIDTH;
-			skillSlotRec.height = DPAD_HEIGHT;
-			
-			SkillSlot skillSlot = new SkillSlot();
-			skillSlot.setRectangle(skillSlotRec);
-			skillSlot.setId(i);
-			skillSlot.setSkillId(0);
-			skillSlots.add(skillSlot);
-		}
+//		for( int i = 0 ; i < 5 ; i++ ) {
+//			Rectangle skillSlotRec = new Rectangle();
+//			skillSlotRec.width = DPAD_WIDTH;
+//			skillSlotRec.height = DPAD_HEIGHT;
+//			
+//			SkillSlot skillSlot = new SkillSlot();
+//			skillSlot.setRectangle(skillSlotRec);
+//			skillSlot.setId(i);
+//			skillSlot.setSkillId(0);
+//			skillSlots.add(skillSlot);
+//		}
 		
 		upArrowRectangle.width = DPAD_WIDTH;
 		upArrowRectangle.height = DPAD_HEIGHT;
@@ -171,16 +173,20 @@ public class Dpad {
 						x = newMapCheckpoint.getRectangle().getX();
 						y = newMapCheckpoint.getRectangle().getY();
 						switch (facing) {
-							case FRONT_STAND:
+							case FRONT_STAND_1:
+							case FRONT_STAND_2:
 								y = y - newMapCheckpoint.getRectangle().getHeight();
 								break;
-							case BACK_STAND:
+							case BACK_STAND_1:
+							case BACK_STAND_2:
 								y = y + newMapCheckpoint.getRectangle().getHeight();
 								break;
-							case LEFT_STAND:
+							case LEFT_STAND_1:
+							case LEFT_STAND_2:
 								x = x - newMapCheckpoint.getRectangle().getWidth();
 								break;
-							case RIGHT_STAND:
+							case RIGHT_STAND_1:
+							case RIGHT_STAND_2:
 								x = x + newMapCheckpoint.getRectangle().getWidth();
 								break;
 							default:
@@ -293,56 +299,53 @@ public class Dpad {
 		if( Gdx.input.isTouched() && Dpad.isDpadActive ) {
 			
 			StanceEnum face = GameValues.avatar.facingFlag;
-			GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-			GameValues.camera.unproject(GameValues.touchPos);
 			
 			if( !Dpad.buttonActive ) {
 				
 				// Action button is clicked
 				if( EventUtils.isTap(GameValues.dpad.getActionRectangle()) ) {
 					Dpad.buttonActive = true;
-					System.out.println( "ACT" );
+					actionButton();
 				}
 				
 				// Pause button is clicked
 				if( EventUtils.isTap(GameValues.dpad.getPauseRectangle()) ) {
 					Dpad.buttonActive = true;
 					GameValues.settingUtils.toggleBGM();
-					System.out.println( "PAUSE" );
 				}
 				
-				// Skill slots
-				for( SkillSlot skillSlot : GameValues.dpad.skillSlots ) {
-					if( EventUtils.isTap(skillSlot.getRectangle()) ) {
-						Dpad.buttonActive = true;
-						System.out.println( "SKILL" );
-					}
-				}
+//				// Skill slots
+//				for( SkillSlot skillSlot : GameValues.dpad.skillSlots ) {
+//					if( EventUtils.isTap(skillSlot.getRectangle()) ) {
+//						Dpad.buttonActive = true;
+//						System.out.println( "SKILL" );
+//					}
+//				}
 				
 			}
 			
 			// Up arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getUpArrowRectangle()) ) {
 				valueY = GameValues.CHARACTER_SPEED;
-				face = StanceEnum.BACK_STAND;
+				face = StanceEnum.BACK_STAND_1;
 			}
 			
 			// Down arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getDownArrowRectangle()) ) {
 				valueY = -GameValues.CHARACTER_SPEED;
-				face = StanceEnum.FRONT_STAND;
+				face = StanceEnum.FRONT_STAND_1;
 			}
 			
 			// Left arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getLeftArrowRectangle()) ) {
 				valueX = -GameValues.CHARACTER_SPEED;
-				face = StanceEnum.LEFT_STAND;
+				face = StanceEnum.LEFT_STAND_1;
 			}
 			
 			// Right arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getRightArrowRectangle()) ) {
 				valueX = GameValues.CHARACTER_SPEED;
-				face = StanceEnum.RIGHT_STAND;
+				face = StanceEnum.RIGHT_STAND_1;
 			}
 			
 			if( !face.equals(GameValues.avatar.facingFlag) ) {
@@ -361,18 +364,66 @@ public class Dpad {
 	}
 	
 	public void drawDpad() {
-		GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getLeftArrow(), GameValues.dpad.getLeftArrowRectangle().x, GameValues.dpad.getLeftArrowRectangle().y, GameValues.dpad.getLeftArrowRectangle().width, GameValues.dpad.getLeftArrowRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getActionBtn(), GameValues.dpad.getActionRectangle().x, GameValues.dpad.getActionRectangle().y, GameValues.dpad.getActionRectangle().width, GameValues.dpad.getActionRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getPauseBtn(), GameValues.dpad.getPauseRectangle().x, GameValues.dpad.getPauseRectangle().y, GameValues.dpad.getPauseRectangle().width, GameValues.dpad.getPauseRectangle().height);
-		GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
-		
-		for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
-			GameValues.currentBatch.draw(GameValues.dpad.getSlot(), skillSlot.getRectangle().x, skillSlot.getRectangle().y, skillSlot.getRectangle().width, skillSlot.getRectangle().height);
+		if( isDpadActive ) {
+			GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getLeftArrow(), GameValues.dpad.getLeftArrowRectangle().x, GameValues.dpad.getLeftArrowRectangle().y, GameValues.dpad.getLeftArrowRectangle().width, GameValues.dpad.getLeftArrowRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getActionBtn(), GameValues.dpad.getActionRectangle().x, GameValues.dpad.getActionRectangle().y, GameValues.dpad.getActionRectangle().width, GameValues.dpad.getActionRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getPauseBtn(), GameValues.dpad.getPauseRectangle().x, GameValues.dpad.getPauseRectangle().y, GameValues.dpad.getPauseRectangle().width, GameValues.dpad.getPauseRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
+			
+			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
+				GameValues.currentBatch.draw(GameValues.dpad.getSlot(), skillSlot.getRectangle().x, skillSlot.getRectangle().y, skillSlot.getRectangle().width, skillSlot.getRectangle().height);
+			}
 		}
+	}
+	
+	public void actionButton() {
+		Rectangle tmpRectangle = new Rectangle();
+		switch(GameValues.avatar.facingFlag) {
+			case FRONT_STAND_1:
+			case FRONT_STAND_2:
+				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() - Avatar.height, Avatar.width, Avatar.height);
+				break;
+			case BACK_STAND_1:
+			case BACK_STAND_2:
+				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() + Avatar.height, Avatar.width, Avatar.height);
+				break;
+			case LEFT_STAND_1:
+			case LEFT_STAND_2:
+				tmpRectangle.set(GameValues.avatar.getX() - Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
+				break;
+			case RIGHT_STAND_1:
+			case RIGHT_STAND_2:
+				tmpRectangle.set(GameValues.avatar.getX() + Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
+				break;
+			default:
+				break;
+		}
+		
+		if( tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
+			String dialog = "Can you help me gather these items?\n\n";
+			List<Quest> quests = new ArrayList<Quest>();
+			for( Quest quest : GameValues.dataHandler.getQuests() ) {
+				for( int id : quest.getScientistsIds() ) {
+					if( id == GameValues.currentScientist.getId() ) {
+						quests.add(quest);
+					}
+				}
+			}
+			int i = 0;
+			for( Quest quest : quests ) {
+				dialog = dialog.concat(quest.getName());
+				if( i < quests.size()-1 )
+					dialog = dialog.concat(", ");
+				i++;
+			}
+			DialogUtils.isDialogActive = true;
+			DialogUtils.createDialog(dialog + "\n\nHelp me please");
+		}
+				
 	}
 	
 	public Texture getActionBtn() {

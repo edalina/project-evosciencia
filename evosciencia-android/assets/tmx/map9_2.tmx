@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="50" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="tileset2" tilewidth="16" tileheight="16">
+  <image source="tileset/tileset2.png" trans="ff00ff" width="2048" height="2048"/>
+  <tile id="220">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="223">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="226">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="348">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="351">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="354">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="3339">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5398">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5399">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5402">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="5403">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="7042">
+   <properties>
+    <property name="cpoint" value="map9_1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="tile" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0D0KgDAMBtCCq4K73tap9FIeTcFBKBEs/kxveBCakn5NHlPKAAAAAAAAAAAAP+qHQxnO+i3LnNbIV29G8+6clUrd6/bMkdYsV/2Wuy27qP+zTPv+A0/zRzbqRqjD
+  </data>
+ </layer>
+ <layer name="obstacles_1" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzbEJAAAIBDFL53dip3hBSODqqwIAAAAAAAAAAL6YznX5hIQFzWgaeQ==
+  </data>
+ </layer>
+ <layer name="obstacles_2" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmVsOgkAMRcseNJro0gAfsCdNdGmKz4V4TfwyAWxpZxjTk9zwQWCmDdPpZYiILtAVutFwVtAa2ii8q49tRlRBdfYZG9c1tMmGv1szJ33cMd8H9PzM+4LrFbopxKGZE0t2E6L9pP2+Zk4smU2J5tOwY+ZQAZVhh1XnBJ2hhvnc2OLP8Y0WUMn8VqXxc/m1Rp8w/zPUMOOQxs/FukZz4z+gfh07algbY6vRC9SvpaCGDanR0tyNDWnuHMexpa/HTIWQPeYWqqA6zHBm3KEH9IwwtqYn/va8IdHst7497y9o5ZHTb1l4C608cvotC28Ro2+18BYx/i1IvZXjcPgHT/XGPVWaaO+fsfpR7f0zVj+qvX/G6ke1909JP5oqXWsyJY/ctSZjnMNICfW/3BrJmgx5XmxJyPNiS8Z2FiGF4+n87EEXz6fjOCnyAtVMcQw=
+  </data>
+ </layer>
+</map>

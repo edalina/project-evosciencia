@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.eciz.evosciencia.EvoSciencia;
 import com.eciz.evosciencia.entities.CharacterSlot;
+import com.eciz.evosciencia.entities.User;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.screens.NewGameScreen;
 import com.eciz.evosciencia.utils.EventUtils;
@@ -51,18 +52,21 @@ public class SaveDataActor extends Table {
 		
 		characterSlots = new ArrayList<CharacterSlot>();
 		
-		for( int i = 0 ; i < 5 ; i++ ) {
+		for( User user : GameValues.dataHandler.getUsers() ) {
 			CharacterSlot characterSlot = new CharacterSlot();
-			characterSlot.setId(i);
+			characterSlot.setId(user.getId());
 			characterSlot.setTexture(characterSlotTexture);
-			characterSlot.setSaveDataId(0);
+			characterSlot.setPlaytime(user.getPlaytime());
 			characterSlot.setActive(false);
-			characterSlot.setDefinition("NEW GAME");
+			if( user.getPlaytime() == 0 )
+				characterSlot.setDefinition("NEW GAME");
+			else
+				characterSlot.setDefinition("Avatar: " + user.getAvatar() + "\nPlaytime: " + user.getPlaytime());
 			
 			Rectangle rectangle = new Rectangle();
 			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*2) - 20)/5;
 			rectangle.height = ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20;
-			rectangle.x = (i * rectangle.width)+  (coor + 10);
+			rectangle.x = (user.getId() * rectangle.width)+  (coor + 10);
 			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*2))/2;
 			characterSlot.setRectangle(rectangle);
 			characterSlots.add(characterSlot);
@@ -87,8 +91,6 @@ public class SaveDataActor extends Table {
 		if( Gdx.input.isTouched() ) {
 			if( !GameValues.touchDown ) {
 				GameValues.touchDown = true;
-				GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-				GameValues.camera.unproject(GameValues.touchPos);
 				for( CharacterSlot characterSlot : characterSlots ) {
 					if( EventUtils.isTap(characterSlot.getRectangle()) ) {
 						activateSlot(characterSlot);
@@ -102,7 +104,7 @@ public class SaveDataActor extends Table {
 	
 	public void activateSlot(CharacterSlot characterSlot) {
 		if( characterSlot.isActive() ) {
-			if( characterSlot.getSaveDataId() == 0 ) {
+			if( characterSlot.getPlaytime() == 0 ) {
 				GameValues.currentScreen = new NewGameScreen();
 			} else {
 				GameValues.currentScreen = new GameScreen();

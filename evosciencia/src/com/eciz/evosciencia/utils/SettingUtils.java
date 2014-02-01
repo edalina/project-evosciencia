@@ -22,7 +22,6 @@ public class SettingUtils {
 	public void stopBGM() {
 		if( bgm != null ) {
 			bgm.stop();
-			GameSettings.bgm = false;
 		}
 	}
 	
@@ -33,6 +32,14 @@ public class SettingUtils {
 		} else {
 			GameSettings.bgm = true;
 			startBGM(currentBGM);
+		}
+	}
+
+	public void toggleSFX() {
+		if( GameSettings.sfx ) {
+			GameSettings.sfx = false;
+		} else {
+			GameSettings.sfx = true;
 		}
 	}
 	

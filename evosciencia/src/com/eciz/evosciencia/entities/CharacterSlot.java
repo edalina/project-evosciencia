@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class CharacterSlot {
 
 	private int id;
-	private int saveDataId;
+	private int playtime;
 	private Texture texture;
 	private Rectangle rectangle;
 	private String definition;
@@ -18,11 +18,11 @@ public class CharacterSlot {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getSaveDataId() {
-		return saveDataId;
+	public int getPlaytime() {
+		return playtime;
 	}
-	public void setSaveDataId(int saveDataId) {
-		this.saveDataId = saveDataId;
+	public void setPlaytime(int playtime) {
+		this.playtime = playtime;
 	}
 	public Texture getTexture() {
 		return texture;

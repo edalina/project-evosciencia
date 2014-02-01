@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
@@ -29,7 +30,7 @@ public class Avatar extends Rectangle {
 	public boolean walkFlag = true;
 	// Animation flag
 	public long animationFlag = 0;
-	public StanceEnum facingFlag = StanceEnum.FRONT_STAND;
+	public StanceEnum facingFlag = StanceEnum.FRONT_STAND_1;
 	
 	public Avatar() {
 		setWidth(Avatar.width);
@@ -44,8 +45,9 @@ public class Avatar extends Rectangle {
 		boolean isX = false, isY = false;
 		GameValues.avatar.setX(x);
 		GameValues.avatar.setY(y);
-		GameValues.avatar.sprite.getBoundingRectangle().set(GameValues.avatar.getX(),
-				GameValues.avatar.getY(), 
+		GameValues.avatar.sprite.getBoundingRectangle().set(
+				GameValues.avatar.getX() + (Avatar.width - Avatar.width),
+				GameValues.avatar.getY() + (Avatar.height - Avatar.height), 
 				GameValues.avatar.getWidth(), 
 				GameValues.avatar.getHeight());
 		
@@ -66,7 +68,16 @@ public class Avatar extends Rectangle {
 	}
 	
 	public void updateStandBy() {
-		GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue()));
+		if( TimeUtils.nanoTime() - GameValues.avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
+			GameValues.avatar.animationFlag = TimeUtils.nanoTime();
+			if( GameValues.avatar.walkFlag ) {
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_1", "_2")));
+				GameValues.avatar.walkFlag = false;
+			} else {
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_2", "_1")));
+				GameValues.avatar.walkFlag = true;
+			}
+		}
 	}
 	
 	public void angleCameraOnAvatar() {

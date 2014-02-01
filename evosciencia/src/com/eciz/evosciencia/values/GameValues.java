@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,11 +14,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.DataHandler;
 import com.eciz.evosciencia.entities.Enemy;
+import com.eciz.evosciencia.entities.Scientist;
+import com.eciz.evosciencia.entities.User;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.utils.SettingUtils;
 
 public class GameValues {
+	
+	public static DataHandler dataHandler;
 	
 	public static final int SCREEN_WIDTH = 800;
 	public static final int SCREEN_HEIGHT = 400;
@@ -54,6 +60,8 @@ public class GameValues {
 	
 	public static Avatar avatar;
 	
+	public static User user;
+	
 	public static List<Rectangle> collisions;
 	
 	public static List<Checkpoint> checkpoints;
@@ -69,4 +77,16 @@ public class GameValues {
 	public static boolean touchDown = false;
 	
 	public static SettingUtils settingUtils;
+	
+	public static Texture[] introAnimations;
+	
+	public static Scientist currentScientist;
+	
+	public static Texture questMarkActive;
+	public static Texture questMarkInactive;
+	
+	public static int introIndexPointer;
+	
+	public static boolean isNewGame = false;
+	
 }

@@ -14,7 +14,7 @@ import com.eciz.evosciencia.EvoSciencia;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.CharacterSlot;
 import com.eciz.evosciencia.resources.LoadAssets;
-import com.eciz.evosciencia.screens.GameScreen;
+import com.eciz.evosciencia.screens.IntroScreen;
 import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
@@ -31,11 +31,13 @@ public class NewGameActor extends Table {
 	private BitmapFont dataText;
 	private String currentText = "";
 	
+	private Texture[] charactersTextures;
+	
 	private static final String[] CHARACTERS = {
-		"<Yjae>\n\nChampion marksman and gunslinger. Uses his agility and accuracy at it's finest.",
-		"<Carlo>\n\nChampion of hand to hand combat. Uses more of brute strength and powerful attacks.",
-		"<Ia>\n\nChampion of kendo. Uses swiftness and to slice up any object.",
-		"<Zhandy>\n\nChampion of blades. Uses the enemies weak points to deal critical damages."};
+		"<Yjae>",
+		"<Carlo>",
+		"<Ia>",
+		"<Zhandy>"};
 	
 	public NewGameActor() {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
@@ -56,15 +58,18 @@ public class NewGameActor extends Table {
 		
 		dataText = new BitmapFont();
 		
+		charactersTextures = new Texture[4];
+		
 		characterSlots = new ArrayList<CharacterSlot>();
 		
 		for( int i = 0 ; i < CHARACTERS.length ; i++ ) {
 			CharacterSlot characterSlot = new CharacterSlot();
 			characterSlot.setId(i);
 			characterSlot.setTexture(characterSlotTexture);
-			characterSlot.setSaveDataId(0);
 			characterSlot.setActive(false);
 			characterSlot.setDefinition(CHARACTERS[i]);
+			
+			charactersTextures[i] = new Texture(Gdx.files.internal("images/selection_" + characterSlot.getDefinition().split(">")[0].replace("<", "").toLowerCase() + ".jpg"));
 			
 			Rectangle rectangle = new Rectangle();
 			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*2) - 20)/4;
@@ -87,15 +92,16 @@ public class NewGameActor extends Table {
 		GameValues.currentBatch.draw(saveDataBox, coor, coor, GameValues.SCREEN_WIDTH - (coor*2), GameValues.SCREEN_HEIGHT - (coor*2));
 		GameValues.currentBatch.draw(dataBox, dataBoxRect.getX(), dataBoxRect.getY(), dataBoxRect.getWidth(), dataBoxRect.getHeight());
 		dataText.drawMultiLine(GameValues.currentBatch, currentText, dataBoxRect.getX() + 10, (dataBoxRect.getY() + dataBoxRect.getHeight()) - 10);
+		int i = 0;
 		for( CharacterSlot characterSlot : characterSlots ) {
+			GameValues.currentBatch.draw(charactersTextures[i], characterSlot.getRectangle().getX(), characterSlot.getRectangle().y, characterSlot.getRectangle().width, characterSlot.getRectangle().height);
 			GameValues.currentBatch.draw(characterSlot.getTexture(), characterSlot.getRectangle().x, characterSlot.getRectangle().y, characterSlot.getRectangle().width, characterSlot.getRectangle().height);
+			i++;
 		}
 		GameValues.currentBatch.end();
 		if( Gdx.input.isTouched() ) {
 			if( !GameValues.touchDown ) {
 				GameValues.touchDown = true;
-				GameValues.touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-				GameValues.camera.unproject(GameValues.touchPos);
 				for( CharacterSlot characterSlot : characterSlots ) {
 					if( EventUtils.isTap(characterSlot.getRectangle()) ) {
 						activateSlot(characterSlot);
@@ -110,9 +116,11 @@ public class NewGameActor extends Table {
 	public void activateSlot(CharacterSlot characterSlot) {
 		if( characterSlot.isActive() ) {
 			GameValues.avatar = new Avatar();
+			GameValues.user = GameValues.dataHandler.getUsers().get(characterSlot.getId());
 			GameValues.avatar.name = characterSlot.getDefinition().split(">")[0].replace("<", "").toLowerCase();
 			LoadAssets.loadAvatarAssets();
-			GameValues.currentScreen = new GameScreen();
+			GameValues.touchDown = false;
+			GameValues.currentScreen = new IntroScreen();
 			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 			return;
 		}
