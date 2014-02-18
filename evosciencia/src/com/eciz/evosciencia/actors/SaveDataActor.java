@@ -46,7 +46,7 @@ public class SaveDataActor extends Table {
 		
 		dataBoxRect = new Rectangle();
 		
-		dataBoxRect.set(coor + 10, coor + 10, GameValues.SCREEN_WIDTH - (coor*2) - 20, ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20);
+		dataBoxRect.set(coor*2 + 12, coor + 10, (GameValues.SCREEN_WIDTH - (coor*4) - 30), ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20);
 		
 		dataText = new BitmapFont();
 		
@@ -64,9 +64,9 @@ public class SaveDataActor extends Table {
 				characterSlot.setDefinition("Avatar: " + user.getAvatar() + "\nPlaytime: " + user.getPlaytime());
 			
 			Rectangle rectangle = new Rectangle();
-			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*2) - 20)/5;
+			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*4) - 30)/5;
 			rectangle.height = ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20;
-			rectangle.x = (user.getId() * rectangle.width)+  (coor + 10);
+			rectangle.x = (user.getId() * rectangle.width) + coor +  (coor + 12);
 			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*2))/2;
 			characterSlot.setRectangle(rectangle);
 			characterSlots.add(characterSlot);

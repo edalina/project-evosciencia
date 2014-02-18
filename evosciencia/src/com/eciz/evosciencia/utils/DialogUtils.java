@@ -81,7 +81,7 @@ public class DialogUtils {
 	
 	public static void createDialog() {
 		if( !dialog.equals("") ) {
-//			Dpad.isDpadActive = false;
+			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, dialog, DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
 			nextText.draw(GameValues.currentBatch, "next", nextRect.getX(), nextRect.getY()+15);if( Gdx.input.isTouched() ) {

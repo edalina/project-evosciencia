@@ -54,7 +54,7 @@ public class NewGameActor extends Table {
 		
 		dataBoxRect = new Rectangle();
 		
-		dataBoxRect.set(coor + 10, coor + 10, GameValues.SCREEN_WIDTH - (coor*2) - 20, ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20);
+		dataBoxRect.set((coor*2.5f) - 3, coor + 10, (GameValues.SCREEN_WIDTH - (coor*4) - 30), ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20);
 		
 		dataText = new BitmapFont();
 		
@@ -72,9 +72,9 @@ public class NewGameActor extends Table {
 			charactersTextures[i] = new Texture(Gdx.files.internal("images/selection_" + characterSlot.getDefinition().split(">")[0].replace("<", "").toLowerCase() + ".jpg"));
 			
 			Rectangle rectangle = new Rectangle();
-			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*2) - 20)/4;
+			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*4) - 30)/4;
 			rectangle.height = ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20;
-			rectangle.x = (i * rectangle.width)+  (coor + 10);
+			rectangle.x = (i * rectangle.width) + (coor/4) + ((coor*2) + 10);
 			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*2))/2;
 			characterSlot.setRectangle(rectangle);
 			characterSlots.add(characterSlot);

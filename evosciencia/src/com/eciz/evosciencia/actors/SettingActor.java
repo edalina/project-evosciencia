@@ -26,7 +26,7 @@ public class SettingActor extends Table {
 	
 	private Texture saveDataBox;
 	
-	private int coor = 50;
+	private int coor = 30;
 	
 	public SettingActor() {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
@@ -59,12 +59,12 @@ public class SettingActor extends Table {
 		hardRect = new Rectangle();
 		saveRect = new Rectangle();
 		
-		sfxRect.set( sfx.getBounds("sfx").width + (coor*2), GameValues.SCREEN_HEIGHT - (coor*3), 20, 20);
-		bgmRect.set( bgm.getBounds("bgm").width + (coor*2), GameValues.SCREEN_HEIGHT - (coor*4), 20, 20);
-		easyRect.set(difficulty.getBounds("difficulty").width + (coor*2), GameValues.SCREEN_HEIGHT - (coor*5), 20, 20);
-		normalRect.set(difficulty.getBounds("difficulty").width + (coor*2) + 25, GameValues.SCREEN_HEIGHT - (coor*5), 20, 20);
-		hardRect.set(difficulty.getBounds("difficulty").width + (coor*2) + 50, GameValues.SCREEN_HEIGHT - (coor*5), 20, 20);
-		saveRect.set(20, 20, save.getBounds("save").width, 15);
+		sfxRect.set( sfx.getBounds("sfx").width + (coor*3) + coor, GameValues.SCREEN_HEIGHT - (coor*3), 20, 20);
+		bgmRect.set( bgm.getBounds("bgm").width + (coor*3) + coor, GameValues.SCREEN_HEIGHT - (coor*4), 20, 20);
+		easyRect.set(difficulty.getBounds("difficulty").width + (coor*4), GameValues.SCREEN_HEIGHT - (coor*5), 20, 20);
+		normalRect.set(difficulty.getBounds("difficulty").width + (coor*4) + 25, GameValues.SCREEN_HEIGHT - (coor*5), 20, 20);
+		hardRect.set(difficulty.getBounds("difficulty").width + (coor*4) + 50, GameValues.SCREEN_HEIGHT - (coor*5), 20, 20);
+		saveRect.set(20, 10, save.getBounds("save").width, 15);
 		
 	}
 	
@@ -77,9 +77,9 @@ public class SettingActor extends Table {
 		GameValues.currentBatch.begin();
 		GameValues.currentBatch.draw(saveDataBox, coor, coor, GameValues.SCREEN_WIDTH - (coor*2), GameValues.SCREEN_HEIGHT - (coor*2));
 		title.draw(GameValues.currentBatch, "Options", coor, GameValues.SCREEN_HEIGHT);
-		sfx.draw(GameValues.currentBatch, "sfx", sfxRect.x - sfx.getBounds("sfx").width - 10, sfxRect.y + 17);
-		bgm.draw(GameValues.currentBatch, "bgm", sfxRect.x - bgm.getBounds("bgm").width - 10, bgmRect.y + 17);
-		difficulty.draw(GameValues.currentBatch, "difficulty", easyRect.x - sfx.getBounds("difficulty").width - 10, easyRect.y + 17);
+		sfx.draw(GameValues.currentBatch, "sfx", coor * 3, sfxRect.y + 17);
+		bgm.draw(GameValues.currentBatch, "bgm", coor * 3, bgmRect.y + 17);
+		difficulty.draw(GameValues.currentBatch, "difficulty", coor * 3, easyRect.y + 17);
 		GameValues.currentBatch.draw(sfxTexture, sfxRect.x, sfxRect.y, sfxRect.width, sfxRect.height);
 		GameValues.currentBatch.draw(bgmTexture, bgmRect.x, bgmRect.y, bgmRect.width, bgmRect.height);
 		GameValues.currentBatch.draw(easyTexture, easyRect.x, easyRect.y, easyRect.width, easyRect.height);

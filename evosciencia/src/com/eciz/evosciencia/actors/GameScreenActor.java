@@ -74,7 +74,7 @@ public class GameScreenActor extends Table {
 		
 		DialogUtils.createDialog();
 		GameValues.currentBatch.draw(npcTexture, npcRectangle.getX(), npcRectangle.getY(), npcRectangle.getWidth(), npcRectangle.getHeight());
-		GameValues.currentBatch.draw(GameValues.questMarkInactive, npcRectangle.getX(), npcRectangle.getY(), npcRectangle.getWidth(), npcRectangle.getHeight());
+		GameValues.currentBatch.draw(GameValues.questMarkActive, npcRectangle.getX(), npcRectangle.getY(), npcRectangle.getWidth(), npcRectangle.getHeight());
 		GameValues.currentBatch.draw(GameValues.avatar.sprite, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
 		GameValues.currentBatch.end();
 		

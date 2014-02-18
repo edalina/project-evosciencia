@@ -3,7 +3,7 @@ package com.eciz.evosciencia.values;
 public class HelpValues {
 
 	public static final String[] INTRO = {
-		"Hello, I am Albert Einstein.\nI will be your guide in this game.",
+		"Hello, I am Prof. Ivan Scieze.\nI will be your guide in this game.",
 		"A secret group of scientists has tried to " +
 		"create a time machine but they failed and " +
 		"created a catastrophic phenomena.",

@@ -33,6 +33,7 @@ public class LoadAssets {
 		LoadAssets.loadEtc();
 		LoadAssets.loadScientists();
 //		LoadAssets.loadPools();
+		LoadAssets.loadIntroAssets();
 		GameValues.settingUtils = new SettingUtils();
 	}
 	
@@ -68,6 +69,9 @@ public class LoadAssets {
 		assetManager.load("images/selection_yjae.jpg", Texture.class);
 		assetManager.load("images/selection_zhandy.jpg", Texture.class);
 		
+	}
+	
+	public static void loadIntroAssets() {
 		GameValues.introAnimations = new Texture[72];
 		GameValues.introIndexPointer = 1;
 		
@@ -76,7 +80,6 @@ public class LoadAssets {
 			assetManager.load(pathName, Texture.class);
 			GameValues.introAnimations[i-1] = new Texture(Gdx.files.internal(pathName));
 		}
-		
 	}
 
 	public static void loadAllMonsters() {

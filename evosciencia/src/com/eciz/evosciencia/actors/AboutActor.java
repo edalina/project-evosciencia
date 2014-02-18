@@ -33,7 +33,7 @@ public class AboutActor extends Table {
 			"\tZhandy Teves\n";
 	private String backTxt = "back";
 	
-	private int coor = 50;
+	private int coor = 30;
 	
 	public AboutActor() {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
@@ -50,10 +50,10 @@ public class AboutActor extends Table {
 		back = new BitmapFont();
 		
 		title.setScale(2);
-		content.setScale(2);
+		content.setScale(1);
 		
 		backRec = new Rectangle();
-		backRec.set(20, 20, back.getBounds(backTxt).width, 15);
+		backRec.set(20, 10, back.getBounds(backTxt).width, 15);
 		
 	}
 	
@@ -66,7 +66,7 @@ public class AboutActor extends Table {
 		GameValues.currentBatch.begin();
 		GameValues.currentBatch.draw(saveDataBox, coor, coor, GameValues.SCREEN_WIDTH - (coor*2), GameValues.SCREEN_HEIGHT - (coor*2));
 		title.draw(GameValues.currentBatch, titleTxt, coor + 10, GameValues.SCREEN_HEIGHT);
-		content.drawMultiLine(GameValues.currentBatch, contentTxt, coor + 10, GameValues.SCREEN_HEIGHT - (coor*2) + 30);
+		content.drawMultiLine(GameValues.currentBatch, contentTxt, coor * 3, GameValues.SCREEN_HEIGHT - (coor*3));
 		back.draw(GameValues.currentBatch, backTxt, backRec.x, backRec.y + 15);
 		GameValues.currentBatch.end();
 		if( Gdx.input.isTouched() ) {
