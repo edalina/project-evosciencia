@@ -488,4 +488,9 @@
    eJztmsEOgjAMhncz0QNBLsKzcfCVgBfYcwkPYxdmrI0uYaxzG/2SHnrZ2srK36FSK8tNFUFfSB4hfo8UahEihlDPZtUqvSeG02W1R6fUDLZ029boW9/dw5FCDEJ5mHPh8oXjAD1GQ7/U0Pv1v2MRPqkY+z+sfY9x7s0eJo/6rNQVrLGG/Zr4KfejAeIbwSZr2B+InzI11PgK1ljDfk18bvbozgHiG8Ema9gfiG8APaiDBP2FmHPZzJiH0Z2xzuCC8khhBvIF9+qc53OcR+rzh+sZ5Xx3hqaUPFyUkocgCOkRWztw7Ye1A6cGe63NoVVMr/fRDrSmrhqbPfDdLpdW8Xlv0ZrmqgdpTVPXgxzIXen7W0rulJKHIAiCD67+t6U3VgHuCKm+y7U3U32H8wgxJ8SqS9/+/r9ErhqWckQNWypPMpE6tg==
   </data>
  </layer>
+ <layer name="npc" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIA7AlmMC/Ui4M8PC0CpoAAKv6ewAAAAAAAAAAXA2GTQAc
+  </data>
+ </layer>
 </map>

@@ -598,4 +598,9 @@
    eJzt0VsKgkAYhuF/IYY36uRm6tJ0g9WK5rCaPoiukg6DNA28D7wIIviNmm3HNWb7lcZmw5f8wFl7LytdKzuH2+n7rzTuSi+rx7F9vndo7/e/vb7yeObT5wEAAAAAAAAAAAD8B9+ZBRVV6kqvyTf1Zic1q6UvvSaf1/agokoVn2Ma9D/UrJah9Jp8XtuDiipVfI7J6X+oWS2u9Jp8XtuDiipVfA7gnRtm9Cd5
   </data>
  </layer>
+ <layer name="npc" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzgEJAAAIA7CDJeyf1BgqbAmWAAAAAAAAANxUvT0AAOCTATvHABw=
+  </data>
+ </layer>
 </map>

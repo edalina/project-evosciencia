@@ -8,7 +8,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.eciz.evosciencia.controls.Dpad;
@@ -32,8 +31,6 @@ public class GameValues {
 
 	public static final int CHARACTER_WIDTH = Avatar.width;
 	public static final int CHARACTER_HEIGHT = Avatar.height;
-	public static final int ENEMY_WIDTH = Enemy.width;
-	public static final int ENEMY_HEIGHT = Enemy.height;
 	public static final int DPAD_WIDTH = 16;
 	public static final int DPAD_HEIGHT = 16;
 	
@@ -49,6 +46,10 @@ public class GameValues {
 	public static final String COLLISION_PROPERTY = "collision";
 	
 	public static final String OBSTACLE_PROPERTY = "obstacles_";
+	
+	public static final String NPC_PROPERTY = "npc";
+	
+	public static final String SPAWN_PROPERTY = "spawn";
 	
 	public static final String CHECK_POINT = "cpoint";
 	
@@ -70,7 +71,7 @@ public class GameValues {
 	
 	public static Maps maps;
 	
-	public static Map<String, Map<String, Sprite>> monsters = new LinkedHashMap<String, Map<String,Sprite>>();
+	public static Map<String, Map<String, Texture>> monsters = new LinkedHashMap<String, Map<String,Texture>>();
 	
 	public static Batch currentBatch;
 	
@@ -81,6 +82,8 @@ public class GameValues {
 	public static Texture[] introAnimations;
 	
 	public static Scientist currentScientist;
+	
+	public static int currentMapValue;
 	
 	public static Texture questMarkActive;
 	public static Texture questMarkInactive;

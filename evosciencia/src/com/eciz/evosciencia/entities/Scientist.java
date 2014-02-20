@@ -1,5 +1,6 @@
 package com.eciz.evosciencia.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Scientist {
@@ -8,6 +9,7 @@ public class Scientist {
 	private String name;
 	private String description;
 	private Rectangle rectangle;
+	private Texture texture;
 	
 	public int getId() {
 		return id;
@@ -32,6 +34,12 @@ public class Scientist {
 	}
 	public void setRectangle(Rectangle rectangle) {
 		this.rectangle = rectangle;
+	}
+	public Texture getTexture() {
+		return texture;
+	}
+	public void setTexture(Texture texture) {
+		this.texture = texture;
 	}
 	
 }

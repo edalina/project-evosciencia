@@ -948,4 +948,9 @@
    eJzt080JwCAMhuEMIv7MZhfoHF2qu8RBmmMPhR4iBPR9wJPw+QWJSJxeRY76fXclud/nLyeS2vtjQgedkOHRm/1Hm5OzgjNFN9iDZtufHN3CrxfbnxLdwk9thrHAHAAAAAAAAAAAAAAAYE8PPwwRWA==
   </data>
  </layer>
+ <layer name="npc" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzgEJAAAIA7CDJeyf1BQiyJZgCQAAAAAA/Fd9PQAAAAC2DdcHABw=
+  </data>
+ </layer>
 </map>

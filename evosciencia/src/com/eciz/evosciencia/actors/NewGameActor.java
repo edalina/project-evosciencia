@@ -120,6 +120,7 @@ public class NewGameActor extends Table {
 			GameValues.avatar.name = characterSlot.getDefinition().split(">")[0].replace("<", "").toLowerCase();
 			LoadAssets.loadAvatarAssets();
 			GameValues.touchDown = false;
+			LoadAssets.loadIntroAssets();
 			GameValues.currentScreen = new IntroScreen();
 			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 			return;

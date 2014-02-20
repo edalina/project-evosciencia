@@ -1,20 +1,14 @@
 {
 	"maps" : [
-		"town_1",
-		"town_2",
-		"town_3",
-		"town_4",
-		"town_5",
-		"town_6",
-		"town_7",
-		"town_8",
-		"town_9",
-		"town_10",
-		"town_11",
-		"town_12",
-		"town_13",
-		"town_14",
-		"town_15"
+		"map1_1",
+		"map2_1",
+		"map3_1",
+		"map4_1",
+		"map5_1",
+		"map6_1",
+		"map7_1",
+		"map8_1",
+		"map9_1"
 	],
 	"scientists" : [
 		{"id" : 0, "name" : "alessandro volta", "description" : "Discovery of the first practical method of generating electricity and he invented the battery in 1800."},
@@ -83,48 +77,53 @@
 	"users" : [
 		{
 			"id" : 0,
-			"coordinate" : { "x" : 0, "y" : 0, "map" : "town_1"},
+			"coordinate" : { "x" : 0, "y" : 0, "map" : "map1_1"},
 			"playtime" : 0,
 			"avatar" : "yjae",
 			"life" : 100,
 			"level" : 1,
-			"scientists" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+			"scientists" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+			"questDone" : ["false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false"]
 		},
 		{
 			"id" : 1,
-			"coordinate" : { "x" : 0, "y" : 0, "map" : "town_1"},
+			"coordinate" : { "x" : 0, "y" : 0, "map" : "map1_1"},
 			"playtime" : 0,
 			"avatar" : "yjae",
 			"life" : 100,
 			"level" : 1,
-			"scientists" : [18, 36, 2, 26, 26, 32, 33, 26, 22, 37, 30, 12, 26, 1, 14]
+			"scientists" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+			"questDone" : ["false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false"]
 		},
 		{
 			"id" : 2,
-			"coordinate" : { "x" : 0, "y" : 0, "map" : "town_1"},
+			"coordinate" : { "x" : 0, "y" : 0, "map" : "map1_1"},
 			"playtime" : 0,
 			"avatar" : "yjae",
 			"life" : 100,
 			"level" : 1,
-			"scientists" : [21, 21, 3, 40, 41, 30, 1, 11, 13, 16, 14, 1, 6, 0, 28]
+			"scientists" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+			"questDone" : ["false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false"]
 		},
 		{
 			"id" : 3,
-			"coordinate" : { "x" : 0, "y" : 0, "map" : "town_1"},
+			"coordinate" : { "x" : 0, "y" : 0, "map" : "map1_1"},
 			"playtime" : 0,
 			"avatar" : "yjae",
 			"life" : 100,
 			"level" : 1,
-			"scientists" : [35, 10, 41, 14, 25, 34, 30, 37, 21, 30, 30, 23, 17, 4, 30]
+			"scientists" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+			"questDone" : ["false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false"]
 		},
 		{
 			"id" : 4,
-			"coordinate" : { "x" : 0, "y" : 0, "map" : "town_1"},
+			"coordinate" : { "x" : 0, "y" : 0, "map" : "map1_1"},
 			"playtime" : 0,
 			"avatar" : "yjae",
 			"life" : 100,
 			"level" : 1,
-			"scientists" : [30, 34, 36, 29, 40, 44, 43, 40, 36, 12, 13, 42, 10, 22, 34]
+			"scientists" : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+			"questDone" : ["false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false", "false"]
 		}
 	]
 }

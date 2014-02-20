@@ -205,7 +205,12 @@
  </layer>
  <layer name="obstacles_1" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmVluwjAQQP2FVKS2Z2A5EGvZ4Tyt1HI19n25Sl9URUKI0BjGNkZ+0vuDeDyOJ85EKX2+M0p9Zm74YyDwgGS5l18N3s9ZS3vlK/O3N01e/1GI1stWXpPGfxEYP1qva3mVGOO/8W3U8jRjmJ6rad6I//0Jno0/xD/0fA4BGVzWWEke6dkVCATscV7D5jmlFrjEFa5zbuKK0Kmv5zWsnlfqAxvYxFZeNjYd7qmvc+Je4BJXuHY4jzQknVPrBdYDG9jEVsFsHCXyVMYKVrGmmbekc+qcuBe4xBWuDc9jRNxjnOAUZ0LrXy+yHtjAJraKMtdNokSeyljBKtYM580UI+Ie4wSnODMwj3CutI/LnOuOfe33LnOuO7Z0rM+4b+K+yb2Y7OGmQapvYrKH6wO+3+Nx/D49Gy7he/wRUrXFNaZ6sr733GNc9txDDmXxvf7HnNfPTU6pLe5wjwc8avSeTH+nTkub9/MOdrGHfRxovLOb/k6dlg0xb3GHezzgUbj3ZONebvN+3sEu9rCPA+F3dhtngQ0xb3GHezzg8WQeab/526zHl/Zku8h6YBd72MfBSe/p9Jv/tbPJLfX41vpw756UPpu4qg+/MsNZOA==
+   eJztmVlqwzAQhgWFQANtX/ua5UBZmz05Twttr5Z9X67SL4SAMbFrWZsT9MP3lkijGXkkzQghr++cEJ+5FH/08kqhp3ez4+fZyy8G93Pe0rfylbt8mybHz4rO8brlV9N7JTj/swZ/nOMV51fVOf7zh61cnmQOHf50qVfsf3uAs/EH+3/vfA1eemTr7DItXWeXrfPFy/va6yLVfRDOYYuCEEtYwRo2BbXxVSSTX8M5rFkU4gNa0IZOUa9tMlLJrwvsXsIK1rBxuI4kirqnNkvEA1rQhk7JrB0V/FSFGtShIem3qHvqAruXsII1bAyvY4zdE5jCDOaa4t8sEw9oQRs6ZT3jRqmCn6pQgzo0YvyW5bNtjN0TmMIM5gbi7++V6pLdQy59Ljt33O9d+lx2bt222oyhyRwV9Mu1bqIqkzXcJNJVNzFZw9URUxv1+HvW1f6s1MvTxusRaia6cotrJcktafxso+ZuI/4ua+4yPszyvT8rfYt7yv9x8Qznz21BiB3s4QBHOEnUnkz3qZOqy/u8B30YwBBGEm92033qpNpi8w72cIAjnDTXnmzs5S7v8x70YQBDGGl+s9u4y2yxeQd7OMARToF1RPX8w7LZR771TXbLxAP6MIAhjAK1p2DPP+5ukiYfp80Pqt+k7n6xq/zwB0iqWwM=
+  </data>
+ </layer>
+ <layer name="spawn" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1UEJAAAIA0DBEvZPagV9iXCXYI+NRQDAP1nXCQDghg9kS2fgPzsGAAAAgLkGs7IAbQ==
   </data>
  </layer>
 </map>

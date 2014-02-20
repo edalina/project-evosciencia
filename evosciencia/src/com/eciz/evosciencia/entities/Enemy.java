@@ -1,19 +1,21 @@
 package com.eciz.evosciencia.entities;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.values.GameValues;
 
-public class Enemy extends Actor {
+public class Enemy extends Sprite {
 
-	public static final int width = 64;
-	public static final int height = 64;
+	public static final float width = GameValues.avatar.getWidth();
+	public static final float height = GameValues.avatar.getWidth();
 	
 	private int id;
-	private Sprite currentSprite;
+	private Texture texture;
 	private StanceEnum facing;
 	public boolean isMoving = false;
+	private int life = 100;
+	private boolean alive = true;
 	
 	public int getId() {
 		return id;
@@ -21,11 +23,17 @@ public class Enemy extends Actor {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Sprite getCurrentSprite() {
-		return currentSprite;
+	public int getLife() {
+		return life;
 	}
-	public void setCurrentSprite(Sprite currentSprite) {
-		this.currentSprite = currentSprite;
+	public void setLife(int life) {
+		this.life = life;
+	}
+	public Texture getTexture() {
+		return texture;
+	}
+	public void setTexture(Texture texture) {
+		this.texture = texture;
 	}
 	public StanceEnum getFacing() {
 		return facing;
@@ -33,16 +41,11 @@ public class Enemy extends Actor {
 	public void setFacing(StanceEnum facing) {
 		this.facing = facing;
 	}
-	
-	@Override
-	public void setPosition( float x, float y ) {
-		setX(x);
-		setY(y);
-		getCurrentSprite().getBoundingRectangle().set(
-				x, 
-				y, 
-				GameValues.ENEMY_WIDTH, 
-				GameValues.ENEMY_HEIGHT);
+	public boolean isAlive() {
+		return alive;
+	}
+	public void setAlive(boolean isAlive) {
+		this.alive = isAlive;
 	}
 	
 }

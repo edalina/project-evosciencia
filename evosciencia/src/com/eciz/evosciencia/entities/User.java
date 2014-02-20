@@ -9,6 +9,7 @@ public class User {
 	private int life;
 	private int level;
 	private int[] scientists;
+	private boolean[] questDone;
 	
 	public int getId() {
 		return id;
@@ -51,6 +52,12 @@ public class User {
 	}
 	public void setScientists(int[] scientists) {
 		this.scientists = scientists;
+	}
+	public boolean[] getQuestDone() {
+		return questDone;
+	}
+	public void setQuestDone(boolean[] questDone) {
+		this.questDone = questDone;
 	}
 	
 }

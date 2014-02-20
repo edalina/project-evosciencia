@@ -14,7 +14,6 @@ import com.eciz.evosciencia.entities.DataHandler;
 import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.enums.MonsterEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
-import com.eciz.evosciencia.manager.pool.EnemyPool;
 import com.eciz.evosciencia.utils.SettingUtils;
 import com.eciz.evosciencia.values.GameValues;
 
@@ -29,11 +28,11 @@ public class LoadAssets {
 	
 	public static void loadAllAssets() {
 		assetManager = new AssetManager();
-//		LoadAssets.loadAllMonsters();
+		LoadAssets.loadAllMonsters();
 		LoadAssets.loadEtc();
 		LoadAssets.loadScientists();
 //		LoadAssets.loadPools();
-		LoadAssets.loadIntroAssets();
+//		LoadAssets.loadIntroAssets();
 		GameValues.settingUtils = new SettingUtils();
 	}
 	
@@ -41,6 +40,7 @@ public class LoadAssets {
 		for( Scientist scientist : GameValues.dataHandler.getScientists() ) {
 			assetManager.load("npc/" + scientist.getName() + ".png", Texture.class);
 		}
+		assetManager.load("npc/npc_unknown.png", Texture.class);
 	}
 
 	private static void loadEtc() {
@@ -84,18 +84,18 @@ public class LoadAssets {
 
 	public static void loadAllMonsters() {
 		for(MonsterEnum monsterEnum : MonsterEnum.values()) {
-			Map<String, Sprite> monsters = new LinkedHashMap<String, Sprite>();
+			Map<String, Texture> monsters = new LinkedHashMap<String, Texture>();
 			for( StanceEnum stanceEnum : StanceEnum.values()  ) {
 				String path = "monsters/" + monsterEnum.getValue() + "/" + stanceEnum.getValue() + ".png";
 				assetManager.load(path, Texture.class);
-				monsters.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal(path))));
+				monsters.put(stanceEnum.getValue(), new Texture(Gdx.files.internal(path)));
 			}
 			GameValues.monsters.put(monsterEnum.getValue(), monsters);
 		}
 	}
 	
 	public static void loadPools() {
-		new EnemyPool();
+//		new EnemyPool();
 	}
 	
 //	public static void 
@@ -110,7 +110,7 @@ public class LoadAssets {
 			GameValues.avatar.avatarSprites.put(stanceEnum.getValue(), new Sprite(new Texture(Gdx.files.internal(path))));
 		}
 		
-		GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND_1.getValue());
+		GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.FRONT_STAND.getValue());
 		
 		GameValues.avatar.sprite.setBounds(GameValues.avatar.getX(), GameValues.avatar.getY(), Avatar.width, Avatar.height);
 	}

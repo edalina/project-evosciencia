@@ -3,7 +3,6 @@ package com.eciz.evosciencia.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.eciz.evosciencia.controls.Dpad;
@@ -16,8 +15,7 @@ import com.eciz.evosciencia.values.GameValues;
 
 public class GameScreenActor extends Table {
 	
-	private Texture npcTexture;
-	private Rectangle npcRectangle;
+	private Texture questIndicator;
 	
 	public GameScreenActor() {
 		
@@ -33,23 +31,14 @@ public class GameScreenActor extends Table {
 		GameValues.maps = Maps.getMaps();
 		
 		if( GameValues.isNewGame ) {
-			GameValues.avatar.facingFlag = StanceEnum.BACK_STAND_1;
-			GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.BACK_STAND_1.getValue());
+			GameValues.avatar.facingFlag = StanceEnum.BACK_STAND;
+			GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.BACK_STAND.getValue());
 		}
 
-		GameValues.currentScientist = GameValues.dataHandler.getScientists().get((GameValues.user.getScientists()[Integer.parseInt(GameValues.maps.name.replace("town_", ""))-1]));
+		questIndicator = GameValues.questMarkInactive;
 		
-		npcTexture = new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png"));
-		npcRectangle = new Rectangle();
-		
-		float x = ( GameValues.SCREEN_WIDTH - GameValues.avatar.getWidth() ) / 2,
-			y = ( GameValues.SCREEN_HEIGHT - GameValues.avatar.getHeight() ) / 2;
-		
-		npcRectangle.set(x, y + (Avatar.height * 5), Avatar.width, Avatar.height);
-		
-		GameValues.currentScientist.setRectangle(npcRectangle);
-		
-		GameValues.collisions.add(npcRectangle);
+		if( GameValues.currentScientist.getRectangle() != null )
+			GameValues.collisions.add(GameValues.maps.createNPCObjects());
 		
 		new DialogUtils();
 		
@@ -58,6 +47,18 @@ public class GameScreenActor extends Table {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		
+		if( Avatar.isQuestActive ) {
+			questIndicator = GameValues.questMarkActive;
+		} else {
+			questIndicator = GameValues.questMarkInactive;
+		}
+		
+		if( GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+			GameValues.currentScientist.setTexture( new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")) );
+		} else {
+			GameValues.currentScientist.setTexture( new Texture(Gdx.files.internal("npc/npc_unknown.png")) );
+		}
 		
 		// Updating camera/frame
 		GameValues.camera.update();
@@ -72,9 +73,12 @@ public class GameScreenActor extends Table {
 			GameValues.currentBatch.draw(new Texture(Gdx.files.internal("npc/albert einstein.png")), GameValues.avatar.getX(), GameValues.avatar.getY() + (GameValues.avatar.getHeight()*2), Avatar.width, Avatar.height);
 		}
 		
-		DialogUtils.createDialog();
-		GameValues.currentBatch.draw(npcTexture, npcRectangle.getX(), npcRectangle.getY(), npcRectangle.getWidth(), npcRectangle.getHeight());
-		GameValues.currentBatch.draw(GameValues.questMarkActive, npcRectangle.getX(), npcRectangle.getY(), npcRectangle.getWidth(), npcRectangle.getHeight());
+		if( GameValues.currentScientist.getRectangle() != null ) {
+			DialogUtils.createDialog();
+			GameValues.currentBatch.draw(GameValues.currentScientist.getTexture(), GameValues.currentScientist.getRectangle().getX(), GameValues.currentScientist.getRectangle().getY(), GameValues.currentScientist.getRectangle().getWidth(), GameValues.currentScientist.getRectangle().getHeight());
+			GameValues.currentBatch.draw(questIndicator, GameValues.currentScientist.getRectangle().getX() + (GameValues.currentScientist.getRectangle().getWidth()/4), GameValues.currentScientist.getRectangle().getY() + (GameValues.currentScientist.getRectangle().getHeight()/4), GameValues.currentScientist.getRectangle().getWidth()/2, GameValues.currentScientist.getRectangle().getHeight()/2);
+		}
+		GameValues.maps.renderMonsters();
 		GameValues.currentBatch.draw(GameValues.avatar.sprite, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
 		GameValues.currentBatch.end();
 		
@@ -90,6 +94,10 @@ public class GameScreenActor extends Table {
 			Dpad.isDpadActive = false;
 			DialogUtils.isDialogActive = true;
 			DialogUtils.introDialogs();
+		}
+		
+		if( GameValues.currentScientist.getRectangle() != null ) {
+			DialogUtils.createDialog();
 		}
 		
 		GameValues.currentBatch.end();

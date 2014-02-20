@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.entities.Quest;
 import com.eciz.evosciencia.entities.SkillSlot;
 import com.eciz.evosciencia.enums.StanceEnum;
@@ -155,11 +156,11 @@ public class Dpad {
 	
 	public static void moveAvatar( float valueX, float valueY ) {
 		
-		Rectangle tempRect = new Rectangle();
-		tempRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		Rectangle tmpRect = new Rectangle();
+		tmpRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
 		
 		for(Checkpoint checkpoint : GameValues.checkpoints ) {
-			if( tempRect.overlaps(checkpoint.getRectangle()) ) {
+			if( tmpRect.overlaps(checkpoint.getRectangle()) ) {
 				GameValues.avatar.updateStandBy();
 				String prevMap = GameValues.maps.name;
 				GameValues.maps.setCurrentMap(checkpoint.getValue());
@@ -173,20 +174,16 @@ public class Dpad {
 						x = newMapCheckpoint.getRectangle().getX();
 						y = newMapCheckpoint.getRectangle().getY();
 						switch (facing) {
-							case FRONT_STAND_1:
-							case FRONT_STAND_2:
+							case FRONT_STAND:
 								y = y - newMapCheckpoint.getRectangle().getHeight();
 								break;
-							case BACK_STAND_1:
-							case BACK_STAND_2:
+							case BACK_STAND:
 								y = y + newMapCheckpoint.getRectangle().getHeight();
 								break;
-							case LEFT_STAND_1:
-							case LEFT_STAND_2:
+							case LEFT_STAND:
 								x = x - newMapCheckpoint.getRectangle().getWidth();
 								break;
-							case RIGHT_STAND_1:
-							case RIGHT_STAND_2:
+							case RIGHT_STAND:
 								x = x + newMapCheckpoint.getRectangle().getWidth();
 								break;
 							default:
@@ -221,16 +218,25 @@ public class Dpad {
 			}
 		}
 		
-		if( tempRect.getX() < 1 ||
-			tempRect.getX() > Maps.MAP_WIDTH - Avatar.width ||
-			tempRect.getY() < 1 ||
-			tempRect.getY() > Maps.MAP_HEIGHT - Avatar.height) {
+		if( tmpRect.getX() < 1 ||
+			tmpRect.getX() > Maps.MAP_WIDTH - Avatar.width ||
+			tmpRect.getY() < 1 ||
+			tmpRect.getY() > Maps.MAP_HEIGHT - Avatar.height) {
 			GameValues.avatar.updateStandBy();
 			return;
 		}
 		
+		for(Enemy enemy : Maps.enemies) {
+			if( enemy.isAlive() ) {
+				if( tmpRect.overlaps(enemy.getBoundingRectangle()) ) {
+					GameValues.avatar.updateStandBy();
+					return;
+				}
+			}
+		}
+		
 		for(Rectangle collision : GameValues.collisions ) {
-			if( tempRect.overlaps(collision) ) {
+			if( tmpRect.overlaps(collision) ) {
 				GameValues.avatar.updateStandBy();
 				return;
 			}
@@ -287,7 +293,6 @@ public class Dpad {
 			}
 			
 		}
-			
 		
 	}
 	
@@ -327,25 +332,25 @@ public class Dpad {
 			// Up arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getUpArrowRectangle()) ) {
 				valueY = GameValues.CHARACTER_SPEED;
-				face = StanceEnum.BACK_STAND_1;
+				face = StanceEnum.BACK_STAND;
 			}
 			
 			// Down arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getDownArrowRectangle()) ) {
 				valueY = -GameValues.CHARACTER_SPEED;
-				face = StanceEnum.FRONT_STAND_1;
+				face = StanceEnum.FRONT_STAND;
 			}
 			
 			// Left arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getLeftArrowRectangle()) ) {
 				valueX = -GameValues.CHARACTER_SPEED;
-				face = StanceEnum.LEFT_STAND_1;
+				face = StanceEnum.LEFT_STAND;
 			}
 			
 			// Right arrow is clicked/touched
 			if( EventUtils.isTap(GameValues.dpad.getRightArrowRectangle()) ) {
 				valueX = GameValues.CHARACTER_SPEED;
-				face = StanceEnum.RIGHT_STAND_1;
+				face = StanceEnum.RIGHT_STAND;
 			}
 			
 			if( !face.equals(GameValues.avatar.facingFlag) ) {
@@ -383,45 +388,57 @@ public class Dpad {
 	public void actionButton() {
 		Rectangle tmpRectangle = new Rectangle();
 		switch(GameValues.avatar.facingFlag) {
-			case FRONT_STAND_1:
-			case FRONT_STAND_2:
+			case FRONT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() - Avatar.height, Avatar.width, Avatar.height);
 				break;
-			case BACK_STAND_1:
-			case BACK_STAND_2:
+			case BACK_STAND:
 				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() + Avatar.height, Avatar.width, Avatar.height);
 				break;
-			case LEFT_STAND_1:
-			case LEFT_STAND_2:
+			case LEFT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX() - Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
 				break;
-			case RIGHT_STAND_1:
-			case RIGHT_STAND_2:
+			case RIGHT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX() + Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
 				break;
 			default:
 				break;
 		}
 		
-		if( tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
-			String dialog = "Can you help me gather these items?\n\n";
-			List<Quest> quests = new ArrayList<Quest>();
-			for( Quest quest : GameValues.dataHandler.getQuests() ) {
-				for( int id : quest.getScientistsIds() ) {
-					if( id == GameValues.currentScientist.getId() ) {
-						quests.add(quest);
+		if( GameValues.currentScientist != null ) {
+		
+			if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
+				String dialog = "Can you help me gather these items?\n";
+				List<Quest> quests = Quest.getQuests();
+				int i = 0;
+				for( Quest quest : quests ) {
+					dialog = dialog.concat(quest.getName());
+					if( i < quests.size()-1 )
+						dialog = dialog.concat(", ");
+					i++;
+				}
+				DialogUtils.createDialog(dialog + "\nHelp me please");
+			}
+			
+		}
+		
+		for( Enemy enemy : Maps.enemies ) {
+			if( tmpRectangle.overlaps(enemy.getBoundingRectangle()) ) {
+				enemy.setLife(enemy.getLife()-10);
+				if( enemy.getLife() <= 0 ) {
+					enemy.setAlive(false);
+					if( Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+						if( ( Math.random() * 500 ) < 500 ) {
+							
+							System.out.println( "Quest complete" );
+							
+							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
+							
+							DialogUtils.createItemDialog("Quest completed");
+							
+						}
 					}
 				}
 			}
-			int i = 0;
-			for( Quest quest : quests ) {
-				dialog = dialog.concat(quest.getName());
-				if( i < quests.size()-1 )
-					dialog = dialog.concat(", ");
-				i++;
-			}
-			DialogUtils.isDialogActive = true;
-			DialogUtils.createDialog(dialog + "\n\nHelp me please");
 		}
 				
 	}

@@ -1,7 +1,10 @@
 package com.eciz.evosciencia.resources;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -10,6 +13,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.Enemy;
+import com.eciz.evosciencia.enums.MonsterEnum;
+import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Maps {
@@ -19,9 +25,12 @@ public class Maps {
 	public static final float MAP_UNIT_SCALE = 1f;
 	public static final float MAP_WIDTH = 800 * MAP_UNIT_SCALE;
 	public static final float MAP_HEIGHT = 800 * MAP_UNIT_SCALE;
-	public String name = "town_1";
+	public static List<Enemy> enemies;
+	public String name = "map1_1";
 	
 	public Maps() {
+		GameValues.currentScientist = GameValues.dataHandler.getScientists().get((GameValues.user.getScientists()[GameValues.currentMapValue]));
+		GameValues.currentScientist.setTexture( new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")) );
 		currentMap = new TmxMapLoader().load("tmx/" + name + ".tmx");
 		changeMap();
 	}
@@ -48,15 +57,27 @@ public class Maps {
 	}
 	
 	public void changeMap() {
+		Maps.enemies = new ArrayList<Enemy>();
 		createObjects();
 		renderCheckpoints();
+		createSpawningGrounds();
 		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
+		GameValues.currentScientist.setRectangle(createNPCObjects());
+	}
+	
+	public void renderMonsters() {
+		GameValues.maps.getRenderer().setView(GameValues.camera);
+		for( Enemy enemy : enemies ) {
+			if( enemy.isAlive() )
+				GameValues.currentBatch.draw(enemy.getTexture(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
+		}
 	}
 	
 	public void renderNonObstacleObj() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
 		for( int i = 0 ; i < GameValues.maps.getCurrentMap().getLayers().getCount() ; i++ ) {
-			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.OBSTACLE_PROPERTY) ) {
+			if( !GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.OBSTACLE_PROPERTY) &&
+				!GameValues.maps.getCurrentMap().getLayers().get(i).getName().contains(GameValues.SPAWN_PROPERTY) ) {
 				GameValues.maps.getRenderer().render(new int[]{i});
 			}
 		}
@@ -69,6 +90,26 @@ public class Maps {
 				GameValues.maps.getRenderer().render(new int[]{i});
 			}
 		}
+	}
+	
+	public Rectangle createNPCObjects() {
+		Rectangle npcRect = null;
+		for( int i = 0 ; i < currentMap.getLayers().getCount() ; i++ ) {
+			if( currentMap.getLayers().get(i).getName().contains(GameValues.NPC_PROPERTY) ) {
+				TiledMapTileLayer currentLayer = (TiledMapTileLayer) currentMap.getLayers().get(i);
+				int tileWidth = (int) (currentLayer.getTileWidth() * Maps.MAP_UNIT_SCALE),
+					tileHeight = (int) (currentLayer.getTileHeight() * Maps.MAP_UNIT_SCALE);
+				for( int x = 0 ; x < 50 ; x++ ) {
+					for( int y = 0 ; y < 50 ; y++ ) {
+						if( currentLayer.getCell(x, y) != null ) {
+							npcRect = new Rectangle();
+							npcRect.set(x*tileWidth, y*tileHeight, tileWidth, tileHeight);
+						}
+					}
+				}
+			}
+		}
+		return npcRect;
 	}
 	
 	public void renderCheckpoints() {
@@ -112,5 +153,43 @@ public class Maps {
 			}
 		}
 	}
-
+	
+	public void createSpawningGrounds() {
+		for( int i = 0 ; i < currentMap.getLayers().getCount() ; i++ ) {
+			if( currentMap.getLayers().get(i).getName().contains(GameValues.SPAWN_PROPERTY) ) {
+				TiledMapTileLayer currentLayer = (TiledMapTileLayer) currentMap.getLayers().get(i);
+				int tileWidth = (int) (currentLayer.getTileWidth() * Maps.MAP_UNIT_SCALE),
+					tileHeight = (int) (currentLayer.getTileHeight() * Maps.MAP_UNIT_SCALE);
+				int id = 0;
+				for( int x = 0 ; x < 50 ; x++ ) {
+					for( int y = 0 ; y < 50 ; y++ ) {
+						if( currentLayer.getCell(x, y) != null ) {
+							Enemy enemy = new Enemy();
+							enemy.setId(id);
+							enemy.setAlive(true);
+							int rnd = (int) (Math.random() * 4);
+							switch( rnd ) {
+								case 0: enemy.setFacing(StanceEnum.FRONT_STAND);
+									break;
+								case 1: enemy.setFacing(StanceEnum.BACK_STAND);
+									break;
+								case 2: enemy.setFacing(StanceEnum.LEFT_STAND);
+									break;
+								case 3: enemy.setFacing(StanceEnum.RIGHT_STAND);
+									break;
+							}
+							enemy.setBounds(x*tileWidth, y*tileHeight, Enemy.width, Enemy.height);
+							
+							enemy.setTexture(GameValues.monsters.get(MonsterEnum.GOBLIN.getValue()).get(enemy.getFacing().getValue()));
+							
+							enemies.add(enemy);
+							
+							id++;
+						}
+					}
+				}
+			}
+		}
+	}
+	
 }

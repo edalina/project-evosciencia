@@ -25,12 +25,13 @@ public class Avatar extends Rectangle {
 	public Map<String, Sprite> avatarSprites;
 	public String name = "yjae";
 	public Sprite sprite;
+	public static boolean isQuestActive = false;
 	
 	// Walking flag, 0 = right 1 = left
 	public boolean walkFlag = true;
 	// Animation flag
 	public long animationFlag = 0;
-	public StanceEnum facingFlag = StanceEnum.FRONT_STAND_1;
+	public StanceEnum facingFlag = StanceEnum.FRONT_STAND;
 	
 	public Avatar() {
 		setWidth(Avatar.width);
@@ -70,13 +71,13 @@ public class Avatar extends Rectangle {
 	public void updateStandBy() {
 		if( TimeUtils.nanoTime() - GameValues.avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
 			GameValues.avatar.animationFlag = TimeUtils.nanoTime();
-			if( GameValues.avatar.walkFlag ) {
+//			if( GameValues.avatar.walkFlag ) {
 				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_1", "_2")));
-				GameValues.avatar.walkFlag = false;
-			} else {
-				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_2", "_1")));
-				GameValues.avatar.walkFlag = true;
-			}
+//				GameValues.avatar.walkFlag = false;
+//			} else {
+//				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_2", "_1")));
+//				GameValues.avatar.walkFlag = true;
+//			}
 		}
 	}
 	
