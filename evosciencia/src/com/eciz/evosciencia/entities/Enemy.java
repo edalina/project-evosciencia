@@ -15,6 +15,7 @@ public class Enemy extends Sprite {
 	private StanceEnum facing;
 	public boolean isMoving = false;
 	private int life = 100;
+	private int damage = 5;
 	private boolean alive = true;
 	
 	public int getId() {
@@ -40,6 +41,12 @@ public class Enemy extends Sprite {
 	}
 	public void setFacing(StanceEnum facing) {
 		this.facing = facing;
+	}
+	public int getDamage() {
+		return damage;
+	}
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 	public boolean isAlive() {
 		return alive;

@@ -64,10 +64,10 @@ public class LoadAssets {
 		assetManager.load("images/einstein.png", Texture.class);
 		assetManager.load("images/dialog.png", Texture.class);
 		
-		assetManager.load("images/selection_carlo.jpg", Texture.class);
-		assetManager.load("images/selection_ia.jpg", Texture.class);
-		assetManager.load("images/selection_yjae.jpg", Texture.class);
-		assetManager.load("images/selection_zhandy.jpg", Texture.class);
+		assetManager.load("images/selection_carlo.png", Texture.class);
+		assetManager.load("images/selection_ia.png", Texture.class);
+		assetManager.load("images/selection_yjae.png", Texture.class);
+		assetManager.load("images/selection_zhandy.png", Texture.class);
 		
 	}
 	

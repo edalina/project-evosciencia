@@ -5,12 +5,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.enums.BGMEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.utils.DialogUtils;
+import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
 public class GameScreenActor extends Table {
@@ -69,6 +71,7 @@ public class GameScreenActor extends Table {
 		// Initialize batch
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.currentBatch.begin();
+		
 		if( DialogUtils.isDialogActive && GameValues.isNewGame ) {
 			GameValues.currentBatch.draw(new Texture(Gdx.files.internal("npc/albert einstein.png")), GameValues.avatar.getX(), GameValues.avatar.getY() + (GameValues.avatar.getHeight()*2), Avatar.width, Avatar.height);
 		}
@@ -79,16 +82,25 @@ public class GameScreenActor extends Table {
 			GameValues.currentBatch.draw(questIndicator, GameValues.currentScientist.getRectangle().getX() + (GameValues.currentScientist.getRectangle().getWidth()/4), GameValues.currentScientist.getRectangle().getY() + (GameValues.currentScientist.getRectangle().getHeight()/4), GameValues.currentScientist.getRectangle().getWidth()/2, GameValues.currentScientist.getRectangle().getHeight()/2);
 		}
 		GameValues.maps.renderMonsters();
-		GameValues.currentBatch.draw(GameValues.avatar.sprite, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		if( GameValues.avatar.isAttacking ) {
+			GameValues.currentBatch.draw(
+					GameValues.avatar.avatarSprites.get(EventUtils.avatarAttacking().getValue()),
+					GameValues.avatar.getX() - (Avatar.width/2),
+					GameValues.avatar.getY() - (Avatar.height/2),
+					GameValues.avatar.getWidth()*2,
+					GameValues.avatar.getHeight()*2);
+			
+			if( TimeUtils.nanoTime() - GameValues.avatar.attackAnimCtr > GameValues.ATTACK_SPEED )
+				GameValues.avatar.isAttacking = false;
+		} else {
+			GameValues.currentBatch.draw(GameValues.avatar.sprite, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		}
 		GameValues.currentBatch.end();
 		
 		GameValues.maps.renderObstacleObj();
 		
 		GameValues.currentBatch.begin();
 		GameValues.dpad.drawDpad();
-		
-		// Check if event is triggered
-		GameValues.dpad.checkEvents();
 		
 		if( GameValues.isNewGame ) {
 			Dpad.isDpadActive = false;
@@ -99,6 +111,9 @@ public class GameScreenActor extends Table {
 		if( GameValues.currentScientist.getRectangle() != null ) {
 			DialogUtils.createDialog();
 		}
+		
+		// Check if event is triggered
+		GameValues.dpad.checkEvents();
 		
 		GameValues.currentBatch.end();
 		

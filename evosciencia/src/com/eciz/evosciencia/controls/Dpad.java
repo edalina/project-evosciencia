@@ -46,8 +46,8 @@ public class Dpad {
 	private Rectangle pauseRectangle;
 	private List<SkillSlot> skillSlots;
 	
-	public static final int DPAD_WIDTH = 24;
-	public static final int DPAD_HEIGHT = 24;
+	public static final int DPAD_WIDTH = 32;
+	public static final int DPAD_HEIGHT = 32;
 	
 	public static boolean isDpadActive = true;
 	public static boolean buttonActive = false;
@@ -111,16 +111,16 @@ public class Dpad {
 		 */
 		
 		float
-			dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_WIDTH*3 ) ),
-			dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_HEIGHT*2 ) ),
+			dpadControlXCenter = GameValues.camera.position.x - ( (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_WIDTH*3 ) ) - (DPAD_WIDTH + (DPAD_WIDTH/2)),
+			dpadControlYCenter = GameValues.camera.position.y - ( (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_HEIGHT*2 ) ) - DPAD_HEIGHT,
 			dpadActionXCenter = GameValues.camera.position.x + ( (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_WIDTH*3 ) ),
 			dpadActionYCenter = dpadControlYCenter,
 			dpadPauseXCenter = dpadActionXCenter + DPAD_WIDTH,
 			dpadPauseYCenter = GameValues.camera.position.y + ( (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) - ( DPAD_HEIGHT + 10 ) ),
-			dpadHealthXCenter = dpadControlXCenter - (DPAD_WIDTH*3),
-			dpadHealthYCenter = dpadPauseYCenter + DPAD_HEIGHT - 2,
+			dpadHealthXCenter = dpadControlXCenter - (DPAD_WIDTH*3) + (DPAD_WIDTH + (DPAD_WIDTH/2)),
+			dpadHealthYCenter = dpadPauseYCenter + DPAD_HEIGHT - 7,
 			dpadSkillSlotXCenter = GameValues.camera.position.x - (2 * (DPAD_WIDTH + (DPAD_WIDTH/2))),
-			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2) + 10;
+			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2) + 10 + DPAD_HEIGHT;
 		
 		if( isX ) {
 			GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
@@ -362,8 +362,10 @@ public class Dpad {
 			Dpad.moveAvatar(valueX, valueY);
 			
 		} else {
+			
 			GameValues.avatar.updateStandBy();
 			Dpad.buttonActive = false;
+			
 		}
 		
 	}
@@ -387,18 +389,23 @@ public class Dpad {
 	
 	public void actionButton() {
 		Rectangle tmpRectangle = new Rectangle();
+		StanceEnum attackFace = null;
 		switch(GameValues.avatar.facingFlag) {
 			case FRONT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() - Avatar.height, Avatar.width, Avatar.height);
+				attackFace = StanceEnum.FRONT_ATTACK;
 				break;
 			case BACK_STAND:
 				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() + Avatar.height, Avatar.width, Avatar.height);
+				attackFace = StanceEnum.BACK_ATTACK;
 				break;
 			case LEFT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX() - Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
+				attackFace = StanceEnum.LEFT_ATTACK;
 				break;
 			case RIGHT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX() + Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
+				attackFace = StanceEnum.RIGHT_ATTACK;
 				break;
 			default:
 				break;
@@ -417,13 +424,20 @@ public class Dpad {
 					i++;
 				}
 				DialogUtils.createDialog(dialog + "\nHelp me please");
+				
+				return;
 			}
 			
 		}
 		
+		if( !GameValues.avatar.isAttacking ) {
+			GameValues.avatar.isAttacking = true;
+			GameValues.avatar.attackAnimCtr = TimeUtils.nanoTime();
+		}
+		
 		for( Enemy enemy : Maps.enemies ) {
 			if( tmpRectangle.overlaps(enemy.getBoundingRectangle()) ) {
-				enemy.setLife(enemy.getLife()-10);
+				enemy.setLife(enemy.getLife()-GameValues.user.getDamage());
 				if( enemy.getLife() <= 0 ) {
 					enemy.setAlive(false);
 					if( Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
@@ -440,7 +454,6 @@ public class Dpad {
 				}
 			}
 		}
-				
 	}
 	
 	public Texture getActionBtn() {

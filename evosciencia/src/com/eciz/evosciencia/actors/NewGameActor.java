@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -21,23 +20,13 @@ import com.eciz.evosciencia.values.GameValues;
 public class NewGameActor extends Table {
 	
 	private Texture saveDataBox;
-	private Texture characterSlotTexture;
-	private Texture characterSlotTextureActive;
-	private Texture dataBox;
 	private List<CharacterSlot> characterSlots;
 	
-	private int coor = 50;
-	private Rectangle dataBoxRect;
-	private BitmapFont dataText;
-	private String currentText = "";
-	
-	private Texture[] charactersTextures;
-	
 	private static final String[] CHARACTERS = {
-		"<Yjae>",
-		"<Carlo>",
-		"<Ia>",
-		"<Zhandy>"};
+		"yjae",
+		"carlo",
+		"ia",
+		"zhandy"};
 	
 	public NewGameActor() {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
@@ -48,36 +37,29 @@ public class NewGameActor extends Table {
 		GameValues.touchPos = new Vector3();
 		
 		saveDataBox = new Texture(Gdx.files.internal("images/character_box.png"));
-		dataBox = new Texture(Gdx.files.internal("images/data_box.png"));
-		characterSlotTexture = new Texture(Gdx.files.internal("images/character_slot.png"));
-		characterSlotTextureActive = new Texture(Gdx.files.internal("images/character_slot_active.png"));
-		
-		dataBoxRect = new Rectangle();
-		
-		dataBoxRect.set((coor*2.5f) - 3, coor + 10, (GameValues.SCREEN_WIDTH - (coor*4) - 30), ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20);
-		
-		dataText = new BitmapFont();
-		
-		charactersTextures = new Texture[4];
 		
 		characterSlots = new ArrayList<CharacterSlot>();
 		
+		int slotWidth = 105, slotHeight = 140, slotY = 145, slotX = 105, deviationX = 162;
+		
+		// Adding character slots
 		for( int i = 0 ; i < CHARACTERS.length ; i++ ) {
-			CharacterSlot characterSlot = new CharacterSlot();
-			characterSlot.setId(i);
-			characterSlot.setTexture(characterSlotTexture);
-			characterSlot.setActive(false);
-			characterSlot.setDefinition(CHARACTERS[i]);
 			
-			charactersTextures[i] = new Texture(Gdx.files.internal("images/selection_" + characterSlot.getDefinition().split(">")[0].replace("<", "").toLowerCase() + ".jpg"));
+			CharacterSlot slot = new CharacterSlot();
+			slot.setId(i);
+			slot.setActive(false);
+			slot.setDefinition("");
+			slot.setTexture(new Texture(Gdx.files.internal("images/selection_" + CHARACTERS[i] + ".png")));
+			slot.getExtras().put("avatarName", CHARACTERS[i]);
+		
+			Rectangle rect = new Rectangle();
+			rect.set(slotX, slotY, slotWidth, slotHeight);
+			slot.setRectangle(rect);
 			
-			Rectangle rectangle = new Rectangle();
-			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*4) - 30)/4;
-			rectangle.height = ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20;
-			rectangle.x = (i * rectangle.width) + (coor/4) + ((coor*2) + 10);
-			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*2))/2;
-			characterSlot.setRectangle(rectangle);
-			characterSlots.add(characterSlot);
+			characterSlots.add(slot);
+			
+			slotX += deviationX;
+			
 		}
 		
 	}
@@ -89,15 +71,7 @@ public class NewGameActor extends Table {
 		GameValues.camera.update();
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.currentBatch.begin();
-		GameValues.currentBatch.draw(saveDataBox, coor, coor, GameValues.SCREEN_WIDTH - (coor*2), GameValues.SCREEN_HEIGHT - (coor*2));
-		GameValues.currentBatch.draw(dataBox, dataBoxRect.getX(), dataBoxRect.getY(), dataBoxRect.getWidth(), dataBoxRect.getHeight());
-		dataText.drawMultiLine(GameValues.currentBatch, currentText, dataBoxRect.getX() + 10, (dataBoxRect.getY() + dataBoxRect.getHeight()) - 10);
-		int i = 0;
-		for( CharacterSlot characterSlot : characterSlots ) {
-			GameValues.currentBatch.draw(charactersTextures[i], characterSlot.getRectangle().getX(), characterSlot.getRectangle().y, characterSlot.getRectangle().width, characterSlot.getRectangle().height);
-			GameValues.currentBatch.draw(characterSlot.getTexture(), characterSlot.getRectangle().x, characterSlot.getRectangle().y, characterSlot.getRectangle().width, characterSlot.getRectangle().height);
-			i++;
-		}
+		GameValues.currentBatch.draw(saveDataBox, 10, 10, GameValues.SCREEN_WIDTH - 20, GameValues.SCREEN_HEIGHT - 20);
 		GameValues.currentBatch.end();
 		if( Gdx.input.isTouched() ) {
 			if( !GameValues.touchDown ) {
@@ -117,7 +91,7 @@ public class NewGameActor extends Table {
 		if( characterSlot.isActive() ) {
 			GameValues.avatar = new Avatar();
 			GameValues.user = GameValues.dataHandler.getUsers().get(characterSlot.getId());
-			GameValues.avatar.name = characterSlot.getDefinition().split(">")[0].replace("<", "").toLowerCase();
+			GameValues.avatar.name = characterSlot.getExtras().get("avatarName").toString();
 			LoadAssets.loadAvatarAssets();
 			GameValues.touchDown = false;
 			LoadAssets.loadIntroAssets();
@@ -127,11 +101,9 @@ public class NewGameActor extends Table {
 		}
 		for( CharacterSlot otherSlots : characterSlots ) {
 			otherSlots.setActive(false);
-			otherSlots.setTexture(characterSlotTexture);
 		}
 		characterSlot.setActive(true);
-		characterSlot.setTexture(characterSlotTextureActive);
-		currentText = characterSlot.getDefinition();
+		saveDataBox = characterSlot.getTexture();
 	}
 
 }

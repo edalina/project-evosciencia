@@ -25,8 +25,10 @@ public class Avatar extends Rectangle {
 	public Map<String, Sprite> avatarSprites;
 	public String name = "yjae";
 	public Sprite sprite;
+	public boolean isAttacking = false;
+	public long attackAnimCtr = 0;
 	public static boolean isQuestActive = false;
-	
+
 	// Walking flag, 0 = right 1 = left
 	public boolean walkFlag = true;
 	// Animation flag
@@ -46,6 +48,13 @@ public class Avatar extends Rectangle {
 		boolean isX = false, isY = false;
 		GameValues.avatar.setX(x);
 		GameValues.avatar.setY(y);
+		
+		GameValues.avatar.sprite.setBounds(
+				GameValues.avatar.getX() + (Avatar.width - Avatar.width),
+				GameValues.avatar.getY() + (Avatar.height - Avatar.height), 
+				width, 
+				height);
+		
 		GameValues.avatar.sprite.getBoundingRectangle().set(
 				GameValues.avatar.getX() + (Avatar.width - Avatar.width),
 				GameValues.avatar.getY() + (Avatar.height - Avatar.height), 
@@ -68,16 +77,29 @@ public class Avatar extends Rectangle {
 		
 	}
 	
+	public void repositionAvatar(float x, float y, float width, float height) {
+		GameValues.avatar.setX(x);
+		GameValues.avatar.setY(y);
+		GameValues.avatar.setWidth(width);
+		GameValues.avatar.setWidth(height);
+		
+		GameValues.avatar.sprite.setBounds(
+				GameValues.avatar.getX() + (Avatar.width - Avatar.width),
+				GameValues.avatar.getY() + (Avatar.height - Avatar.height), 
+				width, 
+				height);
+		
+		GameValues.avatar.sprite.getBoundingRectangle().set(
+				GameValues.avatar.getX() + (Avatar.width - Avatar.width),
+				GameValues.avatar.getY() + (Avatar.height - Avatar.height), 
+				width, 
+				height);
+	}
+	
 	public void updateStandBy() {
 		if( TimeUtils.nanoTime() - GameValues.avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
 			GameValues.avatar.animationFlag = TimeUtils.nanoTime();
-//			if( GameValues.avatar.walkFlag ) {
-				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_1", "_2")));
-//				GameValues.avatar.walkFlag = false;
-//			} else {
-//				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue().replace("_2", "_1")));
-//				GameValues.avatar.walkFlag = true;
-//			}
+			GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(GameValues.avatar.facingFlag.getValue()));
 		}
 	}
 	

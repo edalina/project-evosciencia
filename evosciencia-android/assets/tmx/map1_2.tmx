@@ -260,12 +260,12 @@
  </tileset>
  <layer name="brown" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztz6ERACAMBMGUgKQaakWgqBKPQQUQuzOn84kAAAAAAAAAAAA4azX66w2/mSWvsZV561bZfyzh5UmB
+   eJztz6ENADAMA8GM0P1xUaYsD6zkoDvpseUqAAAAAAAAAAAAfvTJdUfJra3SPx5aJ0iL
   </data>
  </layer>
  <layer name="grass" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztwzENAAAIA7BJwL+HeUQDH0ebtJNUVVVVVVVVVVXVc35Z3OTsOw==
+   eJztz8EJACAMA8CO4P4L+OqOLuBPpUUucN+Q5IhIAAAAAAAAAADgiblRvel0/w8/bvVKryzajevb
   </data>
  </layer>
  <layer name="cpoint" width="50" height="50">

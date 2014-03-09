@@ -14,7 +14,6 @@ import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.DataHandler;
-import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.entities.User;
 import com.eciz.evosciencia.resources.Maps;
@@ -42,6 +41,7 @@ public class GameValues {
 	public static final float CHARACTER_SPEED = 1;
 	
 	public static final long ANIMATION_SPEED = 200000000;
+	public static final long ATTACK_SPEED = 100000000;
 	
 	public static final String COLLISION_PROPERTY = "collision";
 	

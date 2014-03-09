@@ -23,7 +23,6 @@ public class SaveDataActor extends Table {
 	private Texture saveDataBox;
 	private Texture characterSlotTexture;
 	private Texture characterSlotTextureActive;
-	private Texture dataBox;
 	private List<CharacterSlot> characterSlots;
 	
 	private int coor = 50;
@@ -39,14 +38,13 @@ public class SaveDataActor extends Table {
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
 		
-		saveDataBox = new Texture(Gdx.files.internal("images/character_box.png"));
-		dataBox = new Texture(Gdx.files.internal("images/data_box.png"));
+		saveDataBox = new Texture(Gdx.files.internal("images/save_data_box.png"));
 		characterSlotTexture = new Texture(Gdx.files.internal("images/character_slot.png"));
 		characterSlotTextureActive = new Texture(Gdx.files.internal("images/character_slot_active.png"));
 		
 		dataBoxRect = new Rectangle();
 		
-		dataBoxRect.set(coor*2 + 12, coor + 10, (GameValues.SCREEN_WIDTH - (coor*4) - 30), ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20);
+		dataBoxRect.set(coor, 10, GameValues.SCREEN_WIDTH - (coor*2), ((GameValues.SCREEN_HEIGHT - (coor*3))/2) - 5);
 		
 		dataText = new BitmapFont();
 		
@@ -67,7 +65,7 @@ public class SaveDataActor extends Table {
 			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*4) - 30)/5;
 			rectangle.height = ((GameValues.SCREEN_HEIGHT - (coor*2))/2) - 20;
 			rectangle.x = (user.getId() * rectangle.width) + coor +  (coor + 12);
-			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*2))/2;
+			rectangle.y = coor + (GameValues.SCREEN_HEIGHT - (coor*4))/2;
 			characterSlot.setRectangle(rectangle);
 			characterSlots.add(characterSlot);
 		}
@@ -81,8 +79,7 @@ public class SaveDataActor extends Table {
 		GameValues.camera.update();
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.currentBatch.begin();
-		GameValues.currentBatch.draw(saveDataBox, coor, coor, GameValues.SCREEN_WIDTH - (coor*2), GameValues.SCREEN_HEIGHT - (coor*2));
-		GameValues.currentBatch.draw(dataBox, dataBoxRect.getX(), dataBoxRect.getY(), dataBoxRect.getWidth(), dataBoxRect.getHeight());
+		GameValues.currentBatch.draw(saveDataBox, 10, 10, GameValues.SCREEN_WIDTH - 20, GameValues.SCREEN_HEIGHT - 20);
 		dataText.drawMultiLine(GameValues.currentBatch, currentText, dataBoxRect.getX() + 10, (dataBoxRect.getY() + dataBoxRect.getHeight()) - 10);
 		for( CharacterSlot characterSlot : characterSlots ) {
 			GameValues.currentBatch.draw(characterSlot.getTexture(), characterSlot.getRectangle().x, characterSlot.getRectangle().y, characterSlot.getRectangle().width, characterSlot.getRectangle().height);

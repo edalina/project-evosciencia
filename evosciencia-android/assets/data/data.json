@@ -58,7 +58,7 @@
 		{"id" : 44, "name" : "william harvey", "description" : "Describe completely and in detail the systemic circulation and properties of blood being pumped to the brain and body by the heart."}
 	],
 	"quests" : [
-		{"scientistsIds" : [27,3,37], "item" : "copper"},
+		{"scientistsIds" : [15], "item" : "copper"},
 		{"scientistsIds" : [28,24,32], "item" : "metal"},
 		{"scientistsIds" : [22,40,39], "item" : "apple"},
 		{"scientistsIds" : [8,42,29], "item" : "string"},

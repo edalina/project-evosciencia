@@ -26,10 +26,10 @@ public class DialogUtils {
 	private static String dialog = "";
 	private static String itemDialog = "";
 	
-	private static float DIALOG_WIDTH = (GameValues.SCREEN_WIDTH/2) * GameValues.CAMERA_ZOOM;
-	private static float DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/4) * GameValues.CAMERA_ZOOM;
+	private static float DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
+	private static float DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/3) * GameValues.CAMERA_ZOOM;
 	private static float DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
-	private static float DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT*2-10);
+	private static float DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT + 30);
 	
 	private static int idx = 0;
 	
@@ -39,15 +39,15 @@ public class DialogUtils {
 		
 		dialogText = new BitmapFont();
 		dialogText.setScale(GameValues.CAMERA_ZOOM);
-		dialogText.setColor(0, 0, 0, 1);
+		dialogText.setColor(1, 1, 1, 1);
 		
 		nextText = new BitmapFont();
 		nextText.setScale(GameValues.CAMERA_ZOOM);
-		nextText.setColor(0, 0, 0, 1);
+		nextText.setColor(1, 1, 1, 1);
 		
 		backText = new BitmapFont();
 		backText.setScale(GameValues.CAMERA_ZOOM);
-		backText.setColor(0, 0, 0, 1);
+		backText.setColor(1, 1, 1, 1);
 		
 		nextRect = new Rectangle();
 		backRect = new Rectangle();
@@ -72,7 +72,7 @@ public class DialogUtils {
 				GameValues.isNewGame = false;
 				return;
 			}
-			GameValues.currentBatch.draw(helpAvatar, DIALOG_X - 100, DIALOG_Y - 50, 167, 200);
+//			GameValues.currentBatch.draw(helpAvatar, DIALOG_X - 100, DIALOG_Y - 50, 167, 200);
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, HelpValues.INTRO[idx], DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
 			nextText.draw(GameValues.currentBatch, "next", nextRect.getX(), nextRect.getY()+10);
@@ -90,10 +90,10 @@ public class DialogUtils {
 	}
 	
 	public static void createDialog(String value) {
-		DIALOG_WIDTH = (GameValues.SCREEN_WIDTH/2) * GameValues.CAMERA_ZOOM;
-		DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/4) * GameValues.CAMERA_ZOOM;
+		DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
+		DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/3) * GameValues.CAMERA_ZOOM;
 		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
-		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT*2-10);
+		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT + 30);
 		
 		nextRect.x = DIALOG_X + DIALOG_WIDTH - (nextRect.width) - 10;
 		nextRect.y = DIALOG_Y + 20 - nextRect.height;

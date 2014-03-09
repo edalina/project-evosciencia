@@ -1,16 +1,15 @@
 package com.eciz.evosciencia;
 
+import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.InputProcessor;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.resources.LoadAssets;
 import com.eciz.evosciencia.screens.SplashScreen;
 import com.eciz.evosciencia.values.GameValues;
 
-public class EvoSciencia extends Game implements InputProcessor {
+public class EvoSciencia extends Game implements ApplicationListener {
 	
 	private static EvoSciencia mainInstance = null;
 	
@@ -26,9 +25,10 @@ public class EvoSciencia extends Game implements InputProcessor {
 		Texture.setEnforcePotImages(false);
 		
 		GameValues.currentScreen = new SplashScreen();
+//		GameValues.currentScreen = new AIScreen();
 		setScreen(GameValues.currentScreen);
 		
-//		Gdx.input.setCatchBackKey(true);
+		Gdx.input.setCatchBackKey(true);
 		
 	}
 	
@@ -44,49 +44,4 @@ public class EvoSciencia extends Game implements InputProcessor {
 		GameValues.currentScreen.dispose();
 	}
 
-	@Override
-	public boolean keyDown(int keycode) {
-		if( keycode == Keys.BACK ) {
-			// Confirm
-			System.out.println( "Back" );
-			Gdx.app.exit();
-		}
-		return false;
-	}
-
-	@Override
-	public boolean keyUp(int keycode) {
-		return false;
-	}
-
-	@Override
-	public boolean keyTyped(char character) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		return false;
-	}
-
-	@Override
-	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		return false;
-	}
-
-	@Override
-	public boolean mouseMoved(int screenX, int screenY) {
-		return false;
-	}
-
-	@Override
-	public boolean scrolled(int amount) {
-		return false;
-	}
-	
 }

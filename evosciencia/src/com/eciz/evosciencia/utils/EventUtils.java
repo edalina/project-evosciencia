@@ -2,6 +2,7 @@ package com.eciz.evosciencia.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
+import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.values.GameValues;
 
 public class EventUtils {
@@ -16,6 +17,27 @@ public class EventUtils {
 			return true;
 		}
 		return false;
+	}
+	
+	public static StanceEnum avatarAttacking() {
+		StanceEnum attackFace = null;
+		switch(GameValues.avatar.facingFlag) {
+			case FRONT_STAND:
+				attackFace = StanceEnum.FRONT_ATTACK;
+				break;
+			case BACK_STAND:
+				attackFace = StanceEnum.BACK_ATTACK;
+				break;
+			case LEFT_STAND:
+				attackFace = StanceEnum.LEFT_ATTACK;
+				break;
+			case RIGHT_STAND:
+				attackFace = StanceEnum.RIGHT_ATTACK;
+				break;
+			default:
+				break;
+		}
+		return attackFace;
 	}
 
 }

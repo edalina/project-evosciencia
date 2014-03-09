@@ -1,5 +1,8 @@
 package com.eciz.evosciencia.entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -11,7 +14,14 @@ public class CharacterSlot {
 	private Rectangle rectangle;
 	private String definition;
 	private boolean active;
+	private Map<String, Object> extras = new HashMap<String, Object>();
 	
+	public Map<String, Object> getExtras() {
+		return extras;
+	}
+	public void setExtras(Map<String, Object> extras) {
+		this.extras = extras;
+	}
 	public int getId() {
 		return id;
 	}

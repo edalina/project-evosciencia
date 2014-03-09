@@ -167,6 +167,8 @@ public class Maps {
 							Enemy enemy = new Enemy();
 							enemy.setId(id);
 							enemy.setAlive(true);
+							enemy.setLife(100+(GameValues.user.getLevel()*10));
+							enemy.setDamage(5 + (GameValues.user.getLevel() * 3));
 							int rnd = (int) (Math.random() * 4);
 							switch( rnd ) {
 								case 0: enemy.setFacing(StanceEnum.FRONT_STAND);

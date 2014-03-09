@@ -8,6 +8,7 @@ public class User {
 	private String avatar;
 	private int life;
 	private int level;
+	private int damage;
 	private int[] scientists;
 	private boolean[] questDone;
 	
@@ -46,6 +47,13 @@ public class User {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getDamage() {
+		damage = 10 + (2*level); 
+		return damage;
+	}
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 	public int[] getScientists() {
 		return scientists;
