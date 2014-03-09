@@ -17,7 +17,8 @@ public enum StanceEnum {
 	RIGHT_STAND("right_standby"),
 	RIGHT_WALK1("right_walk1"),
 	RIGHT_WALK2("right_walk2"),
-	RIGHT_ATTACK("right_attack"),;
+	RIGHT_ATTACK("right_attack"),
+	DEATH("death");
 	
 	private String value;
 

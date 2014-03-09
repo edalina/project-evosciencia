@@ -2,7 +2,6 @@ package com.eciz.evosciencia.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -15,7 +14,7 @@ import com.eciz.evosciencia.values.GameValues;
 
 public class IntroActor extends Table {
 	
-	private BitmapFont skipText;
+	private Texture skipTexture;
 	
 	private Rectangle skipRec;
 	
@@ -31,13 +30,13 @@ public class IntroActor extends Table {
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
 		
-		skipText = new BitmapFont();
+		skipTexture = new Texture(Gdx.files.internal("images/skip.png"));
 		
 		skipRec = new Rectangle();
-		skipRec.x = 25;
+		skipRec.x = 10;
 		skipRec.y = 10;
-		skipRec.width = skipText.getBounds("skip").width;
-		skipRec.height = skipText.getBounds("skip").height;
+		skipRec.width = 50;
+		skipRec.height = 25;
 		
 		GameValues.isNewGame = true;
 	}
@@ -75,7 +74,7 @@ public class IntroActor extends Table {
 			}
 			
 		}
-		skipText.draw(GameValues.currentBatch, "skip", skipRec.getX(), skipRec.getY() + 15);
+		GameValues.currentBatch.draw(skipTexture, skipRec.getX(), skipRec.getY(), skipRec.getWidth(), skipRec.getHeight());
 		GameValues.currentBatch.end();
 		if( Gdx.input.isTouched() ) {
 			

@@ -389,23 +389,18 @@ public class Dpad {
 	
 	public void actionButton() {
 		Rectangle tmpRectangle = new Rectangle();
-		StanceEnum attackFace = null;
 		switch(GameValues.avatar.facingFlag) {
 			case FRONT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() - Avatar.height, Avatar.width, Avatar.height);
-				attackFace = StanceEnum.FRONT_ATTACK;
 				break;
 			case BACK_STAND:
 				tmpRectangle.set(GameValues.avatar.getX(), GameValues.avatar.getY() + Avatar.height, Avatar.width, Avatar.height);
-				attackFace = StanceEnum.BACK_ATTACK;
 				break;
 			case LEFT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX() - Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
-				attackFace = StanceEnum.LEFT_ATTACK;
 				break;
 			case RIGHT_STAND:
 				tmpRectangle.set(GameValues.avatar.getX() + Avatar.width, GameValues.avatar.getY(), Avatar.width, Avatar.height);
-				attackFace = StanceEnum.RIGHT_ATTACK;
 				break;
 			default:
 				break;
@@ -430,7 +425,7 @@ public class Dpad {
 			
 		}
 		
-		if( !GameValues.avatar.isAttacking ) {
+		if( !GameValues.avatar.isAttacking && TimeUtils.nanoTime() - GameValues.avatar.attackAnimCtr > GameValues.ATTACK_SPEED * 2 ) {
 			GameValues.avatar.isAttacking = true;
 			GameValues.avatar.attackAnimCtr = TimeUtils.nanoTime();
 		}

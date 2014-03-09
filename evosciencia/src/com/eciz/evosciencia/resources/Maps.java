@@ -68,8 +68,10 @@ public class Maps {
 	public void renderMonsters() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
 		for( Enemy enemy : enemies ) {
-			if( enemy.isAlive() )
+			if( enemy.isAlive() ) {
 				GameValues.currentBatch.draw(enemy.getTexture(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
+				enemy.moveEnemy();
+			}
 		}
 	}
 	
@@ -180,11 +182,13 @@ public class Maps {
 								case 3: enemy.setFacing(StanceEnum.RIGHT_STAND);
 									break;
 							}
-							enemy.setBounds(x*tileWidth, y*tileHeight, Enemy.width, Enemy.height);
+							enemy.setBounds(x*tileWidth, y*tileHeight, Enemy.WIDTH, Enemy.HEIGHT);
 							
 							enemy.setTexture(GameValues.monsters.get(MonsterEnum.GOBLIN.getValue()).get(enemy.getFacing().getValue()));
 							
 							enemies.add(enemy);
+							
+//							new Thread(enemy).start();
 							
 							id++;
 						}
