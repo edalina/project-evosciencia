@@ -4,14 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.DataHandler;
 import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.entities.Quest;
 import com.eciz.evosciencia.entities.SkillSlot;
+import com.eciz.evosciencia.entities.User;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.utils.DialogUtils;
@@ -242,6 +247,13 @@ public class Dpad {
 			}
 		}
 		
+		if( GameValues.currentScientist != null && GameValues.currentScientist.getRectangle() != null ) {
+			if( tmpRect.overlaps(GameValues.currentScientist.getRectangle()) ) {
+				GameValues.avatar.updateStandBy();
+				return;
+			}
+		}
+		
 		GameValues.avatar.repositionAvatar(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY);
 		
 		if( TimeUtils.nanoTime() - GameValues.avatar.animationFlag > GameValues.ANIMATION_SPEED ) {
@@ -313,10 +325,21 @@ public class Dpad {
 					actionButton();
 				}
 				
-				// Pause button is clicked
+				// Pause button is clicked, CURRENTLY SAVING
 				if( EventUtils.isTap(GameValues.dpad.getPauseRectangle()) ) {
 					Dpad.buttonActive = true;
-					GameValues.settingUtils.toggleBGM();
+					for( User user : GameValues.dataHandler.getUsers() ) {
+						if( user.getId() == GameValues.user.getId() ) {
+							user = GameValues.user;
+						}
+					}
+					Json json = new Json();
+					String string = json.prettyPrint(GameValues.dataHandler);
+					System.out.println( string );
+					FileHandle fileHandle = Gdx.files.local("data/data.json");
+					fileHandle.writeString(string, false);
+//					GameValues.dataHandler = json.fromJson(DataHandler.class, Gdx.files.internal("data/data.json"));
+//					GameValues.settingUtils.toggleBGM();
 				}
 				
 //				// Skill slots
@@ -408,19 +431,25 @@ public class Dpad {
 		
 		if( GameValues.currentScientist != null ) {
 		
-			if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
-				String dialog = "Can you help me gather these items?\n";
-				List<Quest> quests = Quest.getQuests();
-				int i = 0;
-				for( Quest quest : quests ) {
-					dialog = dialog.concat(quest.getName());
-					if( i < quests.size()-1 )
-						dialog = dialog.concat(", ");
-					i++;
+			if( !Avatar.isQuestActive ) {
+				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
+					String dialog = "";
+					List<Quest> quests = Quest.getQuests();
+					int i = 0;
+					for( Quest quest : quests ) {
+						dialog = dialog.concat(quest.getName());
+						if( i < quests.size()-1 )
+							dialog = dialog.concat(", ");
+						i++;
+					}
+					DialogUtils.createQuestDialog(dialog + " x 1");
+					
+					return;
 				}
-				DialogUtils.createDialog(dialog + "\nHelp me please");
-				
-				return;
+			} else if( Avatar.isQuestActive && GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
+					DialogUtils.createCompleteDialog(GameValues.currentScientist.getDescription());
+				}
 			}
 			
 		}
@@ -435,10 +464,12 @@ public class Dpad {
 				enemy.setLife(enemy.getLife()-GameValues.user.getDamage());
 				if( enemy.getLife() <= 0 ) {
 					enemy.setAlive(false);
+					GameValues.user.setExperience(GameValues.user.getExperience()+1);
+					if( GameValues.user.getExperience() == GameValues.user.getLevel() * 10 ) {
+						GameValues.user.setLevel(GameValues.user.getLevel());
+					}
 					if( Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
-						if( ( Math.random() * 500 ) < 500 ) {
-							
-							System.out.println( "Quest complete" );
+						if( MathUtils.random(0, 100) < 10 ) {
 							
 							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
 							

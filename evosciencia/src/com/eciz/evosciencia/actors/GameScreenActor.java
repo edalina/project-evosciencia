@@ -57,9 +57,9 @@ public class GameScreenActor extends Table {
 		}
 		
 		if( GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
-			GameValues.currentScientist.setTexture( new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")) );
+			GameValues.currentScientist.setTexture(new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")));
 		} else {
-			GameValues.currentScientist.setTexture( new Texture(Gdx.files.internal("npc/npc_unknown.png")) );
+			GameValues.currentScientist.setTexture(new Texture(Gdx.files.internal("npc/npc_unknown.png")));
 		}
 		
 		// Updating camera/frame
@@ -110,6 +110,10 @@ public class GameScreenActor extends Table {
 		
 		if( GameValues.currentScientist.getRectangle() != null ) {
 			DialogUtils.createDialog();
+			DialogUtils.createQuestDialog();
+			DialogUtils.createCompleteDialog();
+		} else {
+			DialogUtils.createItemDialog();
 		}
 		
 		// Check if event is triggered

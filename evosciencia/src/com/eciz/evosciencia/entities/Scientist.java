@@ -11,6 +11,12 @@ public class Scientist {
 	private Rectangle rectangle;
 	private Texture texture;
 	
+	public Texture getTexture() {
+		return texture;
+	}
+	public void setTexture(Texture texture) {
+		this.texture = texture;
+	}
 	public int getId() {
 		return id;
 	}
@@ -34,12 +40,6 @@ public class Scientist {
 	}
 	public void setRectangle(Rectangle rectangle) {
 		this.rectangle = rectangle;
-	}
-	public Texture getTexture() {
-		return texture;
-	}
-	public void setTexture(Texture texture) {
-		this.texture = texture;
 	}
 	
 }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class CharacterSlot {
 
 	private int id;
-	private int playtime;
+	private long playtime;
 	private Texture texture;
 	private Rectangle rectangle;
 	private String definition;
@@ -28,10 +28,10 @@ public class CharacterSlot {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getPlaytime() {
+	public long getPlaytime() {
 		return playtime;
 	}
-	public void setPlaytime(int playtime) {
+	public void setPlaytime(long playtime) {
 		this.playtime = playtime;
 	}
 	public Texture getTexture() {

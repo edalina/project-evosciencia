@@ -4,13 +4,14 @@ public class User {
 
 	private int id;
 	private Coordinate coordinate;
-	private int playtime;
+	private long playtime;
 	private String avatar;
 	private int life;
 	private int level;
 	private int damage;
 	private int[] scientists;
 	private boolean[] questDone;
+	private long experience = 0;
 	
 	public int getId() {
 		return id;
@@ -24,10 +25,10 @@ public class User {
 	public void setCoordinate(Coordinate coordinate) {
 		this.coordinate = coordinate;
 	}
-	public int getPlaytime() {
+	public long getPlaytime() {
 		return playtime;
 	}
-	public void setPlaytime(int playtime) {
+	public void setPlaytime(long playtime) {
 		this.playtime = playtime;
 	}
 	public String getAvatar() {
@@ -66,6 +67,12 @@ public class User {
 	}
 	public void setQuestDone(boolean[] questDone) {
 		this.questDone = questDone;
+	}
+	public long getExperience() {
+		return experience;
+	}
+	public void setExperience(long experience) {
+		this.experience = experience;
 	}
 	
 }

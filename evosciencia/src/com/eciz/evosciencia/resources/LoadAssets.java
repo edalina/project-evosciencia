@@ -8,6 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Json;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.DataHandler;
@@ -46,7 +47,8 @@ public class LoadAssets {
 	private static void loadEtc() {
 		
 		Json json = new Json();
-		GameValues.dataHandler = json.fromJson(DataHandler.class, Gdx.files.internal("data/data.json"));
+		json.setIgnoreUnknownFields(true);
+		GameValues.dataHandler = json.fromJson(DataHandler.class, Gdx.files.local("data/data.json"));
 		
 		assetManager.load("images/quest.png", Texture.class);
 		
@@ -63,11 +65,18 @@ public class LoadAssets {
 		
 		assetManager.load("images/einstein.png", Texture.class);
 		assetManager.load("images/dialog.png", Texture.class);
+		assetManager.load("images/quest_dialog.png", Texture.class);
+		assetManager.load("images/quest_dialog_completed.png", Texture.class);
+		assetManager.load("images/accept.png", Texture.class);
+		assetManager.load("images/cancel.png", Texture.class);
+		assetManager.load("images/next.png", Texture.class);
 		
 		assetManager.load("images/selection_carlo.png", Texture.class);
 		assetManager.load("images/selection_ia.png", Texture.class);
 		assetManager.load("images/selection_yjae.png", Texture.class);
 		assetManager.load("images/selection_zhandy.png", Texture.class);
+		
+		GameValues.skin = new Skin(Gdx.files.internal("skins/uiskin.json"));
 		
 	}
 	

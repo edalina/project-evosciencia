@@ -128,17 +128,10 @@ public class Enemy extends Sprite {
 			float ax = GameValues.avatar.getX(),
 				ay = GameValues.avatar.getY();
 			
-			if( getX() < ax ) {
-				
-			} else {
-				
-			}
-			
-			if( getY() < ay ) {
-				
-			} else {
-				
-			}
+//			if( getX() < ax && getY() < ay ) {
+//				futurePosition.setX(GameValues.avatar.getX());
+//				futurePosition.setY(GameValues.avatar.getY());
+//			}
 			
 		} else {
 			switch( rnd ) {
@@ -168,6 +161,7 @@ public class Enemy extends Sprite {
 	public void repositionEnemy(Rectangle tmpRect) {
 		boolean isCollided = false;
 		if( GameValues.avatar.sprite.getBoundingRectangle().overlaps(tmpRect) ) {
+			System.out.println( "COLLIDED" );
 			futurePosition.set(getX(), getY(), getWidth(), getHeight());
 			isCollided = true;
 		}
@@ -210,8 +204,8 @@ public class Enemy extends Sprite {
 			if( Math.abs(GameValues.avatar.getX() - getX()) < TERRITORY_RANGE &&
 				Math.abs(GameValues.avatar.getY() - getY()) < TERRITORY_RANGE ) {
 				onHunt = true;
-				futurePosition.setX(GameValues.avatar.getX());
-				futurePosition.setY(GameValues.avatar.getY());
+//				futurePosition.setX(GameValues.avatar.getX());
+//				futurePosition.setY(GameValues.avatar.getY());
 			} else {
 				if( onHunt ) {
 					if( Math.abs(GameValues.avatar.getX() - getX()) > TERRITORY_RANGE * 2 &&

@@ -30,7 +30,7 @@ public class Maps {
 	
 	public Maps() {
 		GameValues.currentScientist = GameValues.dataHandler.getScientists().get((GameValues.user.getScientists()[GameValues.currentMapValue]));
-		GameValues.currentScientist.setTexture( new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")) );
+		GameValues.currentScientist.setTexture(new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")));
 		currentMap = new TmxMapLoader().load("tmx/" + name + ".tmx");
 		changeMap();
 	}

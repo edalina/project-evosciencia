@@ -21,6 +21,7 @@ public class MenuScreenActor extends Table {
 		MenuControls.getInstance();
 		
 		GameValues.settingUtils.startBGM(BGMEnum.BGM_3.getValue());
+		
 	}
 	
 	@Override

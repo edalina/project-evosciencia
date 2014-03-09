@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.values.GameValues;
 import com.eciz.evosciencia.values.HelpValues;
 
@@ -14,9 +15,11 @@ public class DialogUtils {
 	public static boolean isDialogActive = false;
 	
 	private static BitmapFont dialogText;
-	private static BitmapFont nextText;
-	private static BitmapFont backText;
+	private static Texture nextText;
+	private static Texture acceptText;
+	private static Texture backText;
 	private static Rectangle nextRect;
+	private static Rectangle acceptRect;
 	private static Rectangle backRect;
 	
 	private static Texture dialogTexture;
@@ -25,6 +28,8 @@ public class DialogUtils {
 	
 	private static String dialog = "";
 	private static String itemDialog = "";
+	private static String questDialog = "";
+	private static String questCompleteDialog = "";
 	
 	private static float DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
 	private static float DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/3) * GameValues.CAMERA_ZOOM;
@@ -32,7 +37,7 @@ public class DialogUtils {
 	private static float DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT + 30);
 	
 	private static int idx = 0;
-	
+
 	public DialogUtils() {
 		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
 		helpAvatar = new Texture(Gdx.files.internal("images/einstein.png"));
@@ -41,26 +46,32 @@ public class DialogUtils {
 		dialogText.setScale(GameValues.CAMERA_ZOOM);
 		dialogText.setColor(1, 1, 1, 1);
 		
-		nextText = new BitmapFont();
-		nextText.setScale(GameValues.CAMERA_ZOOM);
-		nextText.setColor(1, 1, 1, 1);
-		
-		backText = new BitmapFont();
-		backText.setScale(GameValues.CAMERA_ZOOM);
-		backText.setColor(1, 1, 1, 1);
+		nextText = new Texture(Gdx.files.internal("images/next.png"));
+		acceptText = new Texture(Gdx.files.internal("images/accept.png"));
+		backText = new Texture(Gdx.files.internal("images/cancel.png"));
 		
 		nextRect = new Rectangle();
+		acceptRect = new Rectangle();
 		backRect = new Rectangle();
 		
-		nextRect.width = nextText.getBounds("next").width;
-		nextRect.height = 10;
+		repositionButtons();
+	}
+	
+	public static void repositionButtons() {
+		nextRect.width = 40;
+		nextRect.height = 15;
 		nextRect.x = DIALOG_X + DIALOG_WIDTH - (nextRect.width) - 10;
-		nextRect.y = DIALOG_Y + 10 - nextRect.height;
+		nextRect.y = DIALOG_Y + 10;
 		
-		backRect.width = nextText.getBounds("back").width;
-		backRect.height = 10;
-		backRect.x = DIALOG_X + DIALOG_WIDTH - (backRect.width) - 10;
-		backRect.y = DIALOG_Y + 10 - backRect.height;
+		acceptRect.width = 60;
+		acceptRect.height = 20;
+		acceptRect.x = DIALOG_X + 15;
+		acceptRect.y = DIALOG_Y + acceptRect.height + 10;
+		
+		backRect.width = 60;
+		backRect.height = 20;
+		backRect.x = DIALOG_X + 15;
+		backRect.y = DIALOG_Y + 10;
 	}
 
 	public static void introDialogs() {
@@ -75,7 +86,7 @@ public class DialogUtils {
 //			GameValues.currentBatch.draw(helpAvatar, DIALOG_X - 100, DIALOG_Y - 50, 167, 200);
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, HelpValues.INTRO[idx], DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
-			nextText.draw(GameValues.currentBatch, "next", nextRect.getX(), nextRect.getY()+10);
+			GameValues.currentBatch.draw(nextText, nextRect.getX(), nextRect.getY(), nextRect.getWidth(), nextRect.getHeight());
 			if( Gdx.input.isTouched() ) {
 				if( !GameValues.touchDown ) {
 					GameValues.touchDown = true;
@@ -95,16 +106,14 @@ public class DialogUtils {
 		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
 		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT + 30);
 		
-		nextRect.x = DIALOG_X + DIALOG_WIDTH - (nextRect.width) - 10;
-		nextRect.y = DIALOG_Y + 20 - nextRect.height;
-		backRect.x = DIALOG_X + DIALOG_WIDTH - (backRect.width) - 10;
-		backRect.y = DIALOG_Y + 10 - backRect.height;
+		repositionButtons();
 		dialog = value;
 		createDialog();
 	}
 	
 	public static void createItemDialog(String value) {
-		DIALOG_WIDTH = (GameValues.SCREEN_WIDTH/2) * GameValues.CAMERA_ZOOM;
+		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
+		DIALOG_WIDTH = (GameValues.SCREEN_WIDTH) * GameValues.CAMERA_ZOOM;
 		DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/8) * GameValues.CAMERA_ZOOM;
 		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
 		DIALOG_Y = GameValues.camera.position.y + (DIALOG_HEIGHT*2-10);
@@ -118,8 +127,8 @@ public class DialogUtils {
 			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, dialog, DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
-			nextText.draw(GameValues.currentBatch, "next", nextRect.getX(), nextRect.getY()+10);
-			backText.draw(GameValues.currentBatch, "back", backRect.getX(), backRect.getY()+10);
+			GameValues.currentBatch.draw(acceptText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
+			GameValues.currentBatch.draw(backText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
 			if( Gdx.input.isTouched() ) {
 				if( !GameValues.touchDown ) {
 					GameValues.touchDown = true;
@@ -146,8 +155,91 @@ public class DialogUtils {
 					GameValues.touchDown = true;
 					Rectangle rectangle = new Rectangle();
 					rectangle.set(DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-					if( EventUtils.isTap(rectangle) ) {
+					if( Gdx.input.isTouched() ) {
 						itemDialog = "";
+					}
+				}
+			} else {
+				GameValues.touchDown = false;
+			}
+		}
+	}
+	
+	public static void createQuestDialog(String value) {
+		dialogTexture = new Texture(Gdx.files.internal("images/quest_dialog.png"));
+		DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
+		DIALOG_HEIGHT = GameValues.SCREEN_HEIGHT * GameValues.CAMERA_ZOOM;
+		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
+		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT/2);
+		
+		repositionButtons();
+		questDialog = value;
+		createQuestDialog();
+	}
+	
+	public static void createQuestDialog() {
+		if( !questDialog.equals("") ) {
+			Dpad.isDpadActive = false;
+			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
+			dialogText.setScale(0.6f);
+			dialogText.drawWrapped(GameValues.currentBatch, questDialog, DIALOG_X + 120, DIALOG_Y + DIALOG_HEIGHT - 80, DIALOG_WIDTH - 240);
+			GameValues.currentBatch.draw(acceptText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
+			GameValues.currentBatch.draw(backText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
+			if( Gdx.input.isTouched() ) {
+				if( !GameValues.touchDown ) {
+					GameValues.touchDown = true;
+					if( EventUtils.isTap(acceptRect) ) {
+						closeDialog();
+						Avatar.isQuestActive = true;
+					}
+					if( EventUtils.isTap(backRect) ) {
+						closeDialog();
+					}
+				}
+			} else {
+				GameValues.touchDown = false;
+			}
+		}
+	}
+	
+	public static void createCompleteDialog(String description) {
+		dialogTexture = new Texture(Gdx.files.internal("images/quest_dialog_completed.png"));
+		
+		DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
+		DIALOG_HEIGHT = GameValues.SCREEN_HEIGHT * GameValues.CAMERA_ZOOM;
+		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
+		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT/2);
+
+		GameScreen.field.setX(50);
+		GameScreen.field.setY(150);
+		GameScreen.field.setWidth((DIALOG_WIDTH * 2) - (50*2));
+		GameScreen.field.setHeight(30);
+		GameScreen.field.setVisible(true);
+		questCompleteDialog = description;
+		questCompleteDialog = questCompleteDialog + "\n" + "Guess the Scientist:";
+		repositionButtons();
+		createCompleteDialog();
+	}
+	
+	public static void createCompleteDialog() {
+		if( !questCompleteDialog.equals("") ) {
+			Dpad.isDpadActive = false;
+			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
+			dialogText.drawWrapped(GameValues.currentBatch, questCompleteDialog, DIALOG_X + 120, DIALOG_Y + DIALOG_HEIGHT - 50, DIALOG_WIDTH - 240);
+			GameValues.currentBatch.draw(nextText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
+			GameValues.currentBatch.draw(backText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
+			if( Gdx.input.isTouched() ) {
+				if( !GameValues.touchDown ) {
+					GameValues.touchDown = true;
+					if( EventUtils.isTap(acceptRect) ) {
+						if( GameScreen.field.getText().toLowerCase().equals(GameValues.currentScientist.getName().toLowerCase()) ) {
+							Avatar.isQuestActive = false;
+							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
+							closeDialog();
+						}
+					}
+					if( EventUtils.isTap(backRect) ) {
+						closeDialog();
 					}
 				}
 			} else {
@@ -162,7 +254,11 @@ public class DialogUtils {
 	
 	public static void closeDialog() {
 		dialog = "";
+		questDialog = "";
+		itemDialog = "";
+		questCompleteDialog = "";
+		GameScreen.field.setVisible(false);
 		Dpad.isDpadActive = true;
 	}
-	
+
 }

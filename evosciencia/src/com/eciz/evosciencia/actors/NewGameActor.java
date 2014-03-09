@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.EvoSciencia;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.CharacterSlot;
@@ -95,6 +96,7 @@ public class NewGameActor extends Table {
 			LoadAssets.loadAvatarAssets();
 			GameValues.touchDown = false;
 			LoadAssets.loadIntroAssets();
+			GameValues.user.setPlaytime(TimeUtils.millis());
 			GameValues.currentScreen = new IntroScreen();
 			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
 			return;
