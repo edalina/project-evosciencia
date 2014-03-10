@@ -15,15 +15,10 @@ public class GameScreen implements Screen {
 
 	public GameScreen() {
 		stage = new Stage();
-//		GameValues.camera = (OrthographicCamera) stage.getCamera();
 		GameValues.camera.zoom = GameValues.CAMERA_ZOOM;
 		stage.addActor(new GameScreenActor());
 		
 		field = new TextField("", GameValues.skin);
-//		field.setX(DIALOG_X + 50);
-//		field.setY(DIALOG_Y + DIALOG_HEIGHT - (110 + dialogText.getBounds(questCompleteDialog).height));
-//		field.setWidth(DIALOG_WIDTH - 100);
-//		field.setHeight(25);
 		field.setX(0);
 		field.setY(0);
 		field.setVisible(false);

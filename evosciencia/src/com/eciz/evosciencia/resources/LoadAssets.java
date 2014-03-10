@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -48,6 +49,12 @@ public class LoadAssets {
 		
 		Json json = new Json();
 		json.setIgnoreUnknownFields(true);
+		if( !Gdx.files.local("data/data.json").exists() ) {
+			DataHandler dataHandler = json.fromJson(DataHandler.class, Gdx.files.internal("data/data.json"));
+			String string = json.prettyPrint(dataHandler);
+			FileHandle fileHandle = Gdx.files.local("data/data.json");
+			fileHandle.writeString(string, false);
+		}
 		GameValues.dataHandler = json.fromJson(DataHandler.class, Gdx.files.local("data/data.json"));
 		
 		assetManager.load("images/quest.png", Texture.class);
@@ -69,6 +76,7 @@ public class LoadAssets {
 		assetManager.load("images/quest_dialog_completed.png", Texture.class);
 		assetManager.load("images/accept.png", Texture.class);
 		assetManager.load("images/cancel.png", Texture.class);
+		assetManager.load("images/back.png", Texture.class);
 		assetManager.load("images/next.png", Texture.class);
 		
 		assetManager.load("images/selection_carlo.png", Texture.class);

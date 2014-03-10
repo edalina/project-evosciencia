@@ -28,7 +28,7 @@ public class EvoSciencia extends Game implements ApplicationListener {
 //		GameValues.currentScreen = new AIScreen();
 		setScreen(GameValues.currentScreen);
 		
-		Gdx.input.setCatchBackKey(true);
+//		Gdx.input.setCatchBackKey(true);
 		
 	}
 	

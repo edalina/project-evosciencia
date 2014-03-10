@@ -12,8 +12,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.Enemy;
+import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.enums.MonsterEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.values.GameValues;
@@ -29,7 +31,12 @@ public class Maps {
 	public String name = "map1_1";
 	
 	public Maps() {
-		GameValues.currentScientist = GameValues.dataHandler.getScientists().get((GameValues.user.getScientists()[GameValues.currentMapValue]));
+		name = GameValues.dataHandler.getMaps().get(GameValues.currentMapValue);
+		Scientist ref = GameValues.dataHandler.getScientists().get((GameValues.user.getScientists()[GameValues.currentMapValue]));
+		GameValues.currentScientist = new Scientist();
+		GameValues.currentScientist.setDescription(ref.getDescription());
+		GameValues.currentScientist.setId(ref.getId());
+		GameValues.currentScientist.setName(ref.getName());
 		GameValues.currentScientist.setTexture(new Texture(Gdx.files.internal("npc/" + GameValues.currentScientist.getName() + ".png")));
 		currentMap = new TmxMapLoader().load("tmx/" + name + ".tmx");
 		changeMap();
@@ -63,6 +70,8 @@ public class Maps {
 		createSpawningGrounds();
 		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
 		GameValues.currentScientist.setRectangle(createNPCObjects());
+		Avatar.isQuestActive = false;
+		GameValues.user.setCurrentQuestDone(false);
 	}
 	
 	public void renderMonsters() {

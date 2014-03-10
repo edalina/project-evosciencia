@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.entities.Portal;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.values.GameValues;
 import com.eciz.evosciencia.values.HelpValues;
@@ -17,6 +18,7 @@ public class DialogUtils {
 	private static BitmapFont dialogText;
 	private static Texture nextText;
 	private static Texture acceptText;
+	private static Texture cancelText;
 	private static Texture backText;
 	private static Rectangle nextRect;
 	private static Rectangle acceptRect;
@@ -48,7 +50,8 @@ public class DialogUtils {
 		
 		nextText = new Texture(Gdx.files.internal("images/next.png"));
 		acceptText = new Texture(Gdx.files.internal("images/accept.png"));
-		backText = new Texture(Gdx.files.internal("images/cancel.png"));
+		cancelText = new Texture(Gdx.files.internal("images/cancel.png"));
+		backText = new Texture(Gdx.files.internal("images/back.png"));
 		
 		nextRect = new Rectangle();
 		acceptRect = new Rectangle();
@@ -101,6 +104,7 @@ public class DialogUtils {
 	}
 	
 	public static void createDialog(String value) {
+		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
 		DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
 		DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/3) * GameValues.CAMERA_ZOOM;
 		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
@@ -127,8 +131,7 @@ public class DialogUtils {
 			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, dialog, DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
-			GameValues.currentBatch.draw(acceptText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
-			GameValues.currentBatch.draw(backText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
+			GameValues.currentBatch.draw(backText, nextRect.getX(), nextRect.getY(), nextRect.getWidth(), nextRect.getHeight());
 			if( Gdx.input.isTouched() ) {
 				if( !GameValues.touchDown ) {
 					GameValues.touchDown = true;
@@ -184,7 +187,7 @@ public class DialogUtils {
 			dialogText.setScale(0.6f);
 			dialogText.drawWrapped(GameValues.currentBatch, questDialog, DIALOG_X + 120, DIALOG_Y + DIALOG_HEIGHT - 80, DIALOG_WIDTH - 240);
 			GameValues.currentBatch.draw(acceptText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
-			GameValues.currentBatch.draw(backText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
+			GameValues.currentBatch.draw(cancelText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
 			if( Gdx.input.isTouched() ) {
 				if( !GameValues.touchDown ) {
 					GameValues.touchDown = true;
@@ -216,7 +219,6 @@ public class DialogUtils {
 		GameScreen.field.setHeight(30);
 		GameScreen.field.setVisible(true);
 		questCompleteDialog = description;
-		questCompleteDialog = questCompleteDialog + "\n" + "Guess the Scientist:";
 		repositionButtons();
 		createCompleteDialog();
 	}
@@ -225,9 +227,9 @@ public class DialogUtils {
 		if( !questCompleteDialog.equals("") ) {
 			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-			dialogText.drawWrapped(GameValues.currentBatch, questCompleteDialog, DIALOG_X + 120, DIALOG_Y + DIALOG_HEIGHT - 50, DIALOG_WIDTH - 240);
+			dialogText.drawWrapped(GameValues.currentBatch, questCompleteDialog + "\n" + "Guess the Scientist:", DIALOG_X + 50, DIALOG_Y + DIALOG_HEIGHT - 50, DIALOG_WIDTH - 100);
 			GameValues.currentBatch.draw(nextText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
-			GameValues.currentBatch.draw(backText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
+			GameValues.currentBatch.draw(cancelText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
 			if( Gdx.input.isTouched() ) {
 				if( !GameValues.touchDown ) {
 					GameValues.touchDown = true;
@@ -236,6 +238,15 @@ public class DialogUtils {
 							Avatar.isQuestActive = false;
 							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
 							closeDialog();
+							String name = "";
+							for( String s : GameValues.currentScientist.getName().split(" ") ) {
+								name = name + s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase() + " ";
+							}
+							createDialog(name + ": Thank you for helping me, my name is " + name);
+							
+							GameValues.portal = new Portal();
+							GameValues.portal.setRectangle(new Rectangle(GameValues.avatar.getX(), GameValues.avatar.getY() - (GameValues.avatar.getHeight()*2), GameValues.avatar.getWidth(), GameValues.avatar.getHeight()*2));
+							GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
 						}
 					}
 					if( EventUtils.isTap(backRect) ) {

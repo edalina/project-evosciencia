@@ -1,6 +1,7 @@
 package com.eciz.evosciencia.actors;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
@@ -11,10 +12,13 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.eciz.evosciencia.EvoSciencia;
+import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.CharacterSlot;
 import com.eciz.evosciencia.entities.User;
+import com.eciz.evosciencia.resources.LoadAssets;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.screens.NewGameScreen;
+import com.eciz.evosciencia.utils.AvatarUtils;
 import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
 
@@ -58,8 +62,16 @@ public class SaveDataActor extends Table {
 			characterSlot.setActive(false);
 			if( user.getPlaytime() == 0 )
 				characterSlot.setDefinition("NEW GAME");
-			else
-				characterSlot.setDefinition("Avatar: " + user.getAvatar() + "\nPlaytime: " + user.getPlaytime());
+			else {
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(user.getPlaytime());
+				String date = (calendar.get(Calendar.HOUR)) + ":" +
+							(calendar.get(Calendar.MINUTE) + 1) + " " +
+							(calendar.get(Calendar.MONTH) + 1) + "/" +
+							(calendar.get(Calendar.DATE)) + "/" +
+							calendar.get(Calendar.YEAR);
+				characterSlot.setDefinition("Avatar: " + user.getAvatar() + "\nDate Created: " + date );
+			}
 			
 			Rectangle rectangle = new Rectangle();
 			rectangle.width = (GameValues.SCREEN_WIDTH - (coor*4) - 30)/5;
@@ -104,6 +116,13 @@ public class SaveDataActor extends Table {
 			if( characterSlot.getPlaytime() == 0 ) {
 				GameValues.currentScreen = new NewGameScreen();
 			} else {
+				GameValues.avatar = new Avatar();
+				GameValues.user = GameValues.dataHandler.getUsers().get(characterSlot.getId());
+				GameValues.avatar.name = GameValues.user.getAvatar();
+				GameValues.currentMapValue = GameValues.user.getCoordinate().getMap();
+				LoadAssets.loadAvatarAssets();
+				AvatarUtils.repositionAvatarByCoordinate();
+				GameValues.touchDown = false;
 				GameValues.currentScreen = new GameScreen();
 			}
 			EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);

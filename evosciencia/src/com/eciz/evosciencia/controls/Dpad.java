@@ -12,9 +12,11 @@ import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
+import com.eciz.evosciencia.entities.Coordinate;
 import com.eciz.evosciencia.entities.DataHandler;
 import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.entities.Quest;
+import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.entities.SkillSlot;
 import com.eciz.evosciencia.entities.User;
 import com.eciz.evosciencia.enums.StanceEnum;
@@ -163,6 +165,18 @@ public class Dpad {
 		
 		Rectangle tmpRect = new Rectangle();
 		tmpRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		
+		if( GameValues.portal != null ) {
+			if( tmpRect.overlaps(GameValues.portal.getRectangle()) ) {
+				GameValues.avatar.updateStandBy();
+				GameValues.currentMapValue = GameValues.currentMapValue+1;
+				GameValues.maps.setCurrentMap(GameValues.portal.getDestination());
+				GameValues.maps.changeMap();
+				GameValues.avatar.setPosition(384, 384);
+				GameValues.portal = null;
+				return;
+			}
+		}
 		
 		for(Checkpoint checkpoint : GameValues.checkpoints ) {
 			if( tmpRect.overlaps(checkpoint.getRectangle()) ) {
@@ -328,18 +342,36 @@ public class Dpad {
 				// Pause button is clicked, CURRENTLY SAVING
 				if( EventUtils.isTap(GameValues.dpad.getPauseRectangle()) ) {
 					Dpad.buttonActive = true;
+					Dpad.isDpadActive = false;
+					DialogUtils.createItemDialog("Saving Data...");
+					
+					Scientist tmpScientist = GameValues.currentScientist;
+					
+					GameValues.user.setCoordinate(new Coordinate(GameValues.currentMapValue));
+					
 					for( User user : GameValues.dataHandler.getUsers() ) {
 						if( user.getId() == GameValues.user.getId() ) {
 							user = GameValues.user;
 						}
 					}
+					
+					DataHandler tmpDataHandler = GameValues.dataHandler;
+					
+					for( Scientist scientist : tmpDataHandler.getScientists() ) {
+						scientist.setTexture(null);
+						scientist.setRectangle(null);
+					}
+					
 					Json json = new Json();
-					String string = json.prettyPrint(GameValues.dataHandler);
-					System.out.println( string );
+					json.setIgnoreUnknownFields(true);
+					String string = json.prettyPrint(tmpDataHandler);
 					FileHandle fileHandle = Gdx.files.local("data/data.json");
 					fileHandle.writeString(string, false);
-//					GameValues.dataHandler = json.fromJson(DataHandler.class, Gdx.files.internal("data/data.json"));
+					DialogUtils.closeDialog();
+					DialogUtils.createItemDialog("Data saved!");
+					Dpad.isDpadActive = true;
 //					GameValues.settingUtils.toggleBGM();
+					GameValues.currentScientist = tmpScientist;
 				}
 				
 //				// Skill slots
@@ -431,7 +463,7 @@ public class Dpad {
 		
 		if( GameValues.currentScientist != null ) {
 		
-			if( !Avatar.isQuestActive ) {
+			if( !Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
 					String dialog = "";
 					List<Quest> quests = Quest.getQuests();
@@ -442,13 +474,24 @@ public class Dpad {
 							dialog = dialog.concat(", ");
 						i++;
 					}
+					GameValues.user.setCurrentQuestDone(false);
 					DialogUtils.createQuestDialog(dialog + " x 1");
+//					DialogUtils.createCompleteDialog(GameValues.currentScientist.getDescription());
 					
 					return;
 				}
-			} else if( Avatar.isQuestActive && GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+			} else if( Avatar.isQuestActive && GameValues.user.isCurrentQuestDone() ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
 					DialogUtils.createCompleteDialog(GameValues.currentScientist.getDescription());
+				}
+			} else if( GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
+					String name = "";
+					for( String s : GameValues.currentScientist.getName().split(" ") ) {
+						name = name + s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase() + " ";
+					}
+					DialogUtils.createDialog( name + ": Thanks for helping me!");
+					return;
 				}
 			}
 			
@@ -469,9 +512,10 @@ public class Dpad {
 						GameValues.user.setLevel(GameValues.user.getLevel());
 					}
 					if( Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
-						if( MathUtils.random(0, 100) < 10 ) {
+						if( MathUtils.random(0, 100) < 20 ) {
 							
-							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
+//							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
+							GameValues.user.setCurrentQuestDone(true);
 							
 							DialogUtils.createItemDialog("Quest completed");
 							

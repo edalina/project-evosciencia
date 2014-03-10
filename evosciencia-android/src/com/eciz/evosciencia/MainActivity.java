@@ -1,7 +1,5 @@
 package com.eciz.evosciencia;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.WindowManager;
 

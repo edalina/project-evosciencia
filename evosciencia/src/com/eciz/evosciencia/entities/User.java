@@ -12,6 +12,7 @@ public class User {
 	private int[] scientists;
 	private boolean[] questDone;
 	private long experience = 0;
+	private boolean isCurrentQuestDone = false;
 	
 	public int getId() {
 		return id;
@@ -73,6 +74,12 @@ public class User {
 	}
 	public void setExperience(long experience) {
 		this.experience = experience;
+	}
+	public boolean isCurrentQuestDone() {
+		return isCurrentQuestDone;
+	}
+	public void setCurrentQuestDone(boolean isCurrentQuestDone) {
+		this.isCurrentQuestDone = isCurrentQuestDone;
 	}
 	
 }

@@ -92,7 +92,9 @@ public class NewGameActor extends Table {
 		if( characterSlot.isActive() ) {
 			GameValues.avatar = new Avatar();
 			GameValues.user = GameValues.dataHandler.getUsers().get(characterSlot.getId());
-			GameValues.avatar.name = characterSlot.getExtras().get("avatarName").toString();
+			GameValues.user.setAvatar(characterSlot.getExtras().get("avatarName").toString());
+			GameValues.user.setPlaytime(TimeUtils.millis());
+			GameValues.avatar.name = GameValues.user.getAvatar();
 			LoadAssets.loadAvatarAssets();
 			GameValues.touchDown = false;
 			LoadAssets.loadIntroAssets();

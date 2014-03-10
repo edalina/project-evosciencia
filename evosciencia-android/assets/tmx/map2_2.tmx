@@ -208,11 +208,6 @@
    eJzt1tEJwCAMBNAbQj/t5u2sXaBIpQVB35vgSCCXBIA3zpJcZXaK71pNjjo7BbAbNxQA/qdf+8wHgNXoNgDgiR9hD/YMY25KgQx5
   </data>
  </layer>
- <layer name="tile_trees" width="50" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt0MEJwCAURME9aB1J51qqaUAIBCIfZirYfQnUMloy2+kV3109ufvpFe/tuo/nwyz0o1r3nWrdAQAAAAAAAAD+sACWEgWz
-  </data>
- </layer>
  <layer name="spawn" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJzt1LENACAIBEATl3D/SS1sTWwMRLmbQOD91gDu6yP7BfEqzhzBXhd7gHf4r0A2PcSJjAA/03FEk7n/Vb9x9fl5g5xCbToA2Jl+DAFg

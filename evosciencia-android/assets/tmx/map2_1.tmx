@@ -267,6 +267,11 @@
     <property name="collision" value=""/>
    </properties>
   </tile>
+  <tile id="2692">
+   <properties>
+    <property name="cpoint" value="map2_2"/>
+   </properties>
+  </tile>
   <tile id="5270">
    <properties>
     <property name="collision" value=""/>
@@ -311,6 +316,11 @@
  <layer name="npc" width="50" height="50">
   <data encoding="base64" compression="zlib">
    eJztzgEJAAAIA7CDJeyf1BhH2BIsAQAAAAAAAIC+2fYAAPjuAAd3ABw=
+  </data>
+ </layer>
+ <layer name="cpoint" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztw7ENAAAIA6DO/u3fzr6gkJAAAAAAAAAAAADc0bXzxwCIzAI9
   </data>
  </layer>
 </map>

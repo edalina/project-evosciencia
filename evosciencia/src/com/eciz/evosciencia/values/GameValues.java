@@ -15,6 +15,7 @@ import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.DataHandler;
+import com.eciz.evosciencia.entities.Portal;
 import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.entities.User;
 import com.eciz.evosciencia.resources.Maps;
@@ -94,5 +95,7 @@ public class GameValues {
 	public static boolean isNewGame = false;
 	
 	public static Skin skin;
+
+	public static Portal portal;
 	
 }

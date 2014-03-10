@@ -11,6 +11,7 @@ import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.enums.BGMEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
+import com.eciz.evosciencia.utils.AvatarUtils;
 import com.eciz.evosciencia.utils.DialogUtils;
 import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
@@ -32,6 +33,8 @@ public class GameScreenActor extends Table {
 		
 		GameValues.maps = Maps.getMaps();
 		
+		AvatarUtils.repositionAvatarByCoordinate();
+		
 		if( GameValues.isNewGame ) {
 			GameValues.avatar.facingFlag = StanceEnum.BACK_STAND;
 			GameValues.avatar.sprite = GameValues.avatar.avatarSprites.get(StanceEnum.BACK_STAND.getValue());
@@ -50,10 +53,14 @@ public class GameScreenActor extends Table {
 	public void act(float delta) {
 		super.act(delta);
 		
-		if( Avatar.isQuestActive ) {
-			questIndicator = GameValues.questMarkActive;
+		if( !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+			if( Avatar.isQuestActive ) {
+				questIndicator = GameValues.questMarkActive;
+			} else {
+				questIndicator = GameValues.questMarkInactive;
+			}
 		} else {
-			questIndicator = GameValues.questMarkInactive;
+			questIndicator = null;
 		}
 		
 		if( GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
@@ -79,7 +86,8 @@ public class GameScreenActor extends Table {
 		if( GameValues.currentScientist.getRectangle() != null ) {
 			DialogUtils.createDialog();
 			GameValues.currentBatch.draw(GameValues.currentScientist.getTexture(), GameValues.currentScientist.getRectangle().getX(), GameValues.currentScientist.getRectangle().getY(), GameValues.currentScientist.getRectangle().getWidth(), GameValues.currentScientist.getRectangle().getHeight());
-			GameValues.currentBatch.draw(questIndicator, GameValues.currentScientist.getRectangle().getX() + (GameValues.currentScientist.getRectangle().getWidth()/4), GameValues.currentScientist.getRectangle().getY() + (GameValues.currentScientist.getRectangle().getHeight()/4), GameValues.currentScientist.getRectangle().getWidth()/2, GameValues.currentScientist.getRectangle().getHeight()/2);
+			if( questIndicator != null )
+				GameValues.currentBatch.draw(questIndicator, GameValues.currentScientist.getRectangle().getX() + (GameValues.currentScientist.getRectangle().getWidth()/4), GameValues.currentScientist.getRectangle().getY() + (GameValues.currentScientist.getRectangle().getHeight()/4), GameValues.currentScientist.getRectangle().getWidth()/2, GameValues.currentScientist.getRectangle().getHeight()/2);
 		}
 		GameValues.maps.renderMonsters();
 		if( GameValues.avatar.isAttacking ) {
@@ -94,6 +102,10 @@ public class GameScreenActor extends Table {
 				GameValues.avatar.isAttacking = false;
 		} else {
 			GameValues.currentBatch.draw(GameValues.avatar.sprite, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+		}
+		
+		if( GameValues.portal != null ) {
+			GameValues.currentBatch.draw(new Texture(Gdx.files.internal("images/portal.png")), GameValues.portal.getRectangle().getX(), GameValues.portal.getRectangle().getY(), GameValues.portal.getRectangle().getWidth(), GameValues.portal.getRectangle().getHeight());
 		}
 		GameValues.currentBatch.end();
 		
@@ -112,9 +124,8 @@ public class GameScreenActor extends Table {
 			DialogUtils.createDialog();
 			DialogUtils.createQuestDialog();
 			DialogUtils.createCompleteDialog();
-		} else {
-			DialogUtils.createItemDialog();
 		}
+		DialogUtils.createItemDialog();
 		
 		// Check if event is triggered
 		GameValues.dpad.checkEvents();
