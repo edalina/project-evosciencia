@@ -31,9 +31,7 @@ public class GameScreenActor extends Table {
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
 		
-		GameValues.maps = Maps.getMaps();
-		
-		AvatarUtils.repositionAvatarByCoordinate();
+		GameValues.maps = Maps.getMaps();		
 		
 		if( GameValues.isNewGame ) {
 			GameValues.avatar.facingFlag = StanceEnum.BACK_STAND;

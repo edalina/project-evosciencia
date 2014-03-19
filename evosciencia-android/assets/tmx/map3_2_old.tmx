@@ -1323,9 +1323,9 @@
    eJztmEtugzAURQ1knEYBZhkElhLCPlhRW+Uzd7uUfPaVQ6uqKk0FxaY29B3pSvEg9r047zlYqe4sI6VilKA0+sUXLZIFSr8opTPUd44d3vfogI6OcuTkeCVDbpBD+Moy5PeJEpSGrt30Z4f3PTqg44hzDNEvqJmK2qnszNaNIfoFPazK/jjHEGhyrCeQQxCE79D7NH1cu/ZhCv1bxxPIwRmkkwnk4BzV6QRyCD8zRw9o4dqIIY/oCT27NmLIPGA/0CJw7WT8rFGGcsc+TNHq7V2kfq8aNbyD1HdD9b2KIAgWkXs1e2xZtzRc24d7+AsZroY5fLiH37Ju6Whtm1zIcJ1ADsEt0uv9wode34cNz7wIP887H3p9H054P4d2zjuXbHjmRTT+8+6E93M0zvOuWRPFjM+onLl29t73P2jr+1ITd+Zq7G3b2CY2a6K5t23jrhw6+rJVE829bRv7SnNv28b/iXjF/6I7Slf957wBfZNbLQ==
   </data>
  </layer>
- <layer name="npc" width="50" height="50">
+ <layer name="spawn" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztzjENAAAIA7AFFfhXigISPp5WQRMAAADYVX8PAAAAAAAAbgatBgAb
+   eJzt1csNABAQBUCJJvRfqTMOHCQ+O1PBeryVEsSTy+kJ7hYxn4hnhlv0/dvRR50eyQQA3uYvXyerljwA9rNb3+Xu+IF3DAAwVwH83wFg
   </data>
  </layer>
 </map>

@@ -43,7 +43,7 @@ public class AboutActor extends Table {
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
 		
-		saveDataBox = new Texture(Gdx.files.internal("images/character_box.png"));
+		saveDataBox = new Texture(Gdx.files.internal("images/dialog.png"));
 		
 		title = new BitmapFont();
 		content = new BitmapFont();

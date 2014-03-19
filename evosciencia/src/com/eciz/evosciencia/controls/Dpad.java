@@ -37,6 +37,7 @@ public class Dpad {
 	private Texture navHandler;
 	private Texture actionBtn;
 	private Texture healthBar;
+	private Texture healthGauge;
 	private Texture pauseBtn;
 	private Texture slot;
 	
@@ -68,6 +69,7 @@ public class Dpad {
 		actionBtn = new Texture(Gdx.files.internal("dpad/action.png"));
 		pauseBtn = new Texture(Gdx.files.internal("dpad/pause.png"));
 		healthBar = new Texture(Gdx.files.internal("dpad/gauge.png"));
+		healthGauge = new Texture(Gdx.files.internal("images/red.png"));
 		slot = new Texture(Gdx.files.internal("dpad/slot.png"));
 		
 		upArrowRectangle = new Rectangle();
@@ -111,7 +113,8 @@ public class Dpad {
 		healthBarRectangle.height = DPAD_HEIGHT/2;
 	}
 
-	public static void positionDpad(boolean isX, boolean isY) {
+//	public static void positionDpad(boolean isX, boolean isY) {
+	public static void positionDpad() {
 		
 		/*
 		 * Setting values
@@ -129,7 +132,7 @@ public class Dpad {
 			dpadSkillSlotXCenter = GameValues.camera.position.x - (2 * (DPAD_WIDTH + (DPAD_WIDTH/2))),
 			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2) + 10 + DPAD_HEIGHT;
 		
-		if( isX ) {
+//		if( isX ) {
 			GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
 			GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
 			GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - DPAD_WIDTH;
@@ -143,9 +146,9 @@ public class Dpad {
 				skillSlot.getRectangle().x = dpadSkillSlotXCenter + (i * (DPAD_WIDTH + (DPAD_WIDTH/2)));
 				i++;
 			}
-		}
-		
-		if( isY ) {
+//		}
+//		
+//		if( isY ) {
 			GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + DPAD_HEIGHT;
 			GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - DPAD_HEIGHT;
 			GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
@@ -157,7 +160,7 @@ public class Dpad {
 			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
 				skillSlot.getRectangle().y = dpadSkillSlotYCenter;
 			}
-		}
+//		}
 		
 	}
 	
@@ -170,9 +173,12 @@ public class Dpad {
 			if( tmpRect.overlaps(GameValues.portal.getRectangle()) ) {
 				GameValues.avatar.updateStandBy();
 				GameValues.currentMapValue = GameValues.currentMapValue+1;
-				GameValues.maps.setCurrentMap(GameValues.portal.getDestination());
-				GameValues.maps.changeMap();
+//				GameValues.maps.setCurrentMap(GameValues.portal.getDestination());
+//				GameValues.maps.changeMap();
+				GameValues.maps = new Maps();
 				GameValues.avatar.setPosition(384, 384);
+				Avatar.isQuestActive = false;
+				GameValues.user.setCurrentQuestDone(false);
 				GameValues.portal = null;
 				return;
 			}
@@ -231,7 +237,8 @@ public class Dpad {
 				}
 				
 				GameValues.camera.position.set(x, y, 0);
-				Dpad.positionDpad(true, true);
+//				Dpad.positionDpad(true, true);
+				Dpad.positionDpad();
 				
 				return;
 			}
@@ -347,7 +354,7 @@ public class Dpad {
 					
 					Scientist tmpScientist = GameValues.currentScientist;
 					
-					GameValues.user.setCoordinate(new Coordinate(GameValues.currentMapValue));
+					GameValues.user.setCoordinate(Coordinate.getCurrentCoordinate());
 					
 					for( User user : GameValues.dataHandler.getUsers() ) {
 						if( user.getId() == GameValues.user.getId() ) {
@@ -427,6 +434,13 @@ public class Dpad {
 	
 	public void drawDpad() {
 		if( isDpadActive ) {
+			float healthLength = GameValues.dpad.getHealthBarRectangle().width -
+								(
+									GameValues.dpad.getHealthBarRectangle().width*
+									(
+										(GameValues.user.getLife() - GameValues.user.getCurrentLife())/GameValues.user.getLife()
+									)
+								);
 			GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
@@ -434,6 +448,7 @@ public class Dpad {
 			GameValues.currentBatch.draw(GameValues.dpad.getRightArrow(), GameValues.dpad.getRightArrowRectangle().x, GameValues.dpad.getRightArrowRectangle().y, GameValues.dpad.getRightArrowRectangle().width, GameValues.dpad.getRightArrowRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getActionBtn(), GameValues.dpad.getActionRectangle().x, GameValues.dpad.getActionRectangle().y, GameValues.dpad.getActionRectangle().width, GameValues.dpad.getActionRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getPauseBtn(), GameValues.dpad.getPauseRectangle().x, GameValues.dpad.getPauseRectangle().y, GameValues.dpad.getPauseRectangle().width, GameValues.dpad.getPauseRectangle().height);
+			GameValues.currentBatch.draw(GameValues.dpad.getHealthGauge(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, healthLength, GameValues.dpad.getHealthBarRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
 			
 			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
@@ -512,7 +527,7 @@ public class Dpad {
 						GameValues.user.setLevel(GameValues.user.getLevel());
 					}
 					if( Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
-						if( MathUtils.random(0, 100) < 20 ) {
+						if( MathUtils.random(0, 100) < 100 ) {
 							
 //							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
 							GameValues.user.setCurrentQuestDone(true);
@@ -596,6 +611,14 @@ public class Dpad {
 
 	public void setHealthBar(Texture healthBar) {
 		this.healthBar = healthBar;
+	}
+	
+	public Texture getHealthGauge() {
+		return healthGauge;
+	}
+
+	public void setHealthGauge(Texture healthGauge) {
+		this.healthGauge = healthGauge;
 	}
 
 	public Texture getPauseBtn() {

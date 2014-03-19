@@ -245,7 +245,7 @@ public class DialogUtils {
 							createDialog(name + ": Thank you for helping me, my name is " + name);
 							
 							GameValues.portal = new Portal();
-							GameValues.portal.setRectangle(new Rectangle(GameValues.avatar.getX(), GameValues.avatar.getY() - (GameValues.avatar.getHeight()*2), GameValues.avatar.getWidth(), GameValues.avatar.getHeight()*2));
+							GameValues.portal.setRectangle(new Rectangle(GameValues.avatar.getX(), GameValues.avatar.getY() - (GameValues.avatar.getHeight()*2), GameValues.avatar.getWidth(), GameValues.avatar.getHeight()));
 							GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
 						}
 					}

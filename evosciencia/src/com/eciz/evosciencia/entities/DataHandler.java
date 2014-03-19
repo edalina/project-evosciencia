@@ -5,6 +5,7 @@ import java.util.List;
 public class DataHandler {
 
 	private List<String> maps;
+	private List<String> outerMaps;
 	private List<Scientist> scientists;
 	private List<Quest> quests;
 	private List<User> users;
@@ -14,6 +15,12 @@ public class DataHandler {
 	}
 	public void setMaps(List<String> maps) {
 		this.maps = maps;
+	}
+	public List<String> getOuterMaps() {
+		return outerMaps;
+	}
+	public void setOuterMaps(List<String> outerMaps) {
+		this.outerMaps = outerMaps;
 	}
 	public List<Scientist> getScientists() {
 		return scientists;

@@ -7,6 +7,7 @@ public class User {
 	private long playtime;
 	private String avatar;
 	private int life;
+	private int currentLife = life;
 	private int level;
 	private int damage;
 	private int[] scientists;
@@ -43,6 +44,12 @@ public class User {
 	}
 	public void setLife(int life) {
 		this.life = life;
+	}
+	public int getCurrentLife() {
+		return currentLife;
+	}
+	public void setCurrentLife(int currentLife) {
+		this.currentLife = currentLife;
 	}
 	public int getLevel() {
 		return level;

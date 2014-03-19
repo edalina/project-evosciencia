@@ -70,8 +70,6 @@ public class Maps {
 		createSpawningGrounds();
 		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
 		GameValues.currentScientist.setRectangle(createNPCObjects());
-		Avatar.isQuestActive = false;
-		GameValues.user.setCurrentQuestDone(false);
 	}
 	
 	public void renderMonsters() {

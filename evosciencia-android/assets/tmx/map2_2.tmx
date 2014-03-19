@@ -200,7 +200,7 @@
  </layer>
  <layer name="cliff_trees" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztlltugzAQRf0RQj67gVZquyUKbKmLaKQkW+K1nF4nuHGGEYEP6CDdIx05JoMYsIfBOeeqnXM1bGALO+j5wXjsfwdeE+fekvs8xJzgGV52wxgZu8ToyXDNL5jDApbJMOe/czA/Jvd5iHmHH/AzeYwJxLFLjJ4KYw0b2MIu5N7no61DmIeYEzzDixIjY5cYr+uxx3rAHBaw3A/3VXxP2lxDXm9JfK4V8q5hA1vY9fch1yCugfh8WUP/gc81S7EeMIcFLNPbf/I5xjUQnx/u9fvl0TXxuVbIu4YNbGGX6rFxDci6XztvjeyA9YA5LGB5uB3X9ox8T1lB5jr2joqPrVG7cxh7rnGuch9ZQ+vlU/q4NbRePtbHraL18mc1YpFnvdz6OgSm9nLrTO3l1tF6uZVvpjlovXxre8qjfWdsbU95rH5nzGXr+RNCCCGEEEIIIYQQQgghFvgFy0GT1A==
+   eJztll1ugzAQBv0QQi7RSm2vRIHLNVKSK/F3nA4NTlyzTXlBMdI30sgx2ojFa7M451yzc67FDnsccOSL8Tj99rxkzr1m97mPOeEZL7t5TBy7xjhScM9PLLHCOpvnfPsP82N2n/uYN3zHj+x3jCeMXWMcaRhb7LDHwec+5WPVwc99zAnPeDFi4tg1xp967KkHllhhvZ/vq/CZrLlFfL+1aci7xQ57HKbniGsQnoFbrsYZehZFTj2wxArr/Ho9XsfwDHj+OtPPoCHvFjvsccjtuPAMxOc+BYoD9cASK6wP1+vWnonfU1vAyjV+92yBMNcU91GI1cuX9PHUsHr5oz6eKlYvf9THU+W/Xp56HTxLe3nqLO3lqWP18pS+mZZi9fKt7akR89tjY3tqZItrb7HFtRdCCCGEEEIIIYQQQgghUuMbCgCLGw==
   </data>
  </layer>
  <layer name="stone" width="50" height="50">

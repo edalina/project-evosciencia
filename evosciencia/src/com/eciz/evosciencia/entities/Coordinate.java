@@ -1,30 +1,46 @@
 package com.eciz.evosciencia.entities;
 
+import com.eciz.evosciencia.values.GameValues;
+
 public class Coordinate {
 
-	private int x;
-	private int y;
+	private float x;
+	private float y;
 	private int map;
 	
 	public Coordinate() {
 	}
 	
 	public Coordinate(int map) {
-		setX(384);
-		setY(384);
-		setMap(map);
+		
 	}
 	
-	public int getX() {
+	public static Coordinate getCurrentCoordinate() {
+		Coordinate coordinate = new Coordinate();
+		float x = GameValues.avatar.getX(),
+			y = GameValues.avatar.getY();
+		
+		if( GameValues.maps.name.indexOf("_1") == -1 ) {
+			x = 384;
+			y = 384;
+		}
+		coordinate.setX(x);
+		coordinate.setY(y);
+		coordinate.setMap(GameValues.currentMapValue);
+		
+		return coordinate;
+	}
+	
+	public float getX() {
 		return x;
 	}
-	public void setX(int x) {
+	public void setX(float x) {
 		this.x = x;
 	}
-	public int getY() {
+	public float getY() {
 		return y;
 	}
-	public void setY(int y) {
+	public void setY(float y) {
 		this.y = y;
 	}
 	public int getMap() {

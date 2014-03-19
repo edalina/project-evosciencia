@@ -65,15 +65,24 @@ public class Avatar extends Rectangle {
 			GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE)) ) {
 			isX = true;
 			angleCameraOnAvatarOnX();
+		} else if( GameValues.avatar.getX() <= GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE ) {
+			angleCameraOnAvatarOnX(GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE);
+		} else if( GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE) ) {
+			angleCameraOnAvatarOnX(Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE));
 		}
 	
 		if( !(GameValues.avatar.getY()  <= GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE ||
 			GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE)) ) {
 			isY = true;
 			angleCameraOnAvatarOnY();
+		} else if( GameValues.avatar.getY()  <= GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE ) {
+			angleCameraOnAvatarOnY(GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE);
+		} else if( GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE) ) {
+			angleCameraOnAvatarOnY(Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE));
 		}
 		
-		Dpad.positionDpad(isX, isY);
+//		Dpad.positionDpad(isX, isY);
+		Dpad.positionDpad();
 		
 	}
 	
@@ -114,8 +123,18 @@ public class Avatar extends Rectangle {
 		GameValues.camera.update();
 	}
 	
+	public void angleCameraOnAvatarOnX( float x ) {
+		GameValues.camera.position.x = x;
+		GameValues.camera.update();
+	}
+	
 	public void angleCameraOnAvatarOnY() {
 		GameValues.camera.position.y = GameValues.avatar.getY();
+		GameValues.camera.update();
+	}
+	
+	public void angleCameraOnAvatarOnY( float y ) {
+		GameValues.camera.position.y = y;
 		GameValues.camera.update();
 	}
 	

@@ -413,9 +413,9 @@
    eJzt1ssNwCAMBFGLUBmBxvn0lb24gHBBTuZJczfismYAAAAAAPxPSWa3qqql09fs67p9qKlW4HeUS/+hqmrX6Wv2dd0+1FQr8DtK1n+oqlo+fQ0AAO/4zovOd150vvOi850Xne88AAAA4Mse06kONA==
   </data>
  </layer>
- <layer name="spawn" width="50" height="50">
+ <layer name="npc" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1DkOwCAMBECUV/D/l1JQpUGRwmWY6ZHM2tqUAPp48pw3J7n9/8B6K3po5+7beTYA3nR2FSGHCDMCRPO1W3VwPH92Zt/M4ta4iXtv65GPjAEYoQDA7gG7
+   eJztzjENAAAIA7AlmMC/UoIGDp5WQRNgVX8PAAAAAAAAAACAiwHzkQAc
   </data>
  </layer>
 </map>
