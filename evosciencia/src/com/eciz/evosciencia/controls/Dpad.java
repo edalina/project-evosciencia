@@ -25,6 +25,7 @@ import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.utils.DialogUtils;
 import com.eciz.evosciencia.utils.EventUtils;
+import com.eciz.evosciencia.values.GameSettings;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Dpad {
@@ -419,7 +420,8 @@ public class Dpad {
 			
 		} else {
 			
-			GameValues.avatar.updateStandBy();
+			if( GameValues.user.getCurrentLife() > 0 )
+				GameValues.avatar.updateStandBy();
 			Dpad.buttonActive = false;
 			
 		}
@@ -428,13 +430,8 @@ public class Dpad {
 	
 	public void drawDpad() {
 		if( isDpadActive ) {
-			float healthLength = GameValues.dpad.getHealthBarRectangle().width -
-								(
-									GameValues.dpad.getHealthBarRectangle().width*
-									(
-										(GameValues.user.getLife() - GameValues.user.getCurrentLife())/GameValues.user.getLife()
-									)
-								);
+			float healthLength = GameValues.dpad.getHealthBarRectangle().width * ( Float.valueOf(GameValues.user.getCurrentLife())/Float.valueOf(GameValues.user.getLife()) );
+			
 			GameValues.currentBatch.draw(GameValues.dpad.getNavHandler(), GameValues.dpad.getNavHandlerRectangle().x, GameValues.dpad.getNavHandlerRectangle().y, GameValues.dpad.getNavHandlerRectangle().width, GameValues.dpad.getNavHandlerRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getUpArrow(), GameValues.dpad.getUpArrowRectangle().x, GameValues.dpad.getUpArrowRectangle().y, GameValues.dpad.getUpArrowRectangle().width, GameValues.dpad.getUpArrowRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getDownArrow(), GameValues.dpad.getDownArrowRectangle().x, GameValues.dpad.getDownArrowRectangle().y, GameValues.dpad.getDownArrowRectangle().width, GameValues.dpad.getDownArrowRectangle().height);
@@ -445,7 +442,7 @@ public class Dpad {
 			GameValues.currentBatch.draw(GameValues.dpad.getHealthGauge(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, healthLength, GameValues.dpad.getHealthBarRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
 			
-			if( GameValues.user.isCurrentQuestInProgress() ) {
+			if( GameValues.user.isCurrentQuestInProgress() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				String dialog = "";
 				if( GameValues.user.isCurrentQuestDone() ) {
 					dialog = "Quest Complete. Talk back to the NPC";
@@ -470,6 +467,7 @@ public class Dpad {
 	}
 	
 	public void actionButton() {
+		boolean isScientist = false;
 		Rectangle tmpRectangle = new Rectangle();
 		switch(GameValues.avatar.facingFlag) {
 			case FRONT_STAND:
@@ -489,7 +487,7 @@ public class Dpad {
 		}
 		
 		if( GameValues.currentScientist != null ) {
-		
+			
 			if( !GameValues.user.isCurrentQuestInProgress() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
 					String dialog = "";
@@ -504,9 +502,11 @@ public class Dpad {
 					GameValues.user.setCurrentQuestDone(false);
 					DialogUtils.createQuestDialog(dialog + " x 1");
 					
+					isScientist = true;
+					
 					return;
 				}
-			} else if( GameValues.user.isCurrentQuestInProgress() && GameValues.user.isCurrentQuestDone() ) {
+			} else if( GameValues.user.isCurrentQuestInProgress() && GameValues.user.isCurrentQuestDone() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
 					String[] sName = GameValues.currentScientist.getName().split(" ");
 					String jumbled = "";
@@ -523,10 +523,12 @@ public class Dpad {
 							_cTmp[i] = tmpList.get(i);
 						}
 						
-						jumbled += new String(_cTmp) + " ";
+						jumbled += new String(_cTmp) + "  ";
 					}
 					
 					DialogUtils.createCompleteDialog("CLUE: " + jumbled.toUpperCase() + "\nGuess the Scientist: \n" + GameValues.currentScientist.getDescription());
+					
+					isScientist = true;
 				}
 			} else if( GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
@@ -535,6 +537,9 @@ public class Dpad {
 						name = name + s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase() + " ";
 					}
 					DialogUtils.createDialog( name + ": Thanks for helping me!");
+					
+					isScientist = true;
+					
 					return;
 				}
 			}
@@ -544,6 +549,9 @@ public class Dpad {
 		if( !GameValues.avatar.isAttacking && TimeUtils.nanoTime() - GameValues.avatar.attackAnimCtr > GameValues.ATTACK_SPEED * 2 ) {
 			GameValues.avatar.isAttacking = true;
 			GameValues.avatar.attackAnimCtr = TimeUtils.nanoTime();
+			if( GameSettings.sfx && !isScientist ) {
+				Avatar.attackSound.play();
+			}
 		}
 		
 		for( Enemy enemy : Maps.enemies ) {
@@ -551,10 +559,20 @@ public class Dpad {
 				enemy.attack();
 				enemy.setLife(enemy.getLife()-GameValues.user.getDamage());
 				if( enemy.getLife() <= 0 ) {
+					Enemy.dieSound.play();
 					enemy.setAlive(false);
 					GameValues.user.setExperience(GameValues.user.getExperience()+1);
+					if( GameValues.user.getCurrentLife() < GameValues.user.getLife() ) {
+						GameValues.user.setCurrentLife(GameValues.user.getCurrentLife()+10);
+						if( GameValues.user.getCurrentLife() > GameValues.user.getLife() ) {
+							GameValues.user.setCurrentLife(GameValues.user.getLife());
+						}
+					}
 					if( GameValues.user.getExperience() == GameValues.user.getLevel() * 10 ) {
-						GameValues.user.setLevel(GameValues.user.getLevel());
+						GameValues.user.setLevel(GameValues.user.getLevel() + 1);
+						GameValues.user.setCurrentLife(GameValues.user.getLife());
+						Avatar.levelSound.play();
+						DialogUtils.createItemDialog("You have level up!");
 					}
 					if( GameValues.user.isCurrentQuestInProgress() && !GameValues.user.isCurrentQuestDone() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 						if( MathUtils.random(0, 100) < 100 ) {

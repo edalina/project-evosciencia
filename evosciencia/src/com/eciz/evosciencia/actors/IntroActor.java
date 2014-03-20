@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.EvoSciencia;
+import com.eciz.evosciencia.enums.BGMEnum;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.utils.EventUtils;
 import com.eciz.evosciencia.values.GameValues;
@@ -22,7 +23,7 @@ public class IntroActor extends Table {
 	private long interval;
 	
 	public IntroActor() {
-		GameValues.settingUtils.stopBGM();
+		GameValues.settingUtils.startBGM(BGMEnum.BGM_5.getValue());
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
 		setClip(true);
 		

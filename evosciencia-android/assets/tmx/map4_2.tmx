@@ -377,6 +377,16 @@
     <property name="collision" value=""/>
    </properties>
   </tile>
+  <tile id="8130">
+   <properties>
+    <property name="cpoint" value="map4_1"/>
+   </properties>
+  </tile>
+  <tile id="8131">
+   <properties>
+    <property name="cpoint" value="map4_1"/>
+   </properties>
+  </tile>
   <tile id="8394">
    <properties>
     <property name="collision" value=""/>

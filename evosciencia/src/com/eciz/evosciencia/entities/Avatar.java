@@ -2,6 +2,8 @@ package com.eciz.evosciencia.entities;
 
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -27,6 +29,9 @@ public class Avatar extends Rectangle {
 	public Sprite sprite;
 	public boolean isAttacking = false;
 	public long attackAnimCtr = 0;
+	public static Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sfx/sword.mp3"));
+	public static Sound levelSound = Gdx.audio.newSound(Gdx.files.internal("sfx/level.wav"));
+	public static Sound dieSound = Gdx.audio.newSound(Gdx.files.internal("sfx/character_die.wav"));
 
 	// Walking flag, 0 = right 1 = left
 	public boolean walkFlag = true;

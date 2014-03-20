@@ -1,13 +1,18 @@
 package com.eciz.evosciencia.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.enums.MonsterEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
+import com.eciz.evosciencia.utils.DialogUtils;
+import com.eciz.evosciencia.values.GameSettings;
 import com.eciz.evosciencia.values.GameValues;
 
 public class Enemy extends Sprite {
@@ -15,6 +20,9 @@ public class Enemy extends Sprite {
 	public static final float WIDTH = GameValues.avatar.getWidth();
 	public static final float HEIGHT = GameValues.avatar.getWidth();
 	public static final float TERRITORY_RANGE = 50;
+	public static final Sound attackSound = Gdx.audio.newSound(Gdx.files.internal("sfx/bite.mp3"));
+	public static final Sound dieSound = Gdx.audio.newSound(Gdx.files.internal("sfx/monster_die.wav"));
+	public static final Texture attackTexture = new Texture(Gdx.files.internal("monsters/goblin/attack.png"));
 	
 	private int id;
 	private Texture texture;
@@ -299,7 +307,18 @@ public class Enemy extends Sprite {
 		}
 		
 		if( MathUtils.randomBoolean() ) {
+			if( GameSettings.sfx )
+				Enemy.attackSound.play();
+			GameValues.currentBatch.draw(Enemy.attackTexture, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
 			GameValues.user.setCurrentLife(GameValues.user.getCurrentLife()-this.getDamage());
+			if( GameValues.user.getCurrentLife() <= 0 ) {
+				GameValues.avatar.isAttacking = false;
+				GameValues.avatar.setSprite(GameValues.avatar.avatarSprites.get(StanceEnum.DEATH.getValue()));
+				GameValues.avatar.facingFlag = StanceEnum.DEATH;
+				Dpad.isDpadActive = false;
+				Avatar.dieSound.play();
+				DialogUtils.createItemDialog("YOU DIED");
+			}
 		}
 	}
 	

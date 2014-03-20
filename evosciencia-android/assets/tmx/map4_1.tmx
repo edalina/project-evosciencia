@@ -229,12 +229,12 @@
   </tile>
   <tile id="8258">
    <properties>
-    <property name="cpoint" value="map4_2"/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="8259">
    <properties>
-    <property name="cpoint" value="map4_2"/>
+    <property name="" value=""/>
    </properties>
   </tile>
   <tile id="8385">
@@ -258,6 +258,11 @@
    </properties>
   </tile>
   <tile id="8407">
+   <properties>
+    <property name="collision" value=""/>
+   </properties>
+  </tile>
+  <tile id="8522">
    <properties>
     <property name="collision" value=""/>
    </properties>
@@ -480,7 +485,7 @@
  </layer>
  <layer name="obstacles_2" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztmktO40AQhssScAIGm12QMux4XWEeKxRYJDADbHwoYJ1FYJfXFYaZFSRZJMAAl5m/GYzLVpOk2xU3Qf6lT06s2Km/q90ul1xboXAEaMbaXYs/fykRfQXfwPdSvL+C3/RL/xkYUoWH4YuP0wWiM3AOGuACXC7I+LhGjDcv/ML/XoHf4E8p3n+zljzmISB6BE/B5O81lo/lRaJPYAWUwWewvmgWLx8LGyEXdRsfiXwg5jNwDhrgAlwa+uBjMU7RvEprYOmj9sb1UV5CPsD6kpkPPhbjFM2rtCTykUVVH2MCDvznc6rxoUPf/DzS+TDVEDGPwC3AuBDOSXcWPlznQ0o8H0erRMfgZHXyd6l8SInnw0TvMR/DgOrVIN66jslGKh8jxF4L4u0RrrNjcOIn1xO1jvwAPy2uQykdsnWNx6bycYvYD4J4+4D9j+DJT64nah25B38d+rhj6xqPTSmqYaJtb4rP866eR/WKN5/XEFcfHvY+gI8BPOx/AB9S0q05NnWVa+nWHJu6ykbRGCrtgf18/lZc0Rgq9cHAaTT2SuTDQz48t/HYKpEP73ntmkvxfMyzeD4KFZJWQ6hXaKMKyd27ypoeUxPeWqANOqAr6JX3Gnskd+9qaHxsYN8m2ALbYMewnzhOvNeIZwaxe1dZ0yts4j9aoA06oCvog/caTfvApvNkA942wRbYBjuGfdFpNW0f+DUuw3nSRNwt0AYd0J2Rj2n7wK9xGc4T/uyge45wVQuYzhP+7KB7jnBVC+Q1TwoVKlRIQpK1pUvx2lJX1+TpM0s9zWtLXV0jWUNPUpZ6uufFfRFdXSNZQ0/SrOpp5CWEpzCv/k+6TsryHgs/FnMsRH5C8YDfULpOsn2PRYkfi+slPM3RR1q277FkPVZatu+xZD32veofhkctZQ==
+   eJztmktO40AQhssScAIGhxWMFNjxusI8ViiwSGAG2PhQwJpFYJfXFXisZpwsEpgBLsPfgKFstZN0d8UmyL/0ycTCdv1d7Xa55NoCBQNAE9b21/jvyyWiK3ANbpZe9lXwP93lF3qGVOGh/+rjeIboBJyCOjgHFzOT8fEN1/4OfoCfy+8+uO5LRA/gsTT6d43lY36W6AtYAGWwAlZnzeLlYzHMxyVivwLX4EbARywfiPkEnII6OAcXhj74WHD9QYx/GUmpfaFQPrjKc8gHWJ0z88HHYpiiXAyTbT5cVPUxJmDPfz6nGh/a993OKZEPU/UR8wDcAowL4Zx0Z+GD30d55ENK3MfBItEhOFoc/VsqH1JKrmvj6iPmo1+isyqItnnHZCPlY4DYayDaHuA+OwRHfnw9UevIL/DbcT1x0T5b13hsysctYt8D0fYe+x/Aox9fT9Q68g/8z9HHHVvXeGzqeRk9M6NtOMbf067Qo7OKN533EFcXHnY+gY8ePOx+Ah9S0q05rnVVHtKtOTZ1lY2iMVTaAbvZXFZc0RgqdUEv12jsFcuHh3x4+cZjq1g+vOe1ayrF8zHN4vkoVEhadaFeoY0qJPfsKmt6TA14a4IWaIOOoFfeawxJ7tlV1/hYw751sAE2wZZhP3GYeK8R7wxiz66yplfYwDWaoAXaoCPog/ca0/rAaTKdJ2vwtg42wCbYMuyLjqu0PnBqXIbzpIG4m6AF2qAzIR/j9oHf4jKcJ/zdQfcekVctYDpP+LuD7j0ir1ogq3lSqFChQhKSrC3zFK8tdXVNlj5d6mleW+rqGskaepRc6unQe++L6OoayRp6lCZVTyMvATwFWfV/knWSy3cs/FjMsQD5CcQDTlGyTrL9jkWJH4v7JTjO0EdStt+xuB4rLdvvWFyP/ah6AkkBJcA=
   </data>
  </layer>
  <layer name="obstacles_1" width="50" height="50">

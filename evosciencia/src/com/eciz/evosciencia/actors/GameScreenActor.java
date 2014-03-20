@@ -3,18 +3,17 @@ package com.eciz.evosciencia.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
-import com.eciz.evosciencia.entities.Portal;
 import com.eciz.evosciencia.enums.BGMEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.utils.DialogUtils;
 import com.eciz.evosciencia.utils.EventUtils;
+import com.eciz.evosciencia.values.GameSettings;
 import com.eciz.evosciencia.values.GameValues;
 
 public class GameScreenActor extends Table {
@@ -23,8 +22,7 @@ public class GameScreenActor extends Table {
 	
 	public GameScreenActor() {
 		
-		GameValues.settingUtils.stopBGM();
-		GameValues.settingUtils.startBGM(BGMEnum.BGM_5.getValue());
+		GameValues.settingUtils.startBGM(BGMEnum.BGM_1.getValue());
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
 		setClip(true);
 		
@@ -32,7 +30,7 @@ public class GameScreenActor extends Table {
 		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
 		
-		GameValues.maps = Maps.getMaps();		
+		GameValues.maps = Maps.getMaps();
 		
 		if( GameValues.isNewGame ) {
 			GameValues.avatar.facingFlag = StanceEnum.BACK_STAND;
@@ -43,15 +41,6 @@ public class GameScreenActor extends Table {
 		
 		if( GameValues.currentScientist.getRectangle() != null ) {
 			GameValues.collisions.add(GameValues.maps.createNPCObjects());
-			
-			GameValues.portal = new Portal();
-			GameValues.portal.setRectangle(
-					new Rectangle(
-						GameValues.currentScientist.getRectangle().getX() - (GameValues.currentScientist.getRectangle().getWidth()/2),
-						GameValues.currentScientist.getRectangle().getY() - (GameValues.currentScientist.getRectangle().getHeight()*4),
-						GameValues.currentScientist.getRectangle().getWidth()*2,
-						GameValues.currentScientist.getRectangle().getHeight()*2));
-			GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
 		}
 		
 		new DialogUtils();
@@ -90,7 +79,7 @@ public class GameScreenActor extends Table {
 		
 		if( GameValues.user.getQuestDone()[GameValues.currentMapValue] &&
 			GameValues.currentScientist.getRectangle() != null ) {
-			GameValues.currentBatch.draw(new Texture(Gdx.files.internal("images/portal.png")), GameValues.portal.getRectangle().getX(), GameValues.portal.getRectangle().getY(), GameValues.portal.getRectangle().getWidth(), GameValues.portal.getRectangle().getHeight());
+			GameValues.currentBatch.draw(GameValues.portal.getTexture(), GameValues.portal.getRectangle().getX(), GameValues.portal.getRectangle().getY(), GameValues.portal.getRectangle().getWidth(), GameValues.portal.getRectangle().getHeight());
 		}
 		
 		if( DialogUtils.isDialogActive && GameValues.isNewGame ) {

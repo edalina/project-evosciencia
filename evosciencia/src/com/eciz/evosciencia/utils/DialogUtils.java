@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.controls.Dpad;
+import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.values.GameValues;
 import com.eciz.evosciencia.values.HelpValues;
@@ -37,6 +39,8 @@ public class DialogUtils {
 	private static float DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT + 30);
 	
 	private static int idx = 0;
+	
+	private static long timer;
 
 	public DialogUtils() {
 		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
@@ -117,11 +121,35 @@ public class DialogUtils {
 		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
 		DIALOG_WIDTH = (GameValues.SCREEN_WIDTH) * GameValues.CAMERA_ZOOM;
 		DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/8) * GameValues.CAMERA_ZOOM;
-		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
-		DIALOG_Y = GameValues.camera.position.y + (DIALOG_HEIGHT*2-10);
 		
 		itemDialog = value;
+		timer = TimeUtils.millis();
 		createItemDialog();
+	}
+	
+	public static void createItemDialog() {
+		if( !itemDialog.equals("") ) {
+			DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
+			DIALOG_Y = GameValues.camera.position.y + (DIALOG_HEIGHT*2-10);
+			
+			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
+			dialogText.drawWrapped(GameValues.currentBatch, itemDialog, DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
+			Rectangle rectangle = new Rectangle();
+			rectangle.set(DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
+
+			if( TimeUtils.millis() - timer > 3000 ) {
+				closeDialog();
+				if( GameValues.user.getCurrentLife() <= 0 ) {
+					GameValues.avatar.repositionAvatar(384, 384);
+					GameValues.avatar.updateStandBy();
+					GameValues.user.setCurrentLife(GameValues.user.getLife()/2);
+					GameValues.maps.setCurrentMap(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue));
+					GameValues.maps.changeMap();
+//					GameValues.currentScreen = new MenuScreen();
+//					EvoSciencia.getMainInstance().setScreen(GameValues.currentScreen);
+				}
+			}
+		}
 	}
 	
 	public static void createDialog() {
@@ -139,25 +167,6 @@ public class DialogUtils {
 					}
 					if( EventUtils.isTap(backRect) ) {
 						closeDialog();
-					}
-				}
-			} else {
-				GameValues.touchDown = false;
-			}
-		}
-	}
-	
-	public static void createItemDialog() {
-		if( !itemDialog.equals("") ) {
-			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-			dialogText.drawWrapped(GameValues.currentBatch, itemDialog, DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
-			if( Gdx.input.isTouched() ) {
-				if( !GameValues.touchDown ) {
-					GameValues.touchDown = true;
-					Rectangle rectangle = new Rectangle();
-					rectangle.set(DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-					if( Gdx.input.isTouched() ) {
-						itemDialog = "";
 					}
 				}
 			} else {
@@ -218,6 +227,7 @@ public class DialogUtils {
 		GameScreen.field.setY(700);
 		GameScreen.field.getStyle().font.setScale(2);
 		GameScreen.field.setVisible(true);
+		GameScreen.field.setText("");
 		questCompleteDialog = description;
 		repositionButtons();
 		createCompleteDialog();
@@ -225,11 +235,10 @@ public class DialogUtils {
 	
 	public static void createCompleteDialog() {
 		if( !questCompleteDialog.equals("") ) {
-			String thisDialog = questCompleteDialog;
 			
 			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-			dialogText.drawWrapped(GameValues.currentBatch, thisDialog, DIALOG_X + 50, DIALOG_Y + nextRect.getY() + 50, DIALOG_WIDTH - 100);
+			dialogText.drawWrapped(GameValues.currentBatch, questCompleteDialog, DIALOG_X + 50, nextRect.getY() + 100, DIALOG_WIDTH - 100);
 			GameValues.currentBatch.draw(nextText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
 			GameValues.currentBatch.draw(cancelText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
 			if( Gdx.input.isTouched() ) {
@@ -238,6 +247,7 @@ public class DialogUtils {
 					if( EventUtils.isTap(acceptRect) ) {
 						if( GameScreen.field.getText().toLowerCase().equals(GameValues.currentScientist.getName().toLowerCase()) ) {
 							GameValues.user.setCurrentQuestInProgress(false);
+							GameValues.user.setCurrentQuestDone(true);
 							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
 							closeDialog();
 							String name = "";
@@ -245,6 +255,16 @@ public class DialogUtils {
 								name = name + s.substring(0,1).toUpperCase() + s.substring(1).toLowerCase() + " ";
 							}
 							createDialog(name + ": Thank you for helping me, my name is " + name);
+							
+							GameValues.user.setExperience(GameValues.user.getExperience() + 5);
+							
+							if( GameValues.user.getExperience() == GameValues.user.getLevel() * 10 ) {
+								GameValues.user.setLevel(GameValues.user.getLevel() + 1);
+								Avatar.levelSound.play();
+								createItemDialog("You have level up!");
+							}
+							
+							GameValues.user.setCurrentLife(GameValues.user.getLife());
 							
 						}
 					}

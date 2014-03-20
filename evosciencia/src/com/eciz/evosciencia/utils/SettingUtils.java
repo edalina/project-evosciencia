@@ -11,6 +11,7 @@ public class SettingUtils {
 	
 	public void startBGM(String path) {
 		currentBGM = path;
+		stopBGM();
 		bgm = Gdx.audio.newMusic(Gdx.files.internal(currentBGM));
 		bgm.setVolume(0.5f);
 		bgm.setLooping(true);
@@ -36,11 +37,11 @@ public class SettingUtils {
 	}
 
 	public void toggleSFX() {
-//		if( GameSettings.sfx ) {
-//			GameSettings.sfx = false;
-//		} else {
-//			GameSettings.sfx = true;
-//		}
+		if( GameSettings.sfx ) {
+			GameSettings.sfx = false;
+		} else {
+			GameSettings.sfx = true;
+		}
 	}
 	
 }

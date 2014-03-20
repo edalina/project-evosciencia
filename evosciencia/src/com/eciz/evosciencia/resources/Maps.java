@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.Enemy;
+import com.eciz.evosciencia.entities.Portal;
 import com.eciz.evosciencia.entities.Scientist;
 import com.eciz.evosciencia.enums.MonsterEnum;
 import com.eciz.evosciencia.enums.StanceEnum;
@@ -69,6 +70,17 @@ public class Maps {
 		createSpawningGrounds();
 		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
 		GameValues.currentScientist.setRectangle(createNPCObjects());
+		if( GameValues.currentScientist.getRectangle() != null ) {
+			GameValues.portal = new Portal();
+			GameValues.portal.setRectangle(
+					new Rectangle(
+						GameValues.currentScientist.getRectangle().getX() - (GameValues.currentScientist.getRectangle().getWidth()/2),
+						GameValues.currentScientist.getRectangle().getY() - (GameValues.currentScientist.getRectangle().getHeight()*4),
+						GameValues.currentScientist.getRectangle().getWidth()*2,
+						GameValues.currentScientist.getRectangle().getHeight()*2));
+			GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
+			GameValues.portal.setTexture(new Texture(Gdx.files.internal("images/portal.png")));
+		}
 	}
 	
 	public void renderMonsters() {

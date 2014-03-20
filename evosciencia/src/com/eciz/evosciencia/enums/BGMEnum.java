@@ -2,7 +2,7 @@ package com.eciz.evosciencia.enums;
 
 public enum BGMEnum {
 	
-	BGM_1("bgm/mirror_sorrow.wav"),
+	BGM_1("bgm/midnight_sorrow.wav"),
 	BGM_2("bgm/monster_attack.wav"),
 	BGM_3("bgm/moving_to_the_beat.wav"),
 	BGM_4("bgm/mysterious_path.wav"),
