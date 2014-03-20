@@ -14,6 +14,7 @@ public class User {
 	private boolean[] questDone;
 	private long experience = 0;
 	private boolean isCurrentQuestDone = false;
+	private boolean isCurrentQuestInProgress = false;
 	
 	public int getId() {
 		return id;
@@ -87,6 +88,12 @@ public class User {
 	}
 	public void setCurrentQuestDone(boolean isCurrentQuestDone) {
 		this.isCurrentQuestDone = isCurrentQuestDone;
+	}
+	public boolean isCurrentQuestInProgress() {
+		return isCurrentQuestInProgress;
+	}
+	public void setCurrentQuestInProgress(boolean isCurrentQuestInProgress) {
+		this.isCurrentQuestInProgress = isCurrentQuestInProgress;
 	}
 	
 }

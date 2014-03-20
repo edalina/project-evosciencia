@@ -1,11 +1,13 @@
 package com.eciz.evosciencia.controls;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Json;
@@ -60,6 +62,9 @@ public class Dpad {
 	public static boolean isDpadActive = true;
 	public static boolean buttonActive = false;
 	
+	// Quest
+	public BitmapFont questInfo;
+	
 	public Dpad() {
 		upArrow = new Texture(Gdx.files.internal("dpad/up.png"));
 		downArrow = new Texture(Gdx.files.internal("dpad/down.png"));
@@ -71,6 +76,9 @@ public class Dpad {
 		healthBar = new Texture(Gdx.files.internal("dpad/gauge.png"));
 		healthGauge = new Texture(Gdx.files.internal("images/red.png"));
 		slot = new Texture(Gdx.files.internal("dpad/slot.png"));
+		
+		questInfo = new BitmapFont();
+		questInfo.setScale(0.7f);
 		
 		upArrowRectangle = new Rectangle();
 		downArrowRectangle = new Rectangle();
@@ -132,35 +140,31 @@ public class Dpad {
 			dpadSkillSlotXCenter = GameValues.camera.position.x - (2 * (DPAD_WIDTH + (DPAD_WIDTH/2))),
 			dpadSkillSlotYCenter = dpadControlYCenter - (DPAD_HEIGHT*2) + 10 + DPAD_HEIGHT;
 		
-//		if( isX ) {
-			GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
-			GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
-			GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - DPAD_WIDTH;
-			GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + DPAD_WIDTH;
-			GameValues.dpad.navHandlerRectangle.x = dpadControlXCenter - (DPAD_WIDTH/2);
-			GameValues.dpad.actionRectangle.x = dpadActionXCenter - (DPAD_WIDTH/2);
-			GameValues.dpad.pauseRectangle.x = dpadPauseXCenter;
-			GameValues.dpad.healthBarRectangle.x = dpadHealthXCenter;
-			int i = 0;
-			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
-				skillSlot.getRectangle().x = dpadSkillSlotXCenter + (i * (DPAD_WIDTH + (DPAD_WIDTH/2)));
-				i++;
-			}
-//		}
-//		
-//		if( isY ) {
-			GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + DPAD_HEIGHT;
-			GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - DPAD_HEIGHT;
-			GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
-			GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
-			GameValues.dpad.navHandlerRectangle.y = dpadControlYCenter - (DPAD_HEIGHT/2);
-			GameValues.dpad.actionRectangle.y = dpadActionYCenter - (DPAD_HEIGHT/2);
-			GameValues.dpad.pauseRectangle.y = dpadPauseYCenter;
-			GameValues.dpad.healthBarRectangle.y = dpadHealthYCenter;
-			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
-				skillSlot.getRectangle().y = dpadSkillSlotYCenter;
-			}
-//		}
+		GameValues.dpad.upArrowRectangle.x = dpadControlXCenter;
+		GameValues.dpad.downArrowRectangle.x = dpadControlXCenter;
+		GameValues.dpad.leftArrowRectangle.x = dpadControlXCenter - DPAD_WIDTH;
+		GameValues.dpad.rightArrowRectangle.x = dpadControlXCenter + DPAD_WIDTH;
+		GameValues.dpad.navHandlerRectangle.x = dpadControlXCenter - (DPAD_WIDTH/2);
+		GameValues.dpad.actionRectangle.x = dpadActionXCenter - (DPAD_WIDTH/2);
+		GameValues.dpad.pauseRectangle.x = dpadPauseXCenter;
+		GameValues.dpad.healthBarRectangle.x = dpadHealthXCenter;
+		int i = 0;
+		for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
+			skillSlot.getRectangle().x = dpadSkillSlotXCenter + (i * (DPAD_WIDTH + (DPAD_WIDTH/2)));
+			i++;
+		}
+
+		GameValues.dpad.upArrowRectangle.y = dpadControlYCenter + DPAD_HEIGHT;
+		GameValues.dpad.downArrowRectangle.y = dpadControlYCenter - DPAD_HEIGHT;
+		GameValues.dpad.leftArrowRectangle.y = dpadControlYCenter;
+		GameValues.dpad.rightArrowRectangle.y = dpadControlYCenter;
+		GameValues.dpad.navHandlerRectangle.y = dpadControlYCenter - (DPAD_HEIGHT/2);
+		GameValues.dpad.actionRectangle.y = dpadActionYCenter - (DPAD_HEIGHT/2);
+		GameValues.dpad.pauseRectangle.y = dpadPauseYCenter;
+		GameValues.dpad.healthBarRectangle.y = dpadHealthYCenter;
+		for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
+			skillSlot.getRectangle().y = dpadSkillSlotYCenter;
+		}
 		
 	}
 	
@@ -169,15 +173,14 @@ public class Dpad {
 		Rectangle tmpRect = new Rectangle();
 		tmpRect.set(GameValues.avatar.getX() + valueX, GameValues.avatar.getY() + valueY, GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
 		
-		if( GameValues.portal != null ) {
+		if( GameValues.user.getQuestDone()[GameValues.currentMapValue] &&
+			GameValues.currentScientist.getRectangle() != null ) {
 			if( tmpRect.overlaps(GameValues.portal.getRectangle()) ) {
 				GameValues.avatar.updateStandBy();
 				GameValues.currentMapValue = GameValues.currentMapValue+1;
-//				GameValues.maps.setCurrentMap(GameValues.portal.getDestination());
-//				GameValues.maps.changeMap();
 				GameValues.maps = new Maps();
-				GameValues.avatar.setPosition(384, 384);
-				Avatar.isQuestActive = false;
+				GameValues.avatar.repositionAvatar(384, 384);
+				GameValues.user.setCurrentQuestInProgress(false);
 				GameValues.user.setCurrentQuestDone(false);
 				GameValues.portal = null;
 				return;
@@ -237,7 +240,6 @@ public class Dpad {
 				}
 				
 				GameValues.camera.position.set(x, y, 0);
-//				Dpad.positionDpad(true, true);
 				Dpad.positionDpad();
 				
 				return;
@@ -381,14 +383,6 @@ public class Dpad {
 					GameValues.currentScientist = tmpScientist;
 				}
 				
-//				// Skill slots
-//				for( SkillSlot skillSlot : GameValues.dpad.skillSlots ) {
-//					if( EventUtils.isTap(skillSlot.getRectangle()) ) {
-//						Dpad.buttonActive = true;
-//						System.out.println( "SKILL" );
-//					}
-//				}
-				
 			}
 			
 			// Up arrow is clicked/touched
@@ -451,6 +445,24 @@ public class Dpad {
 			GameValues.currentBatch.draw(GameValues.dpad.getHealthGauge(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, healthLength, GameValues.dpad.getHealthBarRectangle().height);
 			GameValues.currentBatch.draw(GameValues.dpad.getHealthBar(), GameValues.dpad.getHealthBarRectangle().x, GameValues.dpad.getHealthBarRectangle().y, GameValues.dpad.getHealthBarRectangle().width, GameValues.dpad.getHealthBarRectangle().height);
 			
+			if( GameValues.user.isCurrentQuestInProgress() ) {
+				String dialog = "";
+				if( GameValues.user.isCurrentQuestDone() ) {
+					dialog = "Quest Complete. Talk back to the NPC";
+				} else {
+					dialog = "Collect: ";
+					List<Quest> quests = Quest.getQuests();
+					int i = 0;
+					for( Quest quest : quests ) {
+						dialog = dialog.concat(quest.getName());
+						if( i < quests.size()-1 )
+							dialog = dialog.concat(", ");
+						i++;
+					}
+				}
+				questInfo.draw(GameValues.currentBatch, dialog, getHealthBarRectangle().x + 10, getHealthBarRectangle().y - 30);
+			}
+			
 			for( SkillSlot skillSlot : GameValues.dpad.getSkillSlots() ) {
 				GameValues.currentBatch.draw(GameValues.dpad.getSlot(), skillSlot.getRectangle().x, skillSlot.getRectangle().y, skillSlot.getRectangle().width, skillSlot.getRectangle().height);
 			}
@@ -478,7 +490,7 @@ public class Dpad {
 		
 		if( GameValues.currentScientist != null ) {
 		
-			if( !Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+			if( !GameValues.user.isCurrentQuestInProgress() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
 					String dialog = "";
 					List<Quest> quests = Quest.getQuests();
@@ -491,13 +503,30 @@ public class Dpad {
 					}
 					GameValues.user.setCurrentQuestDone(false);
 					DialogUtils.createQuestDialog(dialog + " x 1");
-//					DialogUtils.createCompleteDialog(GameValues.currentScientist.getDescription());
 					
 					return;
 				}
-			} else if( Avatar.isQuestActive && GameValues.user.isCurrentQuestDone() ) {
+			} else if( GameValues.user.isCurrentQuestInProgress() && GameValues.user.isCurrentQuestDone() ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
-					DialogUtils.createCompleteDialog(GameValues.currentScientist.getDescription());
+					String[] sName = GameValues.currentScientist.getName().split(" ");
+					String jumbled = "";
+					for( String _sName : sName ) {
+						char[] _tmp = _sName.toCharArray();
+						ArrayList<Character> tmpList = new ArrayList<Character>();
+						for( char c : _tmp ) {
+							tmpList.add(c);
+						}
+						
+						Collections.shuffle(tmpList);
+						char[] _cTmp = new char[tmpList.size()];
+						for( int i = 0 ; i < tmpList.size() ; i++ ) {
+							_cTmp[i] = tmpList.get(i);
+						}
+						
+						jumbled += new String(_cTmp) + " ";
+					}
+					
+					DialogUtils.createCompleteDialog("CLUE: " + jumbled.toUpperCase() + "\nGuess the Scientist: \n" + GameValues.currentScientist.getDescription());
 				}
 			} else if( GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 				if( GameValues.currentScientist.getRectangle() != null && tmpRectangle.overlaps(GameValues.currentScientist.getRectangle()) ) {
@@ -519,6 +548,7 @@ public class Dpad {
 		
 		for( Enemy enemy : Maps.enemies ) {
 			if( tmpRectangle.overlaps(enemy.getBoundingRectangle()) ) {
+				enemy.attack();
 				enemy.setLife(enemy.getLife()-GameValues.user.getDamage());
 				if( enemy.getLife() <= 0 ) {
 					enemy.setAlive(false);
@@ -526,7 +556,7 @@ public class Dpad {
 					if( GameValues.user.getExperience() == GameValues.user.getLevel() * 10 ) {
 						GameValues.user.setLevel(GameValues.user.getLevel());
 					}
-					if( Avatar.isQuestActive && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+					if( GameValues.user.isCurrentQuestInProgress() && !GameValues.user.isCurrentQuestDone() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 						if( MathUtils.random(0, 100) < 100 ) {
 							
 //							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;

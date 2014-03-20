@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.controls.Dpad;
-import com.eciz.evosciencia.entities.Avatar;
-import com.eciz.evosciencia.entities.Portal;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.values.GameValues;
 import com.eciz.evosciencia.values.HelpValues;
@@ -137,7 +135,7 @@ public class DialogUtils {
 					GameValues.touchDown = true;
 					if( EventUtils.isTap(nextRect) ) {
 						closeDialog();
-						Avatar.isQuestActive = true;
+						GameValues.user.setCurrentQuestInProgress(true);
 					}
 					if( EventUtils.isTap(backRect) ) {
 						closeDialog();
@@ -193,7 +191,7 @@ public class DialogUtils {
 					GameValues.touchDown = true;
 					if( EventUtils.isTap(acceptRect) ) {
 						closeDialog();
-						Avatar.isQuestActive = true;
+						GameValues.user.setCurrentQuestInProgress(true);
 					}
 					if( EventUtils.isTap(backRect) ) {
 						closeDialog();
@@ -213,10 +211,12 @@ public class DialogUtils {
 		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
 		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT/2);
 
-		GameScreen.field.setX(50);
-		GameScreen.field.setY(150);
-		GameScreen.field.setWidth((DIALOG_WIDTH * 2) - (50*2));
-		GameScreen.field.setHeight(30);
+		GameScreen.field.setScale(2);
+		GameScreen.field.setWidth(GameValues.SCREEN_WIDTH * 2);
+		GameScreen.field.setHeight(GameValues.SCREEN_HEIGHT/5);
+		GameScreen.field.setX(150);
+		GameScreen.field.setY(700);
+		GameScreen.field.getStyle().font.setScale(2);
 		GameScreen.field.setVisible(true);
 		questCompleteDialog = description;
 		repositionButtons();
@@ -225,9 +225,11 @@ public class DialogUtils {
 	
 	public static void createCompleteDialog() {
 		if( !questCompleteDialog.equals("") ) {
+			String thisDialog = questCompleteDialog;
+			
 			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
-			dialogText.drawWrapped(GameValues.currentBatch, questCompleteDialog + "\n" + "Guess the Scientist:", DIALOG_X + 50, DIALOG_Y + DIALOG_HEIGHT - 50, DIALOG_WIDTH - 100);
+			dialogText.drawWrapped(GameValues.currentBatch, thisDialog, DIALOG_X + 50, DIALOG_Y + nextRect.getY() + 50, DIALOG_WIDTH - 100);
 			GameValues.currentBatch.draw(nextText, acceptRect.getX(), acceptRect.getY(), acceptRect.getWidth(), acceptRect.getHeight());
 			GameValues.currentBatch.draw(cancelText, backRect.getX(), backRect.getY(), backRect.getWidth(), backRect.getHeight());
 			if( Gdx.input.isTouched() ) {
@@ -235,7 +237,7 @@ public class DialogUtils {
 					GameValues.touchDown = true;
 					if( EventUtils.isTap(acceptRect) ) {
 						if( GameScreen.field.getText().toLowerCase().equals(GameValues.currentScientist.getName().toLowerCase()) ) {
-							Avatar.isQuestActive = false;
+							GameValues.user.setCurrentQuestInProgress(false);
 							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
 							closeDialog();
 							String name = "";
@@ -244,9 +246,6 @@ public class DialogUtils {
 							}
 							createDialog(name + ": Thank you for helping me, my name is " + name);
 							
-							GameValues.portal = new Portal();
-							GameValues.portal.setRectangle(new Rectangle(GameValues.avatar.getX(), GameValues.avatar.getY() - (GameValues.avatar.getHeight()*2), GameValues.avatar.getWidth(), GameValues.avatar.getHeight()));
-							GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
 						}
 					}
 					if( EventUtils.isTap(backRect) ) {

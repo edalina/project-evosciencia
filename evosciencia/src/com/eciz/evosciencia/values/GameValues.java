@@ -38,7 +38,7 @@ public class GameValues {
 	public static final float CAMERA_ZOOM = 0.5f;
 	public static final float CAMERA_ZOOM_MULTIPLE = 8*CAMERA_ZOOM;
 	
-	public static final int ENEMY_COUNT_PER_MAP = 30;
+	public static final int ENEMY_COUNT_PER_MAP = 15;
 	
 	public static final float CHARACTER_SPEED = 1;
 	

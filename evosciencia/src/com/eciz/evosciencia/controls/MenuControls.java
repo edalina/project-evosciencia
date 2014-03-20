@@ -1,7 +1,7 @@
 package com.eciz.evosciencia.controls;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.eciz.evosciencia.EvoSciencia;
 import com.eciz.evosciencia.screens.AboutScreen;
@@ -12,17 +12,15 @@ import com.eciz.evosciencia.values.GameValues;
 
 public class MenuControls {
 	
-	private BitmapFont startButton;
-	private BitmapFont optionButton;
-	private BitmapFont aboutButton;
+	private Texture startButton;
+	private Texture optionButton;
+	private Texture aboutButton;
 	
 	private Rectangle startRectangle;
 	private Rectangle optionRectangle;
 	private Rectangle aboutRectangle;
 	
-	private final String START_STRING = "Start";
-	private final String OPTION_STRING = "Options";
-	private final String ABOUT_STRING = "About";
+	private final int DIMENSION = 70;
 	
 	public static boolean isMenuActive = false;
 	
@@ -36,38 +34,34 @@ public class MenuControls {
 	}
 
 	public MenuControls() {
-		startButton = new BitmapFont();
-		optionButton = new BitmapFont();
-		aboutButton = new BitmapFont();
-		
-		startButton.setColor(1, 1, 1, 1);
-		optionButton.setColor(1, 1, 1, 1);
-		aboutButton.setColor(1, 1, 1, 1);
+		startButton = new Texture(Gdx.files.internal("images/start_btn.png"));
+		optionButton = new Texture("images/options_btn.png");
+		aboutButton = new Texture("images/about_btn.png");
 		
 		startRectangle = new Rectangle();
 		optionRectangle = new Rectangle();
 		aboutRectangle = new Rectangle();
 		
-		startRectangle.width = startButton.getBounds(START_STRING).width;
-		optionRectangle.width = optionButton.getBounds(OPTION_STRING).width;
-		aboutRectangle.width = aboutButton.getBounds(ABOUT_STRING).width;
-		startRectangle.height = startButton.getBounds(START_STRING).height;
-		optionRectangle.height = optionButton.getBounds(OPTION_STRING).height;
-		aboutRectangle.height = aboutButton.getBounds(ABOUT_STRING).height;
+		startRectangle.x = ((GameValues.SCREEN_WIDTH - optionRectangle.width)/2) - (DIMENSION + (DIMENSION/2) + 20);
+		optionRectangle.x = ((GameValues.SCREEN_WIDTH - optionRectangle.width)/2) - (DIMENSION/2);
+		aboutRectangle.x = ((GameValues.SCREEN_WIDTH - aboutRectangle.width)/2) + (DIMENSION-20);
+		startRectangle.y = 50;
+		optionRectangle.y = 50;
+		aboutRectangle.y = 50;
 		
-		startRectangle.x = (GameValues.SCREEN_WIDTH - startRectangle.width)/2;
-		optionRectangle.x = (GameValues.SCREEN_WIDTH - optionRectangle.width)/2;
-		aboutRectangle.x = (GameValues.SCREEN_WIDTH - aboutRectangle.width)/2;
-		startRectangle.y = 85;
-		optionRectangle.y = 60;
-		aboutRectangle.y = 35;
+		startRectangle.width = 70;
+		optionRectangle.width = 70;
+		aboutRectangle.width = 70;
+		startRectangle.height = 70;
+		optionRectangle.height = 70;
+		aboutRectangle.height = 70;
 		
 	}
 	
 	public void draw() {
-		startButton.draw(GameValues.currentBatch, START_STRING, startRectangle.x, startRectangle.y + 15);
-		optionButton.draw(GameValues.currentBatch, OPTION_STRING, optionRectangle.x, optionRectangle.y + 15);
-		aboutButton.draw(GameValues.currentBatch, ABOUT_STRING, aboutRectangle.x, aboutRectangle.y + 15);
+		GameValues.currentBatch.draw(startButton, startRectangle.x, startRectangle.y, startRectangle.width, startRectangle.height);
+		GameValues.currentBatch.draw(optionButton, optionRectangle.x, optionRectangle.y, optionRectangle.width, optionRectangle.height);
+		GameValues.currentBatch.draw(aboutButton, aboutRectangle.x, aboutRectangle.y, aboutRectangle.width, aboutRectangle.height);
 	}
 	
 	public void checkEvents() {
@@ -92,27 +86,27 @@ public class MenuControls {
 		}
 	}
 
-	public BitmapFont getStartButton() {
+	public Texture getStartButton() {
 		return startButton;
 	}
 
-	public void setStartButton(BitmapFont startButton) {
+	public void setStartButton(Texture startButton) {
 		this.startButton = startButton;
 	}
 
-	public BitmapFont getOptionButton() {
+	public Texture getOptionButton() {
 		return optionButton;
 	}
 
-	public void setOptionButton(BitmapFont optionButton) {
+	public void setOptionButton(Texture optionButton) {
 		this.optionButton = optionButton;
 	}
 
-	public BitmapFont getAboutButton() {
+	public Texture getAboutButton() {
 		return aboutButton;
 	}
 
-	public void setAboutButton(BitmapFont aboutButton) {
+	public void setAboutButton(Texture aboutButton) {
 		this.aboutButton = aboutButton;
 	}
 
@@ -139,5 +133,17 @@ public class MenuControls {
 	public void setAboutRectangle(Rectangle aboutRectangle) {
 		this.aboutRectangle = aboutRectangle;
 	}
-	
+
+	public static boolean isMenuActive() {
+		return isMenuActive;
+	}
+
+	public static void setMenuActive(boolean isMenuActive) {
+		MenuControls.isMenuActive = isMenuActive;
+	}
+
+	public static void setInstance(MenuControls instance) {
+		MenuControls.instance = instance;
+	}
+
 }

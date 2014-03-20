@@ -27,6 +27,7 @@ public class Enemy extends Sprite {
 	private boolean walkingFlag = true;
 	private boolean onHunt = false;
 	public boolean isMoving = false;
+	private long lastAttackTime = 0;
 	
 	public boolean isOnHunt() {
 		return onHunt;
@@ -96,14 +97,14 @@ public class Enemy extends Sprite {
 		} else {
 			Rectangle advanceRectangle = new Rectangle(getX(), getY(), getWidth(), getHeight());
 			if( getX() > futurePosition.getX() ) {
-				advanceRectangle.setX(getX() - 1);
+				advanceRectangle.setX(getX() - 0.5f);
 			} else if( getX() < futurePosition.getX() ) {
-				advanceRectangle.setX(getX() + 1);
+				advanceRectangle.setX(getX() + 0.5f);
 			}
 			if( getY() > futurePosition.getY() ) {
-				advanceRectangle.setY(getY() - 1);
+				advanceRectangle.setY(getY() - 0.5f);
 			} else if( getY() < futurePosition.getY() ) {
-				advanceRectangle.setY(getY() + 1);
+				advanceRectangle.setY(getY() + 0.5f);
 			}
 			
 			repositionEnemy(advanceRectangle);
@@ -124,16 +125,16 @@ public class Enemy extends Sprite {
 		int rnd = MathUtils.random(1, 4);
 		int distance = 30;
 		walkingFlag = true;
-		if( onHunt ) {
-			float ax = GameValues.avatar.getX(),
-				ay = GameValues.avatar.getY();
-			
+//		if( onHunt ) {
+//			float ax = GameValues.avatar.getX(),
+//				ay = GameValues.avatar.getY();
+//			
 //			if( getX() < ax && getY() < ay ) {
 //				futurePosition.setX(GameValues.avatar.getX());
 //				futurePosition.setY(GameValues.avatar.getY());
 //			}
-			
-		} else {
+//			
+//		} else {
 			switch( rnd ) {
 				case 1:
 					setFacing(StanceEnum.FRONT_WALK1);
@@ -154,14 +155,13 @@ public class Enemy extends Sprite {
 				default:
 			}
 			
-		}
+//		}
 		
 	}
 	
 	public void repositionEnemy(Rectangle tmpRect) {
 		boolean isCollided = false;
 		if( GameValues.avatar.sprite.getBoundingRectangle().overlaps(tmpRect) ) {
-			System.out.println( "COLLIDED" );
 			futurePosition.set(getX(), getY(), getWidth(), getHeight());
 			isCollided = true;
 		}
@@ -266,6 +266,41 @@ public class Enemy extends Sprite {
 			
 		}
 		
+	}
+	public void attack() {
+		this.isMoving = false;
+		this.futurePosition.setCenter(this.getX(), this.getY());
+		switch( GameValues.avatar.facingFlag ) {
+			case FRONT_ATTACK:
+			case FRONT_STAND:
+			case FRONT_WALK1:
+			case FRONT_WALK2:
+				this.setFacing(StanceEnum.BACK_STAND);
+				break;
+			case BACK_ATTACK:
+			case BACK_STAND:
+			case BACK_WALK1:
+			case BACK_WALK2:
+				this.setFacing(StanceEnum.FRONT_STAND);
+				break;
+			case LEFT_ATTACK:
+			case LEFT_STAND:
+			case LEFT_WALK1:
+			case LEFT_WALK2:
+				this.setFacing(StanceEnum.RIGHT_STAND);
+				break;
+			case RIGHT_ATTACK:
+			case RIGHT_STAND:
+			case RIGHT_WALK1:
+			case RIGHT_WALK2:
+				this.setFacing(StanceEnum.LEFT_STAND);
+				break;
+			default:
+		}
+		
+		if( MathUtils.randomBoolean() ) {
+			GameValues.user.setCurrentLife(GameValues.user.getCurrentLife()-this.getDamage());
+		}
 	}
 	
 }

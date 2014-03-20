@@ -12,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.eciz.evosciencia.entities.Avatar;
 import com.eciz.evosciencia.entities.Checkpoint;
 import com.eciz.evosciencia.entities.Enemy;
 import com.eciz.evosciencia.entities.Scientist;
@@ -74,10 +73,14 @@ public class Maps {
 	
 	public void renderMonsters() {
 		GameValues.maps.getRenderer().setView(GameValues.camera);
+		int i = 0;
 		for( Enemy enemy : enemies ) {
-			if( enemy.isAlive() ) {
-				GameValues.currentBatch.draw(enemy.getTexture(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
-				enemy.moveEnemy();
+			if( i < GameValues.ENEMY_COUNT_PER_MAP ) {
+				if( enemy.isAlive() ) {
+					GameValues.currentBatch.draw(enemy.getTexture(), enemy.getX(), enemy.getY(), enemy.getWidth(), enemy.getHeight());
+					enemy.moveEnemy();
+				}
+				i++;
 			}
 		}
 	}
@@ -118,6 +121,7 @@ public class Maps {
 				}
 			}
 		}
+		
 		return npcRect;
 	}
 	
@@ -194,8 +198,6 @@ public class Maps {
 							enemy.setTexture(GameValues.monsters.get(MonsterEnum.GOBLIN.getValue()).get(enemy.getFacing().getValue()));
 							
 							enemies.add(enemy);
-							
-//							new Thread(enemy).start();
 							
 							id++;
 						}

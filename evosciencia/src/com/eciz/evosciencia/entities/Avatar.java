@@ -27,7 +27,6 @@ public class Avatar extends Rectangle {
 	public Sprite sprite;
 	public boolean isAttacking = false;
 	public long attackAnimCtr = 0;
-	public static boolean isQuestActive = false;
 
 	// Walking flag, 0 = right 1 = left
 	public boolean walkFlag = true;
