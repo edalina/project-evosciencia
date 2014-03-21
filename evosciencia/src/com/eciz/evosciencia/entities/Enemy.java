@@ -306,7 +306,7 @@ public class Enemy extends Sprite {
 			default:
 		}
 		
-		if( MathUtils.randomBoolean() ) {
+		if( MathUtils.random(100) < 30 ) {
 			if( GameSettings.sfx )
 				Enemy.attackSound.play();
 			GameValues.currentBatch.draw(Enemy.attackTexture, GameValues.avatar.getX(), GameValues.avatar.getY(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());

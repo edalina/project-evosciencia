@@ -3,6 +3,7 @@ package com.eciz.evosciencia.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -15,6 +16,9 @@ public class GameScreen implements Screen {
 	public static TextField field;
 
 	public GameScreen() {
+		
+		GameValues.introAnimations = new Texture[0];
+		
 		stage = new Stage();
 		
 		GameValues.camera.zoom = GameValues.CAMERA_ZOOM;

@@ -555,33 +555,35 @@ public class Dpad {
 		}
 		
 		for( Enemy enemy : Maps.enemies ) {
-			if( tmpRectangle.overlaps(enemy.getBoundingRectangle()) ) {
-				enemy.attack();
-				enemy.setLife(enemy.getLife()-GameValues.user.getDamage());
-				if( enemy.getLife() <= 0 ) {
-					Enemy.dieSound.play();
-					enemy.setAlive(false);
-					GameValues.user.setExperience(GameValues.user.getExperience()+1);
-					if( GameValues.user.getCurrentLife() < GameValues.user.getLife() ) {
-						GameValues.user.setCurrentLife(GameValues.user.getCurrentLife()+10);
-						if( GameValues.user.getCurrentLife() > GameValues.user.getLife() ) {
-							GameValues.user.setCurrentLife(GameValues.user.getLife());
+			if( enemy.getLife() > 0 ) {
+				if( tmpRectangle.overlaps(enemy.getBoundingRectangle()) ) {
+					enemy.attack();
+					enemy.setLife(enemy.getLife()-GameValues.user.getDamage());
+					if( enemy.getLife() <= 0 ) {
+						Enemy.dieSound.play();
+						enemy.setAlive(false);
+						GameValues.user.setExperience(GameValues.user.getExperience()+1);
+						if( GameValues.user.getCurrentLife() < GameValues.user.getLife() ) {
+							GameValues.user.setCurrentLife(GameValues.user.getCurrentLife()+10);
+							if( GameValues.user.getCurrentLife() > GameValues.user.getLife() ) {
+								GameValues.user.setCurrentLife(GameValues.user.getLife());
+							}
 						}
-					}
-					if( GameValues.user.getExperience() == GameValues.user.getLevel() * 10 ) {
-						GameValues.user.setLevel(GameValues.user.getLevel() + 1);
-						GameValues.user.setCurrentLife(GameValues.user.getLife());
-						Avatar.levelSound.play();
-						DialogUtils.createItemDialog("You have level up!");
-					}
-					if( GameValues.user.isCurrentQuestInProgress() && !GameValues.user.isCurrentQuestDone() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
-						if( MathUtils.random(0, 100) < 100 ) {
-							
-//							GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
-							GameValues.user.setCurrentQuestDone(true);
-							
-							DialogUtils.createItemDialog("Quest completed");
-							
+						if( GameValues.user.getExperience() == GameValues.user.getLevel() * 10 ) {
+							GameValues.user.setLevel(GameValues.user.getLevel() + 1);
+							GameValues.user.setCurrentLife(GameValues.user.getLife());
+							Avatar.levelSound.play();
+							DialogUtils.createItemDialog("You have level up!");
+						}
+						if( GameValues.user.isCurrentQuestInProgress() && !GameValues.user.isCurrentQuestDone() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
+							if( MathUtils.random(0, 100) < 100 ) {
+								
+//								GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
+								GameValues.user.setCurrentQuestDone(true);
+								
+								DialogUtils.createItemDialog("Quest completed");
+								
+							}
 						}
 					}
 				}
