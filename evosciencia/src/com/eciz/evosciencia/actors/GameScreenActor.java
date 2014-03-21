@@ -2,7 +2,6 @@ package com.eciz.evosciencia.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -13,7 +12,6 @@ import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.resources.Maps;
 import com.eciz.evosciencia.utils.DialogUtils;
 import com.eciz.evosciencia.utils.EventUtils;
-import com.eciz.evosciencia.values.GameSettings;
 import com.eciz.evosciencia.values.GameValues;
 
 public class GameScreenActor extends Table {
@@ -26,8 +24,6 @@ public class GameScreenActor extends Table {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
 		setClip(true);
 		
-		GameValues.currentBatch = new SpriteBatch();
-		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
 		GameValues.touchPos = new Vector3();
 		
 		GameValues.maps = Maps.getMaps();

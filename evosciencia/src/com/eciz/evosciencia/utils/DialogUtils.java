@@ -213,19 +213,21 @@ public class DialogUtils {
 	}
 	
 	public static void createCompleteDialog(String description) {
+		closeDialog();
+		timer = 0;
 		dialogTexture = new Texture(Gdx.files.internal("images/quest_dialog_completed.png"));
 		
 		DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
 		DIALOG_HEIGHT = GameValues.SCREEN_HEIGHT * GameValues.CAMERA_ZOOM;
+		
 		DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
 		DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT/2);
 
-		GameScreen.field.setScale(2);
-		GameScreen.field.setWidth(GameValues.SCREEN_WIDTH * 2);
-		GameScreen.field.setHeight(GameValues.SCREEN_HEIGHT/5);
-		GameScreen.field.setX(150);
-		GameScreen.field.setY(700);
-		GameScreen.field.getStyle().font.setScale(2);
+		GameScreen.field.setWidth(DIALOG_WIDTH - 100);
+		GameScreen.field.setHeight(30);
+		GameScreen.field.setX(DIALOG_X + 50);
+		GameScreen.field.setY((DIALOG_Y + DIALOG_HEIGHT) - 75);
+//		GameScreen.field.getStyle().font.setScale(2);
 		GameScreen.field.setVisible(true);
 		GameScreen.field.setText("");
 		questCompleteDialog = description;
@@ -235,7 +237,6 @@ public class DialogUtils {
 	
 	public static void createCompleteDialog() {
 		if( !questCompleteDialog.equals("") ) {
-			
 			Dpad.isDpadActive = false;
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, questCompleteDialog, DIALOG_X + 50, nextRect.getY() + 100, DIALOG_WIDTH - 100);

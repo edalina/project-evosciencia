@@ -3,6 +3,7 @@ package com.eciz.evosciencia.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.eciz.evosciencia.actors.GameScreenActor;
@@ -15,7 +16,11 @@ public class GameScreen implements Screen {
 
 	public GameScreen() {
 		stage = new Stage();
+		
 		GameValues.camera.zoom = GameValues.CAMERA_ZOOM;
+		GameValues.currentBatch = new SpriteBatch();
+		GameValues.currentBatch.setProjectionMatrix(GameValues.camera.combined);
+		stage.setCamera(GameValues.camera);
 		stage.addActor(new GameScreenActor());
 		
 		field = new TextField("", GameValues.skin);
