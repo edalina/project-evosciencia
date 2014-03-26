@@ -49,7 +49,6 @@ public class Avatar extends Rectangle {
 	}
 	
 	public void repositionAvatar(float x, float y) {
-		boolean isX = false, isY = false;
 		GameValues.avatar.setX(x);
 		GameValues.avatar.setY(y);
 		
@@ -67,7 +66,6 @@ public class Avatar extends Rectangle {
 		
 		if( !(GameValues.avatar.getX() <= GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE ||
 			GameValues.avatar.getX()  >= Maps.MAP_WIDTH - (GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE)) ) {
-			isX = true;
 			angleCameraOnAvatarOnX();
 		} else if( GameValues.avatar.getX() <= GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE ) {
 			angleCameraOnAvatarOnX(GameValues.SCREEN_WIDTH/GameValues.CAMERA_ZOOM_MULTIPLE);
@@ -77,7 +75,6 @@ public class Avatar extends Rectangle {
 	
 		if( !(GameValues.avatar.getY()  <= GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE ||
 			GameValues.avatar.getY() >= Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE)) ) {
-			isY = true;
 			angleCameraOnAvatarOnY();
 		} else if( GameValues.avatar.getY()  <= GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE ) {
 			angleCameraOnAvatarOnY(GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE);
@@ -85,7 +82,6 @@ public class Avatar extends Rectangle {
 			angleCameraOnAvatarOnY(Maps.MAP_HEIGHT - (GameValues.SCREEN_HEIGHT/GameValues.CAMERA_ZOOM_MULTIPLE));
 		}
 		
-//		Dpad.positionDpad(isX, isY);
 		Dpad.positionDpad();
 		
 	}

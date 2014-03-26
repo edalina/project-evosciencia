@@ -33,8 +33,6 @@ public class LoadAssets {
 		LoadAssets.loadAllMonsters();
 		LoadAssets.loadEtc();
 		LoadAssets.loadScientists();
-//		LoadAssets.loadPools();
-//		LoadAssets.loadIntroAssets();
 		GameValues.settingUtils = new SettingUtils();
 	}
 	
@@ -114,12 +112,6 @@ public class LoadAssets {
 			GameValues.monsters.put(monsterEnum.getValue(), monsters);
 		}
 	}
-	
-	public static void loadPools() {
-//		new EnemyPool();
-	}
-	
-//	public static void 
 	
 	public static void loadAvatarAssets() {
 		

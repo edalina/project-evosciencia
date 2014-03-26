@@ -2,13 +2,18 @@ package com.eciz.evosciencia;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.resources.LoadAssets;
 import com.eciz.evosciencia.screens.SplashScreen;
 import com.eciz.evosciencia.values.GameValues;
 
+/**
+ * 
+ * @author Yjae Dalina
+ * information: get project code at https://github.com/edalina/project-evosciencia
+ *
+ */
 public class EvoSciencia extends Game implements ApplicationListener {
 	
 	private static EvoSciencia mainInstance = null;
@@ -25,10 +30,7 @@ public class EvoSciencia extends Game implements ApplicationListener {
 		Texture.setEnforcePotImages(false);
 		
 		GameValues.currentScreen = new SplashScreen();
-//		GameValues.currentScreen = new AIScreen();
 		setScreen(GameValues.currentScreen);
-		
-//		Gdx.input.setCatchBackKey(true);
 		
 	}
 	

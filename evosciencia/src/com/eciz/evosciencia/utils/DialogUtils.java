@@ -31,8 +31,6 @@ public class DialogUtils {
 	private static Rectangle backRect;
 	
 	private static Texture dialogTexture;
-	private static Texture helpAvatar;
-	private static Texture charAvatar;
 	
 	private static String dialog = "";
 	private static String itemDialog = "";
@@ -53,7 +51,6 @@ public class DialogUtils {
 
 	public DialogUtils() {
 		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
-		helpAvatar = new Texture(Gdx.files.internal("images/einstein.png"));
 		
 		dialogText = new BitmapFont();
 		dialogText.setScale(GameValues.CAMERA_ZOOM);

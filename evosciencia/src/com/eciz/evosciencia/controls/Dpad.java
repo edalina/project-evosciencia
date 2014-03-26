@@ -92,18 +92,6 @@ public class Dpad {
 		
 		skillSlots = new ArrayList<SkillSlot>();
 		
-//		for( int i = 0 ; i < 5 ; i++ ) {
-//			Rectangle skillSlotRec = new Rectangle();
-//			skillSlotRec.width = DPAD_WIDTH;
-//			skillSlotRec.height = DPAD_HEIGHT;
-//			
-//			SkillSlot skillSlot = new SkillSlot();
-//			skillSlot.setRectangle(skillSlotRec);
-//			skillSlot.setId(i);
-//			skillSlot.setSkillId(0);
-//			skillSlots.add(skillSlot);
-//		}
-		
 		upArrowRectangle.width = DPAD_WIDTH;
 		upArrowRectangle.height = DPAD_HEIGHT;
 		downArrowRectangle.width = DPAD_WIDTH;
@@ -122,7 +110,6 @@ public class Dpad {
 		healthBarRectangle.height = DPAD_HEIGHT/2;
 	}
 
-//	public static void positionDpad(boolean isX, boolean isY) {
 	public static void positionDpad() {
 		
 		/*
@@ -392,7 +379,6 @@ public class Dpad {
 					DialogUtils.closeDialog();
 					DialogUtils.createItemDialog("Data saved!");
 					Dpad.isDpadActive = true;
-//					GameValues.settingUtils.toggleBGM();
 					GameValues.currentScientist = tmpScientist;
 				}
 				
@@ -590,7 +576,6 @@ public class Dpad {
 						if( GameValues.user.isCurrentQuestInProgress() && !GameValues.user.isCurrentQuestDone() && !GameValues.user.getQuestDone()[GameValues.currentMapValue] ) {
 							if( MathUtils.random(0, 100) < 100 ) {
 								
-//								GameValues.user.getQuestDone()[GameValues.currentMapValue] = true;
 								GameValues.user.setCurrentQuestDone(true);
 								
 								DialogUtils.createItemDialog("Quest completed");

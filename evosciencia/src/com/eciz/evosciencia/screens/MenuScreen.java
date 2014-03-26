@@ -12,8 +12,6 @@ public class MenuScreen implements Screen {
 	
 	public MenuScreen() {
 		stage = new Stage();
-//		GameValues.camera = (OrthographicCamera) stage.getCamera();
-		
 		stage.addActor(new MenuScreenActor());
 	}
 
@@ -53,8 +51,7 @@ public class MenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
-//		stage.dispose();
-//		this.dispose();
+		
 	}
 
 }

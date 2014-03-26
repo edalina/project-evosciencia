@@ -35,7 +35,6 @@ public class Enemy extends Sprite {
 	private boolean walkingFlag = true;
 	private boolean onHunt = false;
 	public boolean isMoving = false;
-	private long lastAttackTime = 0;
 	
 	public boolean isOnHunt() {
 		return onHunt;
@@ -133,38 +132,26 @@ public class Enemy extends Sprite {
 		int rnd = MathUtils.random(1, 4);
 		int distance = 30;
 		walkingFlag = true;
-//		if( onHunt ) {
-//			float ax = GameValues.avatar.getX(),
-//				ay = GameValues.avatar.getY();
-//			
-//			if( getX() < ax && getY() < ay ) {
-//				futurePosition.setX(GameValues.avatar.getX());
-//				futurePosition.setY(GameValues.avatar.getY());
-//			}
-//			
-//		} else {
-			switch( rnd ) {
-				case 1:
-					setFacing(StanceEnum.FRONT_WALK1);
-					futurePosition.setY(getY() - distance);
-					break;
-				case 2:
-					setFacing(StanceEnum.BACK_WALK1);
-					futurePosition.setY(getY() + distance);
-					break;
-				case 3:
-					setFacing(StanceEnum.LEFT_WALK1);
-					futurePosition.setX(getX() - distance);
-					break;
-				case 4:
-					setFacing(StanceEnum.RIGHT_WALK1);
-					futurePosition.setX(getX() + distance);
-					break;
-				default:
-			}
+		switch( rnd ) {
+			case 1:
+				setFacing(StanceEnum.FRONT_WALK1);
+				futurePosition.setY(getY() - distance);
+				break;
+			case 2:
+				setFacing(StanceEnum.BACK_WALK1);
+				futurePosition.setY(getY() + distance);
+				break;
+			case 3:
+				setFacing(StanceEnum.LEFT_WALK1);
+				futurePosition.setX(getX() - distance);
+				break;
+			case 4:
+				setFacing(StanceEnum.RIGHT_WALK1);
+				futurePosition.setX(getX() + distance);
+				break;
+			default:
+		}
 			
-//		}
-		
 	}
 	
 	public void repositionEnemy(Rectangle tmpRect) {
@@ -212,8 +199,6 @@ public class Enemy extends Sprite {
 			if( Math.abs(GameValues.avatar.getX() - getX()) < TERRITORY_RANGE &&
 				Math.abs(GameValues.avatar.getY() - getY()) < TERRITORY_RANGE ) {
 				onHunt = true;
-//				futurePosition.setX(GameValues.avatar.getX());
-//				futurePosition.setY(GameValues.avatar.getY());
 			} else {
 				if( onHunt ) {
 					if( Math.abs(GameValues.avatar.getX() - getX()) > TERRITORY_RANGE * 2 &&
