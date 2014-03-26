@@ -79,6 +79,12 @@ public class GameValues {
 	
 	public static boolean touchDown = false;
 	
+	public static final String[] CHARACTERS = {
+		"yjae",
+		"carlo",
+		"ia",
+		"zhandy"};
+	
 	public static SettingUtils settingUtils;
 	
 	public static Texture[] introAnimations;
@@ -93,6 +99,8 @@ public class GameValues {
 	public static int introIndexPointer;
 	
 	public static boolean isNewGame = false;
+	
+	public static boolean isEndGame = false;
 	
 	public static Skin skin;
 

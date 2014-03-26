@@ -78,7 +78,8 @@ public class GameScreenActor extends Table {
 			GameValues.currentBatch.draw(GameValues.portal.getTexture(), GameValues.portal.getRectangle().getX(), GameValues.portal.getRectangle().getY(), GameValues.portal.getRectangle().getWidth(), GameValues.portal.getRectangle().getHeight());
 		}
 		
-		if( DialogUtils.isDialogActive && GameValues.isNewGame ) {
+		if( ( DialogUtils.isDialogActive && GameValues.isNewGame ) ||
+			( DialogUtils.isDialogActive && GameValues.isEndGame ) ) {
 			GameValues.currentBatch.draw(new Texture(Gdx.files.internal("npc/albert einstein.png")), GameValues.avatar.getX(), GameValues.avatar.getY() + (GameValues.avatar.getHeight()*2), Avatar.width, Avatar.height);
 		}
 		
@@ -114,6 +115,12 @@ public class GameScreenActor extends Table {
 			Dpad.isDpadActive = false;
 			DialogUtils.isDialogActive = true;
 			DialogUtils.introDialogs();
+		}
+		
+		if( GameValues.isEndGame ) {
+			Dpad.isDpadActive = false;
+			DialogUtils.isDialogActive = true;
+			DialogUtils.endDialog();
 		}
 		
 		if( GameValues.currentScientist.getRectangle() != null ) {

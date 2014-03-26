@@ -178,12 +178,24 @@ public class Dpad {
 			GameValues.currentScientist.getRectangle() != null ) {
 			if( tmpRect.overlaps(GameValues.portal.getRectangle()) ) {
 				GameValues.avatar.updateStandBy();
-				GameValues.currentMapValue = GameValues.currentMapValue+1;
+				if( GameValues.currentMapValue < GameValues.user.getQuestDone().length - 1 ) {
+					GameValues.currentMapValue = GameValues.currentMapValue + 1;
+				} else {
+					GameValues.currentMapValue = 0;
+					Dpad.isDpadActive = false;
+					DialogUtils.isDialogActive = true;
+					GameValues.isEndGame = true;
+					GameValues.avatar.facingFlag = StanceEnum.BACK_STAND;
+					for( int i = 0 ; i < GameValues.user.getQuestDone().length ; i++ ) {
+						GameValues.user.getQuestDone()[i] = false;
+						GameValues.user.getScientists()[i] = MathUtils.random(0, 49);
+					}
+					
+				}
 				GameValues.maps = new Maps();
 				GameValues.avatar.repositionAvatar(384, 384);
 				GameValues.user.setCurrentQuestInProgress(false);
 				GameValues.user.setCurrentQuestDone(false);
-				GameValues.portal = null;
 				return;
 			}
 		}

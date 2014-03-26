@@ -71,15 +71,22 @@ public class Maps {
 		renderer = new OrthogonalTiledMapRenderer(currentMap, MAP_UNIT_SCALE);
 		GameValues.currentScientist.setRectangle(createNPCObjects());
 		if( GameValues.currentScientist.getRectangle() != null ) {
-			GameValues.portal = new Portal();
+			if( GameValues.portal == null ) {
+				GameValues.portal = new Portal();
+				GameValues.portal.setTexture(new Texture(Gdx.files.internal("images/portal.png")));
+			}
 			GameValues.portal.setRectangle(
 					new Rectangle(
 						GameValues.currentScientist.getRectangle().getX() - (GameValues.currentScientist.getRectangle().getWidth()/2),
 						GameValues.currentScientist.getRectangle().getY() - (GameValues.currentScientist.getRectangle().getHeight()*4),
 						GameValues.currentScientist.getRectangle().getWidth()*2,
 						GameValues.currentScientist.getRectangle().getHeight()*2));
-			GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
-			GameValues.portal.setTexture(new Texture(Gdx.files.internal("images/portal.png")));
+			
+			if( GameValues.currentMapValue < GameValues.user.getQuestDone().length - 1 )
+				GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(GameValues.currentMapValue+1));
+			else
+				GameValues.portal.setDestination(GameValues.dataHandler.getMaps().get(0));
+			
 		}
 	}
 	

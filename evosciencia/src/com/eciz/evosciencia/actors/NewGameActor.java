@@ -23,12 +23,6 @@ public class NewGameActor extends Table {
 	private Texture saveDataBox;
 	private List<CharacterSlot> characterSlots;
 	
-	private static final String[] CHARACTERS = {
-		"yjae",
-		"carlo",
-		"ia",
-		"zhandy"};
-	
 	public NewGameActor() {
 		setBounds(0, 0, GameValues.SCREEN_WIDTH, GameValues.SCREEN_HEIGHT);
 		setClip(true);
@@ -44,14 +38,14 @@ public class NewGameActor extends Table {
 		int slotWidth = 105, slotHeight = 140, slotY = 145, slotX = 105, deviationX = 162;
 		
 		// Adding character slots
-		for( int i = 0 ; i < CHARACTERS.length ; i++ ) {
+		for( int i = 0 ; i < GameValues.CHARACTERS.length ; i++ ) {
 			
 			CharacterSlot slot = new CharacterSlot();
 			slot.setId(i);
 			slot.setActive(false);
 			slot.setDefinition("");
-			slot.setTexture(new Texture(Gdx.files.internal("images/selection_" + CHARACTERS[i] + ".png")));
-			slot.getExtras().put("avatarName", CHARACTERS[i]);
+			slot.setTexture(new Texture(Gdx.files.internal("images/selection_" + GameValues.CHARACTERS[i] + ".png")));
+			slot.getExtras().put("avatarName", GameValues.CHARACTERS[i]);
 		
 			Rectangle rect = new Rectangle();
 			rect.set(slotX, slotY, slotWidth, slotHeight);
@@ -91,7 +85,6 @@ public class NewGameActor extends Table {
 	public void activateSlot(CharacterSlot characterSlot) {
 		if( characterSlot.isActive() ) {
 			GameValues.avatar = new Avatar();
-			GameValues.user = GameValues.dataHandler.getUsers().get(characterSlot.getId());
 			GameValues.user.setAvatar(characterSlot.getExtras().get("avatarName").toString());
 			GameValues.user.setPlaytime(TimeUtils.millis());
 			GameValues.avatar.name = GameValues.user.getAvatar();

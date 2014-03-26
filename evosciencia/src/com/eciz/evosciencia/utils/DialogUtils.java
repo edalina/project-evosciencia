@@ -1,5 +1,10 @@
 package com.eciz.evosciencia.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -7,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.eciz.evosciencia.controls.Dpad;
 import com.eciz.evosciencia.entities.Avatar;
+import com.eciz.evosciencia.enums.StanceEnum;
 import com.eciz.evosciencia.screens.GameScreen;
 import com.eciz.evosciencia.values.GameValues;
 import com.eciz.evosciencia.values.HelpValues;
@@ -41,6 +47,9 @@ public class DialogUtils {
 	private static int idx = 0;
 	
 	private static long timer;
+	
+	// Textures
+	private static Map<String, Texture> textures = new HashMap<String, Texture>();
 
 	public DialogUtils() {
 		dialogTexture = new Texture(Gdx.files.internal("images/dialog.png"));
@@ -60,6 +69,13 @@ public class DialogUtils {
 		backRect = new Rectangle();
 		
 		repositionButtons();
+		
+		for( String s : GameValues.CHARACTERS ) {
+			if( !GameValues.user.getAvatar().equals(s) ) {
+				textures.put(s, new Texture( Gdx.files.internal("avatar/" + s + "/" + StanceEnum.BACK_STAND.getValue() + ".png") ));
+			}
+		}
+		
 	}
 	
 	public static void repositionButtons() {
@@ -86,9 +102,9 @@ public class DialogUtils {
 				isDialogActive = false;
 				Dpad.isDpadActive = true;
 				GameValues.isNewGame = false;
+				idx = 0;
 				return;
 			}
-//			GameValues.currentBatch.draw(helpAvatar, DIALOG_X - 100, DIALOG_Y - 50, 167, 200);
 			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
 			dialogText.drawWrapped(GameValues.currentBatch, HelpValues.INTRO[idx], DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
 			GameValues.currentBatch.draw(nextText, nextRect.getX(), nextRect.getY(), nextRect.getWidth(), nextRect.getHeight());
@@ -281,6 +297,44 @@ public class DialogUtils {
 	
 	public static void createAvatarDialog() {
 		
+	}
+	
+	public static void endDialog() {
+		repositionButtons();
+		if( isDialogActive ) {
+			DIALOG_WIDTH = GameValues.SCREEN_WIDTH * GameValues.CAMERA_ZOOM;
+			DIALOG_HEIGHT = (GameValues.SCREEN_HEIGHT/3) * GameValues.CAMERA_ZOOM;
+			DIALOG_X = GameValues.camera.position.x - (DIALOG_WIDTH/2);
+			DIALOG_Y = GameValues.camera.position.y - (DIALOG_HEIGHT + 30);
+			Dpad.isDpadActive = false;
+			if( idx == HelpValues.ENDDIALOG.length ) {
+				isDialogActive = false;
+				Dpad.isDpadActive = true;
+				GameValues.isEndGame = false;
+				return;
+			}
+			
+			List<String> keys = new ArrayList<String>();
+			keys.addAll(textures.keySet());
+			
+			GameValues.currentBatch.draw(textures.get(keys.get(0)), GameValues.avatar.getX() - GameValues.avatar.getWidth(), GameValues.avatar.getY() - GameValues.avatar.getHeight(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+			GameValues.currentBatch.draw(textures.get(keys.get(1)), GameValues.avatar.getX() + GameValues.avatar.getWidth(), GameValues.avatar.getY() - GameValues.avatar.getHeight(), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+			GameValues.currentBatch.draw(textures.get(keys.get(2)), GameValues.avatar.getX(), GameValues.avatar.getY() - (GameValues.avatar.getHeight() * 2), GameValues.avatar.getWidth(), GameValues.avatar.getHeight());
+			
+			GameValues.currentBatch.draw(dialogTexture, DIALOG_X, DIALOG_Y, DIALOG_WIDTH, DIALOG_HEIGHT);
+			dialogText.drawWrapped(GameValues.currentBatch, HelpValues.ENDDIALOG[idx], DIALOG_X + 10, DIALOG_Y + DIALOG_HEIGHT - 10, DIALOG_WIDTH - 20);
+			GameValues.currentBatch.draw(nextText, nextRect.getX(), nextRect.getY(), nextRect.getWidth(), nextRect.getHeight());
+			if( Gdx.input.isTouched() ) {
+				if( !GameValues.touchDown ) {
+					GameValues.touchDown = true;
+					if( EventUtils.isTap(nextRect) ) {
+						idx++;
+					}
+				}
+			} else {
+				GameValues.touchDown = false;
+			}
+		}
 	}
 	
 	public static void closeDialog() {

@@ -114,6 +114,7 @@ public class SaveDataActor extends Table {
 	public void activateSlot(CharacterSlot characterSlot) {
 		if( characterSlot.isActive() ) {
 			if( characterSlot.getPlaytime() == 0 ) {
+				GameValues.user = GameValues.dataHandler.getUsers().get(characterSlot.getId());
 				GameValues.currentScreen = new NewGameScreen();
 			} else {
 				GameValues.avatar = new Avatar();
