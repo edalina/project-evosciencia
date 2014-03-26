@@ -62,6 +62,10 @@ public class LoadAssets {
 		GameValues.questMarkActive = new Texture(Gdx.files.internal("images/quest.png"));
 		GameValues.questMarkInactive = new Texture(Gdx.files.internal("images/quest_inactive.png"));
 		
+		assetManager.load("images/start_btn.png", Texture.class);
+		assetManager.load("images/options_btn.png", Texture.class);
+		assetManager.load("images/about_btn.png", Texture.class);
+		
 		assetManager.load("images/toggle_on.png", Texture.class);
 		assetManager.load("images/toggle_off.png", Texture.class);
 		

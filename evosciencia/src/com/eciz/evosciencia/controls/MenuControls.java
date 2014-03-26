@@ -35,8 +35,8 @@ public class MenuControls {
 
 	public MenuControls() {
 		startButton = new Texture(Gdx.files.internal("images/start_btn.png"));
-		optionButton = new Texture("images/options_btn.png");
-		aboutButton = new Texture("images/about_btn.png");
+		optionButton = new Texture(Gdx.files.internal("images/options_btn.png"));
+		aboutButton = new Texture(Gdx.files.internal("images/about_btn.png"));
 		
 		startRectangle = new Rectangle();
 		optionRectangle = new Rectangle();
